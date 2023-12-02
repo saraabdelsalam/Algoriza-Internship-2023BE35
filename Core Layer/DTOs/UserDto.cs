@@ -14,7 +14,7 @@ namespace Core_Layer.DTOs
 
         public int Id { get; set; }
 
-        //[RequiredAttributeForDoctor(ErrorMessage = "This property is required for users with the 'doctor' role.")]
+       
         public IFormFile? Image { get; set; }
 
         [Required]
