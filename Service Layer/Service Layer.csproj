@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>Service_Layer</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NLog" Version="5.2.7" />
+    <PackageReference Include="SimpleInjector" Version="5.4.2" />
+    <PackageReference Include="SimpleInjector.Integration.Web" Version="5.0.0" />
+    <PackageReference Include="SimpleInjector.Integration.WebApi" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Repository Layer\Repository Layer.csproj" />
+  </ItemGroup>
+
+</Project>
