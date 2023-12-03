@@ -10,7 +10,9 @@ namespace Service_Layer.Interfaces.Admin
     public interface IDiscountCode 
     {
         Task AddDiscountCode(DiscountCode discountCode);
-        //Task<DiscountCode> EditDiscountCode(int id);
-        //Task DeleteDiscountCode(int id);
+        Task EditDiscountCode(DiscountCode discountCode);
+        Task DeleteDiscountCode(int id);
+        Task ChangeStatus(int id);
+
     }
 }

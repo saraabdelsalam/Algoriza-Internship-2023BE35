@@ -4,7 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Repository_Layer;
 using Service_Layer.Interfaces;
+using Service_Layer.Interfaces.Admin;
 using Service_Layer.Services;
+using Service_Layer.Services.Admin;
 using vezeeta;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,13 +14,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 // register usermanger & rolemanager ==>userstore &rolestore
-builder.Services.AddScoped<ILoggerManager, LoggerManager>();
+//builder.Services.AddScoped<ILoggerManager, LoggerManager>();
 
 
 builder.Services.AddDbContext<ApplicationDbContext>(
              opts => opts.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
                  b => b.MigrationsAssembly("Repository Layer")));
-builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
+
+
+builder.Services.AddTransient<IUnitOfWork,UnitOfWork>();
+builder.Services.AddTransient<IDiscountCode,DiscountCodeServices>();
 //builder.Services.ConfigureUnitOfWork();
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 

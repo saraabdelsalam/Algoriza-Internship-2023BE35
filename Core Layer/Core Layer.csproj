@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Features" Version="6.0.25" />
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="6.0.25" />
     <PackageReference Include="SimpleInjector" Version="5.4.2" />

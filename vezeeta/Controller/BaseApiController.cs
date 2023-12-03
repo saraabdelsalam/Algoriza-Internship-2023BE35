@@ -8,11 +8,11 @@ namespace vezeeta.Controller
     public class BaseApiController : ControllerBase
     {
         protected readonly IUnitOfWork _unitOfWork;
-        protected readonly ILogger _logger;
-        public BaseApiController(IUnitOfWork unitOfWork, ILogger logger)
+        
+        public BaseApiController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _logger = logger;
+            
         }
     }
 
