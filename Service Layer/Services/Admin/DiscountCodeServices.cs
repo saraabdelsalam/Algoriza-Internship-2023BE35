@@ -41,7 +41,7 @@ namespace Service_Layer.Services.Admin
         public async Task DeleteDiscountCode(int id)
         {
             var code =  _unitOfWork._discount.GetById(id);
-            _unitOfWork._discount.DeleteAsync(code);
+           await _unitOfWork._discount.DeleteAsync(code);
             await _unitOfWork.SaveAsync();
         }
         public async Task ChangeStatus(int id)
@@ -50,8 +50,8 @@ namespace Service_Layer.Services.Admin
             if(code.Activated == true)
             {
                 code.Activated= false;
-                _unitOfWork._discount.UpdateAsync(code);
-                _unitOfWork.SaveAsync();   
+               await _unitOfWork._discount.UpdateAsync(code);
+              await  _unitOfWork.SaveAsync();   
             }
 
         }

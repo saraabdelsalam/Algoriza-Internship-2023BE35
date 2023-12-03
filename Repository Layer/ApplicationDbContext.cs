@@ -30,11 +30,11 @@ namespace Repository_Layer
                   new Specialization { id = 3, SpecializationName = "Pediatrics and New Born" },
                    new Specialization { id = 4, SpecializationName = "Nutrtion" }
 
+             
+                   
                    );
             //seeding roles
             string admin_id = "1";
-
-            //seed admin role
             builder.Entity<IdentityRole>().HasData(
                  new List<IdentityRole> {
                      new IdentityRole
@@ -59,11 +59,9 @@ namespace Repository_Layer
 
             },
                  }
-
-
            );
 
-            //create user
+
             var appuser = new ApplicationUser
             {
                 Id = admin_id,
@@ -74,14 +72,10 @@ namespace Repository_Layer
                 NormalizedUserName = "sara abdelsalam"
             };
 
-            //set user password
             PasswordHasher<ApplicationUser> ph = new PasswordHasher<ApplicationUser>();
             appuser.PasswordHash = ph.HashPassword(appuser, "1234");
 
-            //seed user
             builder.Entity<ApplicationUser>().HasData(appuser);
-
-            //set user role to admin
             builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
             {
                 RoleId = "1-admin",

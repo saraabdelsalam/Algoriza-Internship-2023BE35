@@ -24,6 +24,6 @@ namespace Core_Layer.Models
         [Required(ErrorMessage = "Minimum Requests is required.")]
         [Range(0, int.MaxValue)]
         public int RequestsNumber { get; set; }
-        //public List<Request>? Requests { get; set; }
+        public List<Request>? Requests { get; set; }
     }
 }
