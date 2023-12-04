@@ -100,6 +100,21 @@ namespace Service_Layer.Services
           await  _unitOfWork._userRepository.SignOut();
             return new OkResult();
         }
+
+     
+
+       public async Task<int> NumOfUsers(string userRole)
+        {
+            
+            return await _unitOfWork._userRepository.NumberOfUsersAsync(userRole);
+         
+        }
+
+        public Task<IActionResult> GetUserById(string id)
+        {
+            
+            throw new NotImplementedException();
+        }
     }
 }
 

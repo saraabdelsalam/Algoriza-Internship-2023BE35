@@ -12,6 +12,8 @@ namespace Repository_Layer
 {
     public interface IAppUserRepository: IBaseRepository<ApplicationUser>
     {
+
+        public Task<int> NumberOfUsersAsync(string userRole);
         public Task<IdentityResult> AddUser(ApplicationUser user);
        public Task<ApplicationUser> FindByEmail(string email);
         public  Task AssignRole(ApplicationUser user, string role);

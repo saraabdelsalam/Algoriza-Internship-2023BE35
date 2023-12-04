@@ -47,7 +47,12 @@ namespace Repository_Layer
             await _signInManager.SignOutAsync();
         }
 
-
+        public async Task<int> NumberOfUsersAsync(string UserRole)
+        {
+            var role = await _roleManager.FindByNameAsync(UserRole);
+            var RoleUsers = await _userManager.GetUsersInRoleAsync(role.Name);
+            return  RoleUsers.Count();
+        }
 
         public async Task DeleteUser(ApplicationUser user)
         {
@@ -59,5 +64,11 @@ namespace Repository_Layer
          return await _userManager.FindByEmailAsync(email);
            
         }
+        //public async Task<ApplicationUser> GetUserByID(string id)
+        //{
+        //    return await _userManager.FindByIdAsync(id);
+
+        //}
+
     }
 }

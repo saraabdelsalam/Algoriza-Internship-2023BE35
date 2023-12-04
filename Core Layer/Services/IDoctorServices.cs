@@ -13,6 +13,7 @@ namespace Core_Layer.Services
     {
 
         Task<IActionResult> AddDoctor(UserDto userDTO, UserRole doctorRole, string specialization);
+
         //Task<IActionResult> Delete(int id);
         //Task<IActionResult> Edit(int id);
 
