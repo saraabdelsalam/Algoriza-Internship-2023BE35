@@ -7,7 +7,7 @@ namespace Core_Layer.DTOs
     public class UserDto
     {
 
-        public int Id { get; set; }
+      
         //public IFormFile? Image { get; set; }
 
         [Required]

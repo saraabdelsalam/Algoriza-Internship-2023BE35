@@ -34,7 +34,9 @@ namespace Service_Layer.Services
             ApplicationUser User = okResult.Value as ApplicationUser;
             Doctor doctor = new()
             {
-               User = User,
+                id = User.Id,
+
+               User =User,
                 Specialization = specialization,
             };
             try

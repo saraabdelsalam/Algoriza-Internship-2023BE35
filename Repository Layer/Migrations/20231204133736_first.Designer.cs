@@ -12,8 +12,8 @@ using Repository_Layer;
 namespace Repository_Layer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231204113258_try1")]
-    partial class try1
+    [Migration("20231204133736_first")]
+    partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -106,7 +106,7 @@ namespace Repository_Layer.Migrations
                         {
                             Id = "02174cf0–9412–4cfe - afbf - 59f706d72cf6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2b70f971-3326-4800-96cc-d94022d4bd19",
+                            ConcurrencyStamp = "122a68e5-4cc2-4d4f-abd4-77b89bd2854d",
                             DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@vezeeta.com",
                             EmailConfirmed = true,
@@ -114,10 +114,10 @@ namespace Repository_Layer.Migrations
                             Gender = 0,
                             LockoutEnabled = false,
                             NormalizedUserName = "sara abdelsalam",
-                            PasswordHash = "AQAAAAEAACcQAAAAEL4DtQGnZelIL2GXhkN40JhfKNdXNXqfr3Enu2AVXwg6w5pTnjCDCep+GyCp1jK1ZQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFA5eCirYG0KCOHP32J7w3KBagnJ8KOUHS2KR/1ikczy8vdh6+NFeG1zAty/n8HxCw==",
                             PhoneNumber = "01021122226",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e320ce2b-44f7-4cd7-9c56-89ab958350be",
+                            SecurityStamp = "012ffeb2-eb5b-4f05-8d27-86825d8cdab2",
                             TwoFactorEnabled = false,
                             UserName = "sara abdelsalam"
                         });
@@ -134,8 +134,8 @@ namespace Repository_Layer.Migrations
                     b.Property<int>("day")
                         .HasColumnType("int");
 
-                    b.Property<int>("docid")
-                        .HasColumnType("int");
+                    b.Property<string>("docid")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("id");
 
@@ -175,15 +175,8 @@ namespace Repository_Layer.Migrations
 
             modelBuilder.Entity("Core_Layer.Models.Doctor", b =>
                 {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
-
-                    b.Property<string>("DoctorUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("Price")
                         .IsRequired()
@@ -219,8 +212,8 @@ namespace Repository_Layer.Migrations
                     b.Property<int?>("DiscountCodeid")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Doctorid")
-                        .HasColumnType("int");
+                    b.Property<string>("Doctorid")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PatientId")
                         .HasColumnType("nvarchar(450)");
@@ -332,21 +325,21 @@ namespace Repository_Layer.Migrations
                         new
                         {
                             Id = "e014c5f9-775e-4112-bbc9-5a6859f60a6a",
-                            ConcurrencyStamp = "a0891f91-b308-4122-aa80-200746dd7815",
+                            ConcurrencyStamp = "80054619-cfb9-4d90-b003-be8f47123ff5",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "2ef36dbb-a237-4455-a9c2-ec4a4eb925af",
-                            ConcurrencyStamp = "970965fd-ac20-4047-9897-9d95c3841dfd",
+                            Id = "84f9279f-3572-4994-acac-2048071ab9d9",
+                            ConcurrencyStamp = "d322cd00-4e56-49e7-9d06-2443b0480096",
                             Name = "Doctor",
                             NormalizedName = "DOCTOR"
                         },
                         new
                         {
-                            Id = "6b92c2d4-e6cf-41c8-b2c7-971650b1ff3d",
-                            ConcurrencyStamp = "c4388b66-11c2-4de3-9d7b-a4d486723706",
+                            Id = "947f3b28-c7cc-4309-bbf0-023ac6f207a4",
+                            ConcurrencyStamp = "ebf56277-fc6e-4d6f-8112-750f04db599f",
                             Name = "Patient",
                             NormalizedName = "PATIENT"
                         });
@@ -469,9 +462,7 @@ namespace Repository_Layer.Migrations
                 {
                     b.HasOne("Core_Layer.Models.Doctor", "doc")
                         .WithMany()
-                        .HasForeignKey("docid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("docid");
 
                     b.Navigation("doc");
                 });

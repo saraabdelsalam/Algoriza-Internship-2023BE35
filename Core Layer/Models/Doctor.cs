@@ -10,14 +10,13 @@ namespace Core_Layer.Models
 {
     public class Doctor
     {
-       public int id { get; set; }
+       public string id { get; set; }
 
         [Required(ErrorMessage = "Price is required.")]
         public int? Price { get; set; }
 
-        [ForeignKey("FK_Doctors_AspNetUsers_DoctorUserId")]
-        public string DoctorUserId { get; set; }
-
+        [ForeignKey("FK_Doctors_AspNetUsers_UserId")]
+        public string UserId { get; set; }
         public ApplicationUser? User { get; set; }
 
         public Specialization? Specialization { get; set; }

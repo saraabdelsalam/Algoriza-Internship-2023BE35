@@ -13,7 +13,7 @@ namespace Repository_Layer
         public async Task AddAsync(T entity)
         {
             await Task.Run(() => Context.Set<T>().Add(entity));
-            await Context.SaveChangesAsync();
+           
 
         }
         public async Task UpdateAsync(T entity)

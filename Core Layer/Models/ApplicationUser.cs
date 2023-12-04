@@ -10,9 +10,7 @@ using System.Threading.Tasks;
 namespace Core_Layer.Models
 {
     public class ApplicationUser:IdentityUser
-    {
-        public string Id { get; set; }
-        
+    {   
         public string? Image { get; set; }
 
         [Required(ErrorMessage = "FullName is required.")]

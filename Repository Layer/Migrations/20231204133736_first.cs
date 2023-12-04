@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Repository_Layer.Migrations
 {
-    public partial class try1 : Migration
+    public partial class first : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -192,10 +192,8 @@ namespace Repository_Layer.Migrations
                 name: "Doctors",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
-                    DoctorUserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Specializationid = table.Column<int>(type: "int", nullable: true)
                 },
@@ -221,7 +219,7 @@ namespace Repository_Layer.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     day = table.Column<int>(type: "int", nullable: false),
-                    docid = table.Column<int>(type: "int", nullable: false)
+                    docid = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -230,8 +228,7 @@ namespace Repository_Layer.Migrations
                         name: "FK_Appointments_Doctors_docid",
                         column: x => x.docid,
                         principalTable: "Doctors",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateTable(
@@ -263,7 +260,7 @@ namespace Repository_Layer.Migrations
                     Status = table.Column<int>(type: "int", nullable: false),
                     finalPrice = table.Column<int>(type: "int", nullable: false),
                     timeId = table.Column<int>(type: "int", nullable: false),
-                    Doctorid = table.Column<int>(type: "int", nullable: true),
+                    Doctorid = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     PatientId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DiscountCodeid = table.Column<int>(type: "int", nullable: true)
                 },
@@ -298,15 +295,15 @@ namespace Repository_Layer.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "2ef36dbb-a237-4455-a9c2-ec4a4eb925af", "970965fd-ac20-4047-9897-9d95c3841dfd", "Doctor", "DOCTOR" },
-                    { "6b92c2d4-e6cf-41c8-b2c7-971650b1ff3d", "c4388b66-11c2-4de3-9d7b-a4d486723706", "Patient", "PATIENT" },
-                    { "e014c5f9-775e-4112-bbc9-5a6859f60a6a", "a0891f91-b308-4122-aa80-200746dd7815", "Admin", "ADMIN" }
+                    { "84f9279f-3572-4994-acac-2048071ab9d9", "d322cd00-4e56-49e7-9d06-2443b0480096", "Doctor", "DOCTOR" },
+                    { "947f3b28-c7cc-4309-bbf0-023ac6f207a4", "ebf56277-fc6e-4d6f-8112-750f04db599f", "Patient", "PATIENT" },
+                    { "e014c5f9-775e-4112-bbc9-5a6859f60a6a", "80054619-cfb9-4d90-b003-be8f47123ff5", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DateOfBirth", "Email", "EmailConfirmed", "FullName", "Gender", "Image", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "02174cf0–9412–4cfe - afbf - 59f706d72cf6", 0, "2b70f971-3326-4800-96cc-d94022d4bd19", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@vezeeta.com", true, "sara abdelsalam", 0, null, false, null, null, "sara abdelsalam", "AQAAAAEAACcQAAAAEL4DtQGnZelIL2GXhkN40JhfKNdXNXqfr3Enu2AVXwg6w5pTnjCDCep+GyCp1jK1ZQ==", "01021122226", false, "e320ce2b-44f7-4cd7-9c56-89ab958350be", false, "sara abdelsalam" });
+                values: new object[] { "02174cf0–9412–4cfe - afbf - 59f706d72cf6", 0, "122a68e5-4cc2-4d4f-abd4-77b89bd2854d", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@vezeeta.com", true, "sara abdelsalam", 0, null, false, null, null, "sara abdelsalam", "AQAAAAEAACcQAAAAEFA5eCirYG0KCOHP32J7w3KBagnJ8KOUHS2KR/1ikczy8vdh6+NFeG1zAty/n8HxCw==", "01021122226", false, "012ffeb2-eb5b-4f05-8d27-86825d8cdab2", false, "sara abdelsalam" });
 
             migrationBuilder.InsertData(
                 table: "specializations",
