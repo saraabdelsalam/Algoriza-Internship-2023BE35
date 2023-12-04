@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,9 +30,6 @@ namespace Repository_Layer
         {
            await _signInManager.SignInAsync(user, rememberMe);
         }
-
-
-
         public async Task AssignRole(ApplicationUser user, string role)
         {
 
@@ -39,9 +37,27 @@ namespace Repository_Layer
             await _userManager.AddToRoleAsync(user, role);
         }
 
+        public async Task SignIn(ApplicationUser User, bool RememberMe)
+        {
+            await _signInManager.SignInAsync(User, RememberMe);
+        }
+
+       public async Task SignOut()
+        {
+            await _signInManager.SignOutAsync();
+        }
+
+
+
         public async Task DeleteUser(ApplicationUser user)
         {
             await _userManager.DeleteAsync(user);
+        }
+
+        public async Task<ApplicationUser> FindByEmail(string email)
+        {
+         return await _userManager.FindByEmailAsync(email);
+           
         }
     }
 }

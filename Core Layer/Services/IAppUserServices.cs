@@ -13,6 +13,10 @@ namespace Core_Layer.Services
    public interface IAppUserServices
     {
         public Task<IActionResult> ADD_USER(UserDto userDto, UserRole userRole);
-      
+        public Task<IActionResult> SignInUser(SignInDto signInDto);
+        public Task<IActionResult> GetUserImage(string path);
+        public Task<IActionResult> LogOut();
+
+
     }
 }

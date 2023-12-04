@@ -8,7 +8,7 @@ namespace Core_Layer.DTOs
     {
 
       
-        //public IFormFile? Image { get; set; }
+        public IFormFile? Image { get; set; }
 
         [Required]
         public string FirstName { get; set; }

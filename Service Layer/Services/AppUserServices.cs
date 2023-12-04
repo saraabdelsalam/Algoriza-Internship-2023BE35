@@ -3,6 +3,7 @@ using Core_Layer.DTOs;
 using Core_Layer.Enums;
 using Core_Layer.Models;
 using Core_Layer.Services;
+using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Service_Layer.Interfaces;
@@ -67,6 +68,38 @@ namespace Service_Layer.Services
 
         }
       
+        public async Task<IActionResult> GetUserImage(string path)
+        {
+            if (string.IsNullOrEmpty(path))
+            {
+                return  new NotFoundResult();
+            }
+
+            //return PhysicalFile
+            byte[] fileBytes = System.IO.File.ReadAllBytes(path);
+            var fileStream = new MemoryStream(fileBytes);
+            string fileName = Path.GetFileName(path);
+            var formFile = new FormFile(fileStream, 0, fileStream.Length, null, fileName);
+
+            return new OkObjectResult(formFile);
+
+        }
+
+        public async Task<IActionResult> SignInUser(SignInDto signInDto)
+        {
+            ApplicationUser user = await _unitOfWork._userRepository.FindByEmail(signInDto.Email);
+            if(user == null)
+            {
+                return new NotFoundResult();
+            }
+             await _unitOfWork._userRepository.SignIn(user, signInDto.RememberMe);
+            return new OkObjectResult(user);
+        }
+        public async Task<IActionResult> LogOut()
+        {
+          await  _unitOfWork._userRepository.SignOut();
+            return new OkResult();
+        }
     }
 }
 

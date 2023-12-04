@@ -30,10 +30,10 @@ namespace vezeeta.Controller
                 {
                     ModelState.AddModelError("Specialize", "Specialize Is Required");
                 }
-                //if (userDTO.Image == null || userDTO.Image.Length == 0)
-                //{
-                //    ModelState.AddModelError("userDTO.Image", "Image Is Required");
-                //}
+                if (userDTO.Image == null || userDTO.Image.Length == 0)
+                {
+                    ModelState.AddModelError("userDTO.Image", "Image Is Required");
+                }
                 if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
