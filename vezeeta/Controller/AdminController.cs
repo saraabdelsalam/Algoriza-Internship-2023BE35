@@ -1,8 +1,13 @@
-﻿using Core_Layer.Models;
+﻿using Core_Layer.DTOs;
+using Core_Layer.Enums;
+using Core_Layer.Models;
+using Core_Layer.Repository;
+using Core_Layer.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service_Layer.Interfaces;
 using Service_Layer.Interfaces.Admin;
+using Service_Layer.Services;
 using Service_Layer.Services.Admin;
 
 namespace vezeeta.Controller
@@ -13,12 +18,15 @@ namespace vezeeta.Controller
     {
 
         private readonly IDiscountCode _discountCodeServices;
-
+        
         public AdminController(IDiscountCode DiscountCode)
         {
             _discountCodeServices = DiscountCode;
+            
         }
 
+
+    
         [HttpPost]
         public async Task<IActionResult> CreateDiscountCode(DiscountCode code)
         {

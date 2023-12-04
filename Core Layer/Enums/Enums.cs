@@ -30,4 +30,12 @@ namespace Core_Layer.Enums
         Completed,
         Cancelled
     }
+    public enum UserRole { 
+   
+    Doctor,
+    Patient ,
+        Admin
+    }
+
+
 }

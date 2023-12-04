@@ -12,8 +12,8 @@ using Repository_Layer;
 namespace Repository_Layer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231202113412_Second")]
-    partial class Second
+    [Migration("20231204113258_try1")]
+    partial class try1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -45,6 +45,16 @@ namespace Repository_Layer.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -79,12 +89,6 @@ namespace Repository_Layer.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<int>("gender")
-                        .HasColumnType("int");
-
-                    b.Property<string>("image")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -100,21 +104,22 @@ namespace Repository_Layer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1",
+                            Id = "02174cf0–9412–4cfe - afbf - 59f706d72cf6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a0677852-a1a2-414f-a2e4-334b0a16a6b8",
+                            ConcurrencyStamp = "2b70f971-3326-4800-96cc-d94022d4bd19",
                             DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@vezeeta.com",
                             EmailConfirmed = true,
+                            FullName = "sara abdelsalam",
+                            Gender = 0,
                             LockoutEnabled = false,
                             NormalizedUserName = "sara abdelsalam",
-                            PasswordHash = "AQAAAAEAACcQAAAAENf1+b7CVcjb7eIMTZoCvthJ2wUhS76j52rCodjxjIjY7TuE2JgbLXEVPquCVY/Jhw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEL4DtQGnZelIL2GXhkN40JhfKNdXNXqfr3Enu2AVXwg6w5pTnjCDCep+GyCp1jK1ZQ==",
                             PhoneNumber = "01021122226",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "888b94fc-e2e8-4760-b62a-e883e317b7dd",
+                            SecurityStamp = "e320ce2b-44f7-4cd7-9c56-89ab958350be",
                             TwoFactorEnabled = false,
-                            UserName = "sara abdelsalam",
-                            gender = 0
+                            UserName = "sara abdelsalam"
                         });
                 });
 
@@ -129,12 +134,12 @@ namespace Repository_Layer.Migrations
                     b.Property<int>("day")
                         .HasColumnType("int");
 
-                    b.Property<string>("docId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("docid")
+                        .HasColumnType("int");
 
                     b.HasKey("id");
 
-                    b.HasIndex("docId");
+                    b.HasIndex("docid");
 
                     b.ToTable("Appointments");
                 });
@@ -168,6 +173,41 @@ namespace Repository_Layer.Migrations
                     b.ToTable("discountCodes");
                 });
 
+            modelBuilder.Entity("Core_Layer.Models.Doctor", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+
+                    b.Property<string>("DoctorUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Price")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<int?>("Specializationid")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("Specializationid");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Doctors", (string)null);
+
+                    b.HasAnnotation("MyCustomAnnotation", "SomeValue");
+                });
+
             modelBuilder.Entity("Core_Layer.Models.Request", b =>
                 {
                     b.Property<int>("RequestId")
@@ -179,8 +219,8 @@ namespace Repository_Layer.Migrations
                     b.Property<int?>("DiscountCodeid")
                         .HasColumnType("int");
 
-                    b.Property<string>("DoctorId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("Doctorid")
+                        .HasColumnType("int");
 
                     b.Property<string>("PatientId")
                         .HasColumnType("nvarchar(450)");
@@ -198,7 +238,7 @@ namespace Repository_Layer.Migrations
 
                     b.HasIndex("DiscountCodeid");
 
-                    b.HasIndex("DoctorId");
+                    b.HasIndex("Doctorid");
 
                     b.HasIndex("PatientId");
 
@@ -237,12 +277,7 @@ namespace Repository_Layer.Migrations
                         new
                         {
                             id = 3,
-                            SpecializationName = "Pediatrics and New Born"
-                        },
-                        new
-                        {
-                            id = 4,
-                            SpecializationName = "Nutrtion"
+                            SpecializationName = "Nutrition"
                         });
                 });
 
@@ -296,24 +331,24 @@ namespace Repository_Layer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1-admin",
-                            ConcurrencyStamp = "b99596f6-6703-477a-9194-7620573c9be7",
-                            Name = "admin",
-                            NormalizedName = "admin"
+                            Id = "e014c5f9-775e-4112-bbc9-5a6859f60a6a",
+                            ConcurrencyStamp = "a0891f91-b308-4122-aa80-200746dd7815",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "2-doctor",
-                            ConcurrencyStamp = "e7769cfa-e837-4b11-83ad-73e24f6df4a7",
-                            Name = "doctor",
-                            NormalizedName = "doctor"
+                            Id = "2ef36dbb-a237-4455-a9c2-ec4a4eb925af",
+                            ConcurrencyStamp = "970965fd-ac20-4047-9897-9d95c3841dfd",
+                            Name = "Doctor",
+                            NormalizedName = "DOCTOR"
                         },
                         new
                         {
-                            Id = "3-patient",
-                            ConcurrencyStamp = "0e72c96f-47df-4c05-b62e-e3d8a6c6b8ea",
-                            Name = "patient",
-                            NormalizedName = "patient"
+                            Id = "6b92c2d4-e6cf-41c8-b2c7-971650b1ff3d",
+                            ConcurrencyStamp = "c4388b66-11c2-4de3-9d7b-a4d486723706",
+                            Name = "Patient",
+                            NormalizedName = "PATIENT"
                         });
                 });
 
@@ -406,8 +441,8 @@ namespace Repository_Layer.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "1",
-                            RoleId = "1-admin"
+                            UserId = "02174cf0–9412–4cfe - afbf - 59f706d72cf6",
+                            RoleId = "e014c5f9-775e-4112-bbc9-5a6859f60a6a"
                         });
                 });
 
@@ -430,44 +465,44 @@ namespace Repository_Layer.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Core_Layer.Models.Doctor", b =>
-                {
-                    b.HasBaseType("Core_Layer.Models.ApplicationUser");
-
-                    b.Property<int?>("Specializationid")
-                        .HasColumnType("int");
-
-                    b.Property<int>("price")
-                        .HasColumnType("int");
-
-                    b.HasIndex("Specializationid");
-
-                    b.ToTable("Doctors", (string)null);
-
-                    b.HasAnnotation("MyCustomAnnotation", "SomeValue");
-                });
-
             modelBuilder.Entity("Core_Layer.Models.Appointment", b =>
                 {
                     b.HasOne("Core_Layer.Models.Doctor", "doc")
-                        .WithMany("appointments")
-                        .HasForeignKey("docId");
+                        .WithMany()
+                        .HasForeignKey("docid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("doc");
                 });
 
+            modelBuilder.Entity("Core_Layer.Models.Doctor", b =>
+                {
+                    b.HasOne("Core_Layer.Models.Specialization", "Specialization")
+                        .WithMany()
+                        .HasForeignKey("Specializationid");
+
+                    b.HasOne("Core_Layer.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Specialization");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Core_Layer.Models.Request", b =>
                 {
-                    b.HasOne("Core_Layer.Models.DiscountCode", "DiscountCode")
+                    b.HasOne("Core_Layer.Models.DiscountCode", null)
                         .WithMany("Requests")
                         .HasForeignKey("DiscountCodeid");
 
                     b.HasOne("Core_Layer.Models.Doctor", "Doctor")
-                        .WithMany("Requests")
-                        .HasForeignKey("DoctorId");
+                        .WithMany()
+                        .HasForeignKey("Doctorid");
 
                     b.HasOne("Core_Layer.Models.ApplicationUser", "Patient")
-                        .WithMany("requests")
+                        .WithMany()
                         .HasForeignKey("PatientId");
 
                     b.HasOne("Core_Layer.Models.Times", "time")
@@ -475,8 +510,6 @@ namespace Repository_Layer.Migrations
                         .HasForeignKey("timeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("DiscountCode");
 
                     b.Navigation("Doctor");
 
@@ -547,26 +580,6 @@ namespace Repository_Layer.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Core_Layer.Models.Doctor", b =>
-                {
-                    b.HasOne("Core_Layer.Models.ApplicationUser", null)
-                        .WithOne()
-                        .HasForeignKey("Core_Layer.Models.Doctor", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.HasOne("Core_Layer.Models.Specialization", "Specialization")
-                        .WithMany("Doctors")
-                        .HasForeignKey("Specializationid");
-
-                    b.Navigation("Specialization");
-                });
-
-            modelBuilder.Entity("Core_Layer.Models.ApplicationUser", b =>
-                {
-                    b.Navigation("requests");
-                });
-
             modelBuilder.Entity("Core_Layer.Models.Appointment", b =>
                 {
                     b.Navigation("times");
@@ -575,18 +588,6 @@ namespace Repository_Layer.Migrations
             modelBuilder.Entity("Core_Layer.Models.DiscountCode", b =>
                 {
                     b.Navigation("Requests");
-                });
-
-            modelBuilder.Entity("Core_Layer.Models.Specialization", b =>
-                {
-                    b.Navigation("Doctors");
-                });
-
-            modelBuilder.Entity("Core_Layer.Models.Doctor", b =>
-                {
-                    b.Navigation("Requests");
-
-                    b.Navigation("appointments");
                 });
 #pragma warning restore 612, 618
         }

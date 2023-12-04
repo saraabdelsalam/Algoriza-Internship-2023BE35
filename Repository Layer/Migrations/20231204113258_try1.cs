@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Repository_Layer.Migrations
 {
-    public partial class first : Migration
+    public partial class try1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,8 +28,9 @@ namespace Repository_Layer.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    image = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    gender = table.Column<int>(type: "int", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Gender = table.Column<int>(type: "int", nullable: false),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -191,16 +192,19 @@ namespace Repository_Layer.Migrations
                 name: "Doctors",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    price = table.Column<int>(type: "int", nullable: false),
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Price = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    DoctorUserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Specializationid = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Doctors", x => x.Id);
+                    table.PrimaryKey("PK_Doctors", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Doctors_AspNetUsers_Id",
-                        column: x => x.Id,
+                        name: "FK_Doctors_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -217,16 +221,17 @@ namespace Repository_Layer.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     day = table.Column<int>(type: "int", nullable: false),
-                    docId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    docid = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Appointments", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Appointments_Doctors_docId",
-                        column: x => x.docId,
+                        name: "FK_Appointments_Doctors_docid",
+                        column: x => x.docid,
                         principalTable: "Doctors",
-                        principalColumn: "Id");
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -258,7 +263,7 @@ namespace Repository_Layer.Migrations
                     Status = table.Column<int>(type: "int", nullable: false),
                     finalPrice = table.Column<int>(type: "int", nullable: false),
                     timeId = table.Column<int>(type: "int", nullable: false),
-                    DoctorId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Doctorid = table.Column<int>(type: "int", nullable: true),
                     PatientId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DiscountCodeid = table.Column<int>(type: "int", nullable: true)
                 },
@@ -276,10 +281,10 @@ namespace Repository_Layer.Migrations
                         principalTable: "discountCodes",
                         principalColumn: "id");
                     table.ForeignKey(
-                        name: "FK_Requests_Doctors_DoctorId",
-                        column: x => x.DoctorId,
+                        name: "FK_Requests_Doctors_Doctorid",
+                        column: x => x.Doctorid,
                         principalTable: "Doctors",
-                        principalColumn: "Id");
+                        principalColumn: "id");
                     table.ForeignKey(
                         name: "FK_Requests_times_timeId",
                         column: x => x.timeId,
@@ -289,20 +294,39 @@ namespace Repository_Layer.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "2ef36dbb-a237-4455-a9c2-ec4a4eb925af", "970965fd-ac20-4047-9897-9d95c3841dfd", "Doctor", "DOCTOR" },
+                    { "6b92c2d4-e6cf-41c8-b2c7-971650b1ff3d", "c4388b66-11c2-4de3-9d7b-a4d486723706", "Patient", "PATIENT" },
+                    { "e014c5f9-775e-4112-bbc9-5a6859f60a6a", "a0891f91-b308-4122-aa80-200746dd7815", "Admin", "ADMIN" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DateOfBirth", "Email", "EmailConfirmed", "FullName", "Gender", "Image", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "02174cf0–9412–4cfe - afbf - 59f706d72cf6", 0, "2b70f971-3326-4800-96cc-d94022d4bd19", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@vezeeta.com", true, "sara abdelsalam", 0, null, false, null, null, "sara abdelsalam", "AQAAAAEAACcQAAAAEL4DtQGnZelIL2GXhkN40JhfKNdXNXqfr3Enu2AVXwg6w5pTnjCDCep+GyCp1jK1ZQ==", "01021122226", false, "e320ce2b-44f7-4cd7-9c56-89ab958350be", false, "sara abdelsalam" });
+
+            migrationBuilder.InsertData(
                 table: "specializations",
                 columns: new[] { "id", "SpecializationName" },
                 values: new object[,]
                 {
                     { 1, "Dermatology" },
                     { 2, "Dentistry" },
-                    { 3, "Pediatrics and New Born" },
-                    { 4, "Nutrtion" }
+                    { 3, "Nutrition" }
                 });
 
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "e014c5f9-775e-4112-bbc9-5a6859f60a6a", "02174cf0–9412–4cfe - afbf - 59f706d72cf6" });
+
             migrationBuilder.CreateIndex(
-                name: "IX_Appointments_docId",
+                name: "IX_Appointments_docid",
                 table: "Appointments",
-                column: "docId");
+                column: "docid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -349,14 +373,19 @@ namespace Repository_Layer.Migrations
                 column: "Specializationid");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Doctors_UserId",
+                table: "Doctors",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Requests_DiscountCodeid",
                 table: "Requests",
                 column: "DiscountCodeid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Requests_DoctorId",
+                name: "IX_Requests_Doctorid",
                 table: "Requests",
-                column: "DoctorId");
+                column: "Doctorid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Requests_PatientId",

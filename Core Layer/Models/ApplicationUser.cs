@@ -11,17 +11,20 @@ namespace Core_Layer.Models
 {
     public class ApplicationUser:IdentityUser
     {
-     
-        public string? image { get; set; }
-
+        public string Id { get; set; }
         
-        [Required(ErrorMessage ="Gender is required")]
+        public string? Image { get; set; }
+
+        [Required(ErrorMessage = "FullName is required.")]
+        public string FullName { get; set; }
+
+        [Required(ErrorMessage = "Gender is required.")]
         [EnumDataType(typeof(Gender))]
-       public  Gender gender { get; set; }
+        public Gender Gender { get; set; }
+
         [Required(ErrorMessage = "Date of Birth is required.")]
         [DataType(DataType.Date)]
-        public DateTime DateOfBirth {  get; set; }
-       public List<Request>? requests { get; set; }
+        public DateTime DateOfBirth { get; set; }
 
 
     }

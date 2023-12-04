@@ -1,8 +1,13 @@
+using AutoMapper;
 using Core_Layer.Models;
+using Core_Layer.Repository;
+using Core_Layer.Services;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Repository_Layer;
+using Service_Layer;
 using Service_Layer.Interfaces;
 using Service_Layer.Interfaces.Admin;
 using Service_Layer.Services;
@@ -19,10 +24,23 @@ builder.Services.AddDbContext<ApplicationDbContext>(
 // dependency injection for services
 builder.Services.AddTransient<IUnitOfWork,UnitOfWork>();
 builder.Services.AddTransient<IDiscountCode,DiscountCodeServices>();
-
+builder.Services.AddTransient<IAppUserServices, AppUserServices>();
+builder.Services.AddTransient<ISpecializationRepo, SpecializationRepo>();
+builder.Services.AddTransient<IDoctorServices, DoctorServices>();
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
+// inject auto mapper
+
+// inject auto mapper
+var mapperConfig = new MapperConfiguration(cfg =>
+{
+    cfg.AddProfile<MappingProfiles>();
+});
+IMapper _mapper = mapperConfig.CreateMapper();
+builder.Services.AddSingleton(_mapper);
+
+//builder.Services.AddSingleton(_mapper);
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
@@ -42,7 +60,7 @@ if (app.Environment.IsDevelopment())
 }
 
 
-app.UseAuthentication();
+
 #region 
 //using (var scope = app.Services.CreateScope())
 //{
@@ -71,10 +89,13 @@ app.UseAuthentication();
 //    }
 //}
 #endregion
-
 app.UseHttpsRedirection();
-app.MapControllers();
 
+// to read cookies
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllers();
 
 app.Run();
 

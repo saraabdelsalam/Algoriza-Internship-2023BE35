@@ -1,11 +1,6 @@
 ﻿using Core_Layer.Enums;
-using System;
 using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core_Layer.DTOs
 {
@@ -13,8 +8,7 @@ namespace Core_Layer.DTOs
     {
 
         public int Id { get; set; }
-
-        public IFormFile? Image { get; set; }
+        //public IFormFile? Image { get; set; }
 
         [Required]
         public string FirstName { get; set; }
@@ -40,6 +34,7 @@ namespace Core_Layer.DTOs
         [Required]
         [DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }
+        public bool RememberMe {  get; set; }
 
     }
 }

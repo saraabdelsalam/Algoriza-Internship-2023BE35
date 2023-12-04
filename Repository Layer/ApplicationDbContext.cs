@@ -22,52 +22,46 @@ namespace Repository_Layer
         {
             base.OnModelCreating(builder);
             builder.Entity<Doctor>().ToTable("Doctors").HasAnnotation("MyCustomAnnotation", "SomeValue");
-       
+            builder.Entity<Doctor>().Property(p=> p.Price).HasDefaultValue(0);
+
+            builder.Entity<Specialization>()
+            .HasData(new List<Specialization>
+               {
+                    new Specialization
+                    { id=1,
+                        SpecializationName="Dermatology"
+                    },
+                    new Specialization
+                    {
+                        id=2,
+                        SpecializationName="Dentistry"
+                    },
+                    new Specialization
+                    {
+                        id=3,
+                       SpecializationName ="Nutrition"
+                    }, });
+
+
             // specialization seeding
-            builder.Entity<Specialization>().HasData(
-                new Specialization { id= 1, SpecializationName="Dermatology" },
-                 new Specialization { id = 2, SpecializationName = "Dentistry" },
-                  new Specialization { id = 3, SpecializationName = "Pediatrics and New Born" },
-                   new Specialization { id = 4, SpecializationName = "Nutrtion" }
-
-             
-                   
-                   );
+            string ROLE_ID = "e014c5f9-775e-4112-bbc9-5a6859f60a6a";
+            builder.Entity<IdentityRole>()
+              .HasData(new List<IdentityRole>
+               {
+                   new IdentityRole{Id= ROLE_ID ,Name = "Admin" , NormalizedName="ADMIN"},
+                    new IdentityRole{Name = "Doctor", NormalizedName = "DOCTOR"},
+                    new IdentityRole{Name = "Patient", NormalizedName = "PATIENT"},
+               });
             //seeding roles
-            string admin_id = "1";
-            builder.Entity<IdentityRole>().HasData(
-                 new List<IdentityRole> {
-                     new IdentityRole
-            {
-                Name = "admin",
-                NormalizedName = "admin",
-                Id ="1-admin",
-
-            },
-            new IdentityRole
-            {
-                Name = "doctor",
-                NormalizedName = "doctor",
-                Id ="2-doctor",
-
-            },
-              new IdentityRole
-            {
-                Name = "patient",
-                NormalizedName = "patient",
-                Id ="3-patient",
-
-            },
-                 }
-           );
-
+            string ADMIN_ID = "02174cf0–9412–4cfe - afbf - 59f706d72cf6";
 
             var appuser = new ApplicationUser
             {
-                Id = admin_id,
+                Id = ADMIN_ID,
                 Email = "admin@vezeeta.com",
                 EmailConfirmed = true,
                 PhoneNumber = "01021122226",
+                FullName = "sara abdelsalam",
                 UserName = "sara abdelsalam",
                 NormalizedUserName = "sara abdelsalam"
             };
@@ -78,14 +72,11 @@ namespace Repository_Layer
             builder.Entity<ApplicationUser>().HasData(appuser);
             builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
             {
-                RoleId = "1-admin",
-                UserId = admin_id
+                RoleId = ROLE_ID,
+                UserId = ADMIN_ID
             });
-
-
-
-
         }
+    
 
 
 

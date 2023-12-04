@@ -17,6 +17,6 @@ namespace Core_Layer.Models
         
         //[NotMapped]
         //public int NumOfRequests => Doctors.Sum(x => x.NumOfRequests);
-        public List<Doctor>? Doctors { get; set; }
+       
     }
 }
