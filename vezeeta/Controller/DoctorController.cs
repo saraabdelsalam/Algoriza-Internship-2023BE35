@@ -15,11 +15,13 @@ namespace vezeeta.Controller
     {
         private readonly IDoctorServices _doctor;
         private readonly IAppointmentServices _appointmentServices;
+        private readonly ITimesServices _timesServices;
 
-        public DoctorController(IDoctorServices Doctor, IAppointmentServices appointmentServices)
+        public DoctorController(IDoctorServices Doctor, IAppointmentServices appointmentServices, ITimesServices timesServices)
         {
             _doctor = Doctor;
             _appointmentServices = appointmentServices;
+            _timesServices = timesServices;
         }
 
         [HttpPost("SignIn")]
@@ -51,6 +53,27 @@ namespace vezeeta.Controller
             return Ok("LogOut Successfully");
         }
 
+        [HttpPost("Set Price")]
+
+        public async Task<IActionResult> SetPrice(int price)
+        {
+
+            if (price <= 0)
+            {
+                return BadRequest("Price is required");
+
+            }
+            string? doctorId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (doctorId is null)
+            {
+                return NotFound("User Should Login First");
+            }
+
+            return await _doctor.AddPrice(doctorId, price);
+
+
+        }
+
 
         [HttpPost("Appointments")]
       
@@ -70,6 +93,10 @@ namespace vezeeta.Controller
             }
 
             string? doctorId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value; ;
+            if(doctorId is null)
+            {
+                return BadRequest("Login First ");
+            }
 
             return await _doctor.AddAppointments(doctorId, appointments);
             
@@ -77,27 +104,37 @@ namespace vezeeta.Controller
         }
 
 
+        [HttpPatch("Appointments")]
 
-        [HttpPost("Set Price")]
-
-        public async Task<IActionResult> SetPrice(int price)
+        public async Task<IActionResult> UpdateAppointments(int Id, string timeValue )
         {
-
-            if (price <=0)
+               if (Id == 0)
             {
-                return BadRequest("Price is required");
+                return BadRequest("Invalid Id");
 
             }
-            string? doctorId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if(doctorId is null)
+            if (timeValue is null)
             {
-                return NotFound("User Should Login First");
+                return BadRequest("Invalid time");
             }
-
-            return await _doctor.AddPrice(doctorId,price);
-
+            return await _timesServices.EditAppointment(Id, timeValue);
 
         }
+        [HttpDelete("Appointments")]
+
+        public async Task<IActionResult> DeleteAppointments(int Id)
+        {
+            if (Id == 0)
+            {
+                return BadRequest("Invalid Id");
+
+            }
+          
+            return await _timesServices.DeleteAppointment(Id);
+
+        }
+
+
 
 
 

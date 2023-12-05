@@ -24,7 +24,7 @@ namespace Service_Layer.Services
 
         private IActionResult StringToDay(string day)
         {
-            DaysOfWeek DayOfWeek;
+            WeekDays DayOfWeek;
             if (Enum.TryParse(day, true, out DayOfWeek))
             {
                 return new OkObjectResult(DayOfWeek);
@@ -47,7 +47,7 @@ namespace Service_Layer.Services
             {
                 return result;
             }
-            DaysOfWeek DayOfWeek = (DaysOfWeek)okResult.Value;
+            WeekDays DayOfWeek = (WeekDays)okResult.Value;
 
             Appointment appointment = unitOfWork._appointmentRepository.GetByDoctorIdAndDay(doctorId, DayOfWeek);
             int DayId = 0;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Core_Layer.Enums
 {
 
-   public enum DaysOfWeek
+   public enum WeekDays
     {
         Saturday,
         Sunday, 

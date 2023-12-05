@@ -65,14 +65,47 @@ namespace Service_Layer.Services
             return new OkObjectResult(dayTimes);
         }
 
-        public IActionResult DeleteAppointment(int timeId)
+        public async Task<IActionResult> DeleteAppointment(int timeId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Times appTime = unitOfWork._timesRepository.GetById(timeId);
+                if (appTime == null)
+                {
+                    return new BadRequestObjectResult("this appointment doesn't exist");
+                }
+                // checking if booked or not (haven't implemented requests yet)
+
+                await unitOfWork._timesRepository.DeleteAsync(appTime);
+                await unitOfWork.SaveAsync();
+                return new OkObjectResult("Appointment time has been removed successfully");
+            }
+            catch(Exception ex)
+            {
+                return new BadRequestObjectResult(ex.Message);
+            }
+           
         }
 
-        public IActionResult EditAppointment(int timeId, string newTime)
+        public async Task<IActionResult> EditAppointment(int timeId, string newTime)
         {
-            throw new NotImplementedException();
+            Times appTime = unitOfWork._timesRepository.GetById(timeId);
+            if (appTime == null) {
+            return new BadRequestObjectResult("this appointment doesn't exist");
+            }
+            // checking if booked or not (haven't implemented requests yet)
+
+            appTime.time = TotTimeSpan(newTime);
+
+            // check if there is a similar one then delete it
+           bool exists = unitOfWork._timesRepository.Exist(t=> t.id== appTime.id && t.time== appTime.time);
+            if (exists)
+            {
+                return new BadRequestObjectResult("the appointment already exists");
+            }
+           await unitOfWork._timesRepository.UpdateAsync(appTime);
+            await unitOfWork.SaveAsync();
+            return new OkObjectResult(appTime);
         }
     }
 }

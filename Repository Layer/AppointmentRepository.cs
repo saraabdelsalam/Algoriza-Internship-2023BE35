@@ -14,7 +14,7 @@ namespace Repository_Layer
     {
         public AppointmentRepository(ApplicationDbContext context):base(context) { }
 
-        public Appointment GetByDoctorIdAndDay(string docId, DaysOfWeek day)
+        public Appointment GetByDoctorIdAndDay(string docId, WeekDays day)
         {
            return Context.Set<Appointment>().FirstOrDefault(a => a.doctorId == docId && a.day == day);
         }

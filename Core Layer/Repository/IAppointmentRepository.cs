@@ -10,6 +10,6 @@ namespace Core_Layer.Repository
 {
     public interface IAppointmentRepository: ICommonFunctions<Appointment>
     {
-        Appointment GetByDoctorIdAndDay(string docId, DaysOfWeek day);
+        Appointment GetByDoctorIdAndDay(string docId, WeekDays day);
     }
 }

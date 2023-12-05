@@ -10,7 +10,7 @@ namespace Core_Layer.Services
     public interface ITimesServices
     {
         IActionResult AddDayTimes(int dayId, List<String> times);
-        IActionResult DeleteAppointment(int timeId);
-        IActionResult EditAppointment(int timeId, string newTime);
+        Task<IActionResult> DeleteAppointment(int timeId);
+        Task<IActionResult> EditAppointment(int timeId, string newTime);
     }
 }

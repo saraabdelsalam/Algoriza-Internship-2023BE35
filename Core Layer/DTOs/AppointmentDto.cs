@@ -8,7 +8,7 @@ namespace Core_Layer.DTOs
 {
    public class AppointmentDto
     {
-        public int Price {  get; set; }
+        
        public List<Days> Days { get; set; }
 
     }
