@@ -25,7 +25,7 @@ namespace Service_Layer.Services.Admin
         {
             
             await _unitOfWork._discount.AddAsync(discountCode);
-            _unitOfWork.SaveAsync();
+            await _unitOfWork.SaveAsync();
            
 
         }

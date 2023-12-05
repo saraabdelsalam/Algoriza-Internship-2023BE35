@@ -3,12 +3,12 @@ using Core_Layer.Enums;
 using Core_Layer.Models;
 using Core_Layer.Repository;
 using Core_Layer.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service_Layer.Interfaces;
 using Service_Layer.Interfaces.Admin;
 using Service_Layer.Services;
 using Service_Layer.Services.Admin;
+using System.Web.Http;
 
 namespace vezeeta.Controller
 {
@@ -18,16 +18,37 @@ namespace vezeeta.Controller
     {
 
         private readonly IDiscountCode _discountCodeServices;
+        private readonly IAppUserServices _appUserServices;
         
-        public AdminController(IDiscountCode DiscountCode)
+        public AdminController(IDiscountCode DiscountCode, IAppUserServices appUserServices)
         {
             _discountCodeServices = DiscountCode;
-            
+            _appUserServices = appUserServices;
         }
 
 
-    
-        [HttpPost]
+        [Microsoft.AspNetCore.Mvc.HttpPost("SignIn")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> SignIn([FromForm] SignInDto UserDto)
+        {
+            try
+            {
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                };
+
+                return await _appUserServices.SignInUser(UserDto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while Signing In: {ex.Message}");
+            }
+
+        }
+        [Authorize(Roles ="Admin")]
+        [Microsoft.AspNetCore.Mvc.HttpPost]
         public async Task<IActionResult> CreateDiscountCode(DiscountCode code)
         {
             if (code == null)
@@ -45,9 +66,10 @@ namespace vezeeta.Controller
             return Ok(code);
         }
 
-
-        [HttpPut]
-        public async Task<IActionResult> EditDiscountCode(DiscountCode code)
+        [Authorize(Roles = "Admin")]
+        [Microsoft.AspNetCore.Mvc.HttpPut]
+       
+      public async Task<IActionResult> EditDiscountCode(DiscountCode code)
         {
             if(code == null)
             {
@@ -62,8 +84,8 @@ namespace vezeeta.Controller
             await _discountCodeServices.EditDiscountCode(code);
             return Ok(code);
         }
-
-        [HttpDelete]
+        [Authorize(Roles = "Admin")]
+        [Microsoft.AspNetCore.Mvc.HttpDelete]
         public async Task<IActionResult> DeleteDiscountCode(int id)
         {
             if (!ModelState.IsValid)
@@ -73,8 +95,8 @@ namespace vezeeta.Controller
             await _discountCodeServices.DeleteDiscountCode(id);   
             return Ok();
         }
-
-        [HttpPatch]
+        [Authorize(Roles = "Admin")]
+        [Microsoft.AspNetCore.Mvc.HttpPatch]
         [Route("Deactivate")]
         public async Task<IActionResult> DeactivateDiscountCode(int id)
         {

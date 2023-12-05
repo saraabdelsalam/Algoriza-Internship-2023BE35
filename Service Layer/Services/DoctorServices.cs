@@ -4,6 +4,7 @@ using Core_Layer.Enums;
 using Core_Layer.Models;
 using Core_Layer.Services;
 using Microsoft.AspNetCore.Mvc;
+using Repository_Layer;
 using Service_Layer.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -54,6 +55,26 @@ namespace Service_Layer.Services
             }
 
         }
+
+        public async Task<IActionResult> AddPrice(string doctorId, int price)
+        {
+            IActionResult result = await _unitOfWork._doctorRepository.GetDoctorUser(doctorId);
+
+            if (result is OkObjectResult okObjectResult)
+            {
+                Doctor doc = okObjectResult.Value as Doctor;
+
+                doc.Price = price;
+                await _unitOfWork._doctorRepository.UpdateAsync(doc);
+                return new ObjectResult(doc);
+            }
+
+            return new BadRequestObjectResult("Doctor not found");
+
+
+        }
+
+
 
 
         //public Task<IActionResult> Delete(int id)

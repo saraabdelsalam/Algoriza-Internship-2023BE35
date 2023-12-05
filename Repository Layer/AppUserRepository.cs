@@ -41,8 +41,11 @@ namespace Repository_Layer
         {
             await _signInManager.SignInAsync(User, RememberMe);
         }
-
-       public async Task SignOut()
+        public async Task<bool> CheckPassword(ApplicationUser user, string password)
+        {
+            return await _userManager.CheckPasswordAsync(user, password);
+        }
+        public async Task SignOut()
         {
             await _signInManager.SignOutAsync();
         }
@@ -64,11 +67,11 @@ namespace Repository_Layer
          return await _userManager.FindByEmailAsync(email);
            
         }
-        //public async Task<ApplicationUser> GetUserByID(string id)
-        //{
-        //    return await _userManager.FindByIdAsync(id);
+        public async Task<ApplicationUser> GetUserByID(string id)
+        {
+            return await _userManager.FindByIdAsync(id);
 
-        //}
+        }
 
     }
 }

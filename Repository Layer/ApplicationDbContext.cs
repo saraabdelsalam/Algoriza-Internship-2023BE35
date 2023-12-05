@@ -63,11 +63,12 @@ namespace Repository_Layer
                 PhoneNumber = "01021122226",
                 FullName = "sara abdelsalam",
                 UserName = "sara abdelsalam",
-                NormalizedUserName = "sara abdelsalam"
+                NormalizedUserName = "sara abdelsalam",
+                PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "1234")
+
             };
 
-            PasswordHasher<ApplicationUser> ph = new PasswordHasher<ApplicationUser>();
-            appuser.PasswordHash = ph.HashPassword(appuser, "1234");
+           
 
             builder.Entity<ApplicationUser>().HasData(appuser);
             builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>

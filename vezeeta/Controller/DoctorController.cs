@@ -37,7 +37,11 @@ namespace vezeeta.Controller
             }
 
         }
-
+        [HttpPost("set Price")]
+        public Task<IActionResult> SetPrice([FromForm]string id, [FromForm] int price)
+        {
+            return _doctor.AddPrice(id, price);
+        }
 
 
         [HttpPost("LogOut")]

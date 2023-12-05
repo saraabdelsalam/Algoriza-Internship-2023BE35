@@ -1,4 +1,5 @@
 ﻿using Core_Layer.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,6 @@ namespace Core_Layer.Repository
     public interface IDoctorRepository: ICRUD<Doctor>
     {
 
-        Task<ApplicationUser> GetDoctorUser(string userId);
+        Task<IActionResult> GetDoctorUser(string userId);
     }
 }

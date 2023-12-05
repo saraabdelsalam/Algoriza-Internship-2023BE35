@@ -13,10 +13,12 @@ namespace vezeeta.Controller
     public class AdminDoctorSettingController : ControllerBase
     {
         private readonly IDoctorServices _doctor;
-        public AdminDoctorSettingController( IDoctorServices doctor)
+        private readonly IAppUserServices _userServices;
+        public AdminDoctorSettingController( IDoctorServices doctor, IAppUserServices userServices)
         {
             
             _doctor = doctor;
+            _userServices = userServices;
         }
 
         [HttpPost]
@@ -46,7 +48,15 @@ namespace vezeeta.Controller
                 return StatusCode(500, $"An error occurred while adding the Doctor: {ex.Message}");
             }
         }
+        [HttpGet("Doctor")]
+        public Task<IActionResult> GetDoctor(string id) {
 
+            
+              return  _userServices.GetUserById(id);
+            
+         
+           
+        }
 
     }
 }

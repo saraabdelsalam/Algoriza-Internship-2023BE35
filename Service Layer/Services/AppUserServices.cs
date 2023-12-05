@@ -88,10 +88,12 @@ namespace Service_Layer.Services
         public async Task<IActionResult> SignInUser(SignInDto signInDto)
         {
             ApplicationUser user = await _unitOfWork._userRepository.FindByEmail(signInDto.Email);
-            if(user == null)
+            bool pass = await _unitOfWork._userRepository.CheckPassword(user, signInDto.Password);
+            if (user == null || pass==false)
             {
                 return new NotFoundResult();
             }
+  
              await _unitOfWork._userRepository.SignIn(user, signInDto.RememberMe);
             return new OkObjectResult(user);
         }
@@ -110,10 +112,15 @@ namespace Service_Layer.Services
          
         }
 
-        public Task<IActionResult> GetUserById(string id)
+        public async Task<IActionResult> GetUserById(string id)
         {
-            
-            throw new NotImplementedException();
+            ApplicationUser user = await _unitOfWork._userRepository.GetUserByID(id);
+            if(user == null)
+            {
+                return new NotFoundResult();
+            }
+          UserDto userDto  = _mapper.Map<UserDto>(user);
+            return new OkObjectResult(userDto);
         }
     }
 }

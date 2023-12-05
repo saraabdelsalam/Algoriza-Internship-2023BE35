@@ -24,12 +24,17 @@ namespace Repository_Layer
         {
             throw new NotImplementedException();
         }
-        public T GetById(string id)
+        public T GetById(int id)
         {
 
             return Context.Set<T>().Find(id);
         }
 
+        public T GetById(string id)
+        {
+
+            return Context.Set<T>().Find(id);
+        }
 
     }
 }

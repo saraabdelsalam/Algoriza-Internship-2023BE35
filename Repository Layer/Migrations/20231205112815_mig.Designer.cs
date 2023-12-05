@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository_Layer;
 
@@ -11,9 +12,10 @@ using Repository_Layer;
 namespace Repository_Layer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231205112815_mig")]
+    partial class mig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,7 +106,7 @@ namespace Repository_Layer.Migrations
                         {
                             Id = "02174cf0–9412–4cfe - afbf - 59f706d72cf6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6c528a82-2343-43fc-834e-fe4376055b99",
+                            ConcurrencyStamp = "294aaa33-9c90-45e8-bb82-8df95c545ef1",
                             DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@vezeeta.com",
                             EmailConfirmed = true,
@@ -112,10 +114,10 @@ namespace Repository_Layer.Migrations
                             Gender = 0,
                             LockoutEnabled = false,
                             NormalizedUserName = "sara abdelsalam",
-                            PasswordHash = "AQAAAAEAACcQAAAAED78xGS4GGuK9y8z3+xqntGBRJGH2vnBShKDBFNiiDfUVS9FTLmq1LvkAELXekzLdg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPvuaFaoLHG4AcztgiCtLGLrF8MsYzNowGONLe1V0NibXpb9XUCiy3pEuEul+/wI8Q==",
                             PhoneNumber = "01021122226",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "bb8285ae-3e90-4897-8c2f-a3025563d554",
+                            SecurityStamp = "c12b660b-b1c6-4f4a-8efa-7478e2cf0efd",
                             TwoFactorEnabled = false,
                             UserName = "sara abdelsalam"
                         });
@@ -319,21 +321,21 @@ namespace Repository_Layer.Migrations
                         new
                         {
                             Id = "e014c5f9-775e-4112-bbc9-5a6859f60a6a",
-                            ConcurrencyStamp = "ae336d04-606f-4c3f-8e9e-c9531f5b3f4f",
+                            ConcurrencyStamp = "b8a06c20-77fa-4650-abc6-a5784c486a3e",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "e255b369-d241-4bc3-b957-aeee19b42f97",
-                            ConcurrencyStamp = "07470615-42ba-40ac-a0b6-bc5d813f0514",
+                            Id = "63d379ae-8133-4256-b413-20b3a402dc8c",
+                            ConcurrencyStamp = "b28c4dc5-d330-4cbb-9880-a0684cd194d5",
                             Name = "Doctor",
                             NormalizedName = "DOCTOR"
                         },
                         new
                         {
-                            Id = "16f378cf-271b-46c5-86ff-d9df6e8db7ca",
-                            ConcurrencyStamp = "2a1fcf92-e393-4832-a9e2-438f966edbac",
+                            Id = "35ea9a1d-a34c-458d-a7cb-4fe2d240d95a",
+                            ConcurrencyStamp = "35d3b2bc-f817-4c56-96d8-bc68c57c1fd4",
                             Name = "Patient",
                             NormalizedName = "PATIENT"
                         });
