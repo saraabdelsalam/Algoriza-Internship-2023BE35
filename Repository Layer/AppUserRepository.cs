@@ -1,5 +1,6 @@
 ﻿using Core_Layer.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,7 +57,12 @@ namespace Repository_Layer
             var RoleUsers = await _userManager.GetUsersInRoleAsync(role.Name);
             return  RoleUsers.Count();
         }
-
+        public async Task<IActionResult> UpdateUser(ApplicationUser user)
+        {
+            var result = await _userManager.UpdateAsync(user);
+           
+            return result.Succeeded ? new OkResult() : new BadRequestObjectResult(result.Errors);
+        }
         public async Task DeleteUser(ApplicationUser user)
         {
             await _userManager.DeleteAsync(user);

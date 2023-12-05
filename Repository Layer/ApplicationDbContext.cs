@@ -45,12 +45,15 @@ namespace Repository_Layer
 
             // specialization seeding
             string ROLE_ID = "e014c5f9-775e-4112-bbc9-5a6859f60a6a";
+            string ROLE_PATIENT_ID = "35ea9a1d-a34c-458d-a7cb-4fe2d240d95a";
+            string ROLE_DOCTOR_ID = "63d379ae-8133-4256-b413-20b3a402dc8c";
+
             builder.Entity<IdentityRole>()
               .HasData(new List<IdentityRole>
                {
                    new IdentityRole{Id= ROLE_ID ,Name = "Admin" , NormalizedName="ADMIN"},
-                    new IdentityRole{Name = "Doctor", NormalizedName = "DOCTOR"},
-                    new IdentityRole{Name = "Patient", NormalizedName = "PATIENT"},
+                    new IdentityRole{Id= ROLE_DOCTOR_ID,Name = "Doctor", NormalizedName = "DOCTOR"},
+                    new IdentityRole{Id= ROLE_PATIENT_ID,Name = "Patient", NormalizedName = "PATIENT"},
                });
             //seeding roles
             string ADMIN_ID = "02174cf0–9412–4cfe - afbf - 59f706d72cf6";

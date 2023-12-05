@@ -13,10 +13,11 @@ namespace Core_Layer.Models
     {
         public int id {  get; set; }
         [Required(ErrorMessage ="Day is required")]
-        [EnumDataType(typeof(Days))]
-       public Days day { get; set; }
+        [EnumDataType(typeof(DaysOfWeek))]
+       public DaysOfWeek day { get; set; }
         public List<Times>? times {  get; set; }
-
-        public Doctor doc {  get; set; }
+        [ForeignKey("FK_Appointments_Doctors_DoctorId")]
+        public string? doctorId { get; set; }
+        public Doctor doctor {  get; set; }
     }
 }

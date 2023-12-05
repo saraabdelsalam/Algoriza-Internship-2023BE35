@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository_Layer;
 
@@ -11,9 +12,10 @@ using Repository_Layer;
 namespace Repository_Layer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231205152423_roles")]
+    partial class roles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,7 +106,7 @@ namespace Repository_Layer.Migrations
                         {
                             Id = "02174cf0–9412–4cfe - afbf - 59f706d72cf6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "739e8aad-6d52-494c-b563-e06c7de76340",
+                            ConcurrencyStamp = "81b86d55-3219-4ab3-8064-6f87bba7a7d4",
                             DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@vezeeta.com",
                             EmailConfirmed = true,
@@ -112,10 +114,10 @@ namespace Repository_Layer.Migrations
                             Gender = 0,
                             LockoutEnabled = false,
                             NormalizedUserName = "sara abdelsalam",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEyQR8sRgLBmakDMLPZLkbyesznERt7ZFb815ZWBzihEIblzNWzju6h3MsP4Ye/V9w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEG1jRC9hNRFIOgtTT4X2/y2Hr14NCyHqbaQQ2K41v2U56BEpoSbQcJETTU6lhFH1oA==",
                             PhoneNumber = "01021122226",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "583fb8d8-2b2b-4dae-bed3-83ba745a3f50",
+                            SecurityStamp = "a0d190e2-943b-406d-9aa6-cb0ef422671e",
                             TwoFactorEnabled = false,
                             UserName = "sara abdelsalam"
                         });
@@ -132,12 +134,12 @@ namespace Repository_Layer.Migrations
                     b.Property<int>("day")
                         .HasColumnType("int");
 
-                    b.Property<string>("doctorId")
+                    b.Property<string>("docid")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("id");
 
-                    b.HasIndex("doctorId");
+                    b.HasIndex("docid");
 
                     b.ToTable("Appointments");
                 });
@@ -276,16 +278,15 @@ namespace Repository_Layer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
-                    b.Property<int>("AppointmentId")
+                    b.Property<int>("Appointmentid")
                         .HasColumnType("int");
 
-                    b.Property<TimeSpan?>("time")
-                        .IsRequired()
-                        .HasColumnType("time");
+                    b.Property<DateTime?>("time")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("id");
 
-                    b.HasIndex("AppointmentId");
+                    b.HasIndex("Appointmentid");
 
                     b.ToTable("times");
                 });
@@ -320,21 +321,21 @@ namespace Repository_Layer.Migrations
                         new
                         {
                             Id = "e014c5f9-775e-4112-bbc9-5a6859f60a6a",
-                            ConcurrencyStamp = "f7aaa446-5824-498d-85dc-5e117e53bf1b",
+                            ConcurrencyStamp = "cdfbb7fe-f2fb-47eb-818b-f240bb4ca3b7",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "63d379ae-8133-4256-b413-20b3a402dc8c",
-                            ConcurrencyStamp = "ab45c8da-8396-4c82-b9aa-341cb70600ac",
+                            ConcurrencyStamp = "3514ee7d-caf2-4c32-94ab-8e2f7dfaedf2",
                             Name = "Doctor",
                             NormalizedName = "DOCTOR"
                         },
                         new
                         {
                             Id = "35ea9a1d-a34c-458d-a7cb-4fe2d240d95a",
-                            ConcurrencyStamp = "eaa7534f-eeca-46ad-8dc5-aeda600416ea",
+                            ConcurrencyStamp = "c073ff46-1101-446c-a6e9-db6b2ae5d54c",
                             Name = "Patient",
                             NormalizedName = "PATIENT"
                         });
@@ -455,11 +456,11 @@ namespace Repository_Layer.Migrations
 
             modelBuilder.Entity("Core_Layer.Models.Appointment", b =>
                 {
-                    b.HasOne("Core_Layer.Models.Doctor", "doctor")
+                    b.HasOne("Core_Layer.Models.Doctor", "doc")
                         .WithMany()
-                        .HasForeignKey("doctorId");
+                        .HasForeignKey("docid");
 
-                    b.Navigation("doctor");
+                    b.Navigation("doc");
                 });
 
             modelBuilder.Entity("Core_Layer.Models.Doctor", b =>
@@ -506,7 +507,7 @@ namespace Repository_Layer.Migrations
                 {
                     b.HasOne("Core_Layer.Models.Appointment", "Appointment")
                         .WithMany("times")
-                        .HasForeignKey("AppointmentId")
+                        .HasForeignKey("Appointmentid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

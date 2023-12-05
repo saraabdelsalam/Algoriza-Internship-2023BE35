@@ -18,7 +18,8 @@ namespace Service_Layer.Interfaces
         public ISpecializationRepo _specializationRepo { get; }
         public IAppUserRepository _userRepository {  get; }
         public IDoctorRepository _doctorRepository { get; }
-        
+        public IAppointmentRepository _appointmentRepository { get; }
+        public ITimesRepository _timesRepository { get; }
         Task SaveAsync();
     }
 }

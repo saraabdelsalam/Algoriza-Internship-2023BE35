@@ -1,5 +1,6 @@
 ﻿using Core_Layer.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Repository_Layer.Generic_Repo;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace Repository_Layer
         public  Task AssignRole(ApplicationUser user, string role);
         public Task AddSignInCookie(ApplicationUser user, bool rememberMe);
         public Task SignIn(ApplicationUser User, bool RememberMe);
+        public Task<IActionResult> UpdateUser(ApplicationUser user);
         public Task DeleteUser(ApplicationUser user);
         public Task SignOut();
     }

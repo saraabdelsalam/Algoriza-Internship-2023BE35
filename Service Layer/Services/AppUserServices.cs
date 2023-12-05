@@ -68,22 +68,7 @@ namespace Service_Layer.Services
 
         }
       
-        public async Task<IActionResult> GetUserImage(string path)
-        {
-            if (string.IsNullOrEmpty(path))
-            {
-                return  new NotFoundResult();
-            }
-
-            //return PhysicalFile
-            byte[] fileBytes = System.IO.File.ReadAllBytes(path);
-            var fileStream = new MemoryStream(fileBytes);
-            string fileName = Path.GetFileName(path);
-            var formFile = new FormFile(fileStream, 0, fileStream.Length, null, fileName);
-
-            return new OkObjectResult(formFile);
-
-        }
+        
 
         public async Task<IActionResult> SignInUser(SignInDto signInDto)
         {
@@ -121,6 +106,25 @@ namespace Service_Layer.Services
             }
           UserDto userDto  = _mapper.Map<UserDto>(user);
             return new OkObjectResult(userDto);
+        }
+
+        public async Task<IActionResult> UpdateUserData(UserDto UserDto)
+        {
+            try {
+                ApplicationUser applicationUser = _mapper.Map<ApplicationUser>(UserDto);
+                IActionResult updated = await _unitOfWork._userRepository.UpdateUser(applicationUser);
+
+               return updated;
+
+            } catch(Exception ex)
+            {
+
+                return new BadRequestObjectResult(ex.Message.ToString());
+            }
+
+
+
+
         }
     }
 }

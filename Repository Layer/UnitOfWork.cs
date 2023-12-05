@@ -16,7 +16,8 @@ namespace Service_Layer.Services
         public ISpecializationRepo _specializationRepo { get; private set; }
         public IDoctorRepository _doctorRepository { get; private set; }
         public IAppUserRepository _userRepository { get; private set; }
-       
+       public IAppointmentRepository _appointmentRepository { get; private set; }
+        public ITimesRepository _timesRepository { get; private set; }
         public UnitOfWork(ApplicationDbContext dbContext , UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager,
             SignInManager<ApplicationUser> signInManager)
         {
@@ -28,8 +29,8 @@ namespace Service_Layer.Services
             _specializationRepo = new SpecializationRepo(_dbContext);
             _doctorRepository = new DoctorRepository(_dbContext, _userManager);
             _userRepository = new AppUserRepository(_dbContext, _userManager,_roleManager,_signInManager);
-
-            
+            _appointmentRepository = new AppointmentRepository(_dbContext);
+            _timesRepository = new TimesRepository(_dbContext);
         }
 
   
