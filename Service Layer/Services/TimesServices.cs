@@ -1,4 +1,5 @@
-﻿using Core_Layer.Models;
+﻿using Core_Layer.Enums;
+using Core_Layer.Models;
 using Core_Layer.Services;
 using Microsoft.AspNetCore.Mvc;
 using Service_Layer.Interfaces;
@@ -74,8 +75,12 @@ namespace Service_Layer.Services
                 {
                     return new BadRequestObjectResult("this appointment doesn't exist");
                 }
-                // checking if booked or not (haven't implemented requests yet)
-
+                // checking if booked or not
+                bool Booked = _unitOfWork._requestRepository.Exist(b => b.TimeId == timeId && b.Status != RequestStatus.Cancelled);
+                if (Booked)
+                {
+                    return new BadRequestObjectResult(" appointment time has already been booked");
+                }
                 await _unitOfWork._timesRepository.DeleteAsync(appTime);
                 await _unitOfWork.SaveAsync();
                 return new OkObjectResult("Appointment time has been removed successfully");
@@ -93,8 +98,13 @@ namespace Service_Layer.Services
             if (appTime == null) {
             return new BadRequestObjectResult("this appointment doesn't exist");
             }
-            // checking if booked or not (haven't implemented requests yet)
-
+            
+            // checking if booked or not
+            bool Booked = _unitOfWork._requestRepository.Exist(b => b.TimeId == timeId && b.Status != RequestStatus.Cancelled);
+            if (Booked)
+            {
+                return new BadRequestObjectResult("Can't edit appointment time as it has been already booked");
+            }
             appTime.time = TotTimeSpan(newTime);
 
             // check if there is a similar one then delete it
