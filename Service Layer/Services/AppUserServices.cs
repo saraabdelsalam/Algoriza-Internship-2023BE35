@@ -134,18 +134,27 @@ namespace Service_Layer.Services
             {
                 return new NotFoundResult();
             }
+            if(request.Status == RequestStatus.Pending)
+            {
+                request.Status = status;
+                try
+                {
+                    await _unitOfWork._requestRepository.UpdateAsync(request);
+                    await _unitOfWork.SaveAsync();
+                    return new OkResult();
+                }
+                catch (Exception ex)
+                {
+                    return new ObjectResult("couldn't update the status");
+                }
 
-            request.Status = status;
-            try
-            {
-               await _unitOfWork._requestRepository.UpdateAsync(request);
-                await _unitOfWork.SaveAsync();
-                return new OkResult();
             }
-            catch (Exception ex)
-            {
+            else {
+
                 return new ObjectResult("couldn't update the status");
             }
+                
+            
         }
 
 
