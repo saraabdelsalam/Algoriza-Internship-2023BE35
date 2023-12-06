@@ -29,7 +29,8 @@ builder.Services.AddTransient<ISpecializationRepo, SpecializationRepo>();
 builder.Services.AddTransient<IDoctorServices, DoctorServices>();
 builder.Services.AddTransient<IPatientServices, PatientServices>();
 builder.Services.AddTransient<IAppointmentServices, AppointmentServices>();
-builder.Services.AddTransient<ITimesServices, TimesServices>();
+builder.Services.AddTransient<ITimesServices, TimesServices>(); 
+builder.Services.AddTransient<IRequestServices, RequestServices>();
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
 // inject auto mapper

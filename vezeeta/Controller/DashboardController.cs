@@ -10,8 +10,10 @@ namespace vezeeta.Controller
     public class DashboardController : ControllerBase
     {
         private readonly IAppUserServices _appUserServices;
-        public DashboardController(IAppUserServices appUserServices) {
+        private readonly IRequestServices _requestServices;
+        public DashboardController(IAppUserServices appUserServices, IRequestServices requestServices) {
         _appUserServices = appUserServices;
+            _requestServices = requestServices;
         }
 
         [HttpGet("TotalNumberOfDoctors")]
@@ -30,5 +32,10 @@ namespace vezeeta.Controller
             return Ok(total);
         }
 
+        [HttpGet("TotalNumberOfRequests")]
+        public IActionResult GetNumberOfRequests()
+        {
+            return _requestServices.NumOfRequests();
+        }
     }
 }

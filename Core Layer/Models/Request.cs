@@ -13,13 +13,15 @@ namespace Core_Layer.Models
     {
         [Key]
         public  int RequestId { get; set; }
+
         [EnumDataType(typeof(RequestStatus))]
         public RequestStatus Status { get; set; }
-        public int finalPrice { get; set; }
+       
         //navigation properties
-        [ForeignKey("Times")]
-        public int timeId { get; set; }
+       
+       
         public  Times time { get; set; }
+     
         public Doctor? Doctor { get; set; }
         public ApplicationUser? Patient { get; set; }
        

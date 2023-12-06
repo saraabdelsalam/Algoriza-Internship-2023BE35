@@ -12,10 +12,10 @@ namespace Service_Layer.Services
 {
     public class TimesServices : ITimesServices
     {
-        private readonly IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
         public TimesServices(IUnitOfWork unitOfWork)
         {
-            this.unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
         }
         private TimeSpan TotTimeSpan(string Time)
         {
@@ -27,7 +27,7 @@ namespace Service_Layer.Services
             //check if the time exists previously
             if (dayId > 0)
             {
-                appointmentTime = unitOfWork._timesRepository.GetByDayIdAndTime(dayId, time);
+                appointmentTime = _unitOfWork._timesRepository.GetByDayIdAndTime(dayId, time);
 
                 if (appointmentTime != null)
                 {
@@ -69,15 +69,15 @@ namespace Service_Layer.Services
         {
             try
             {
-                Times appTime = unitOfWork._timesRepository.GetById(timeId);
+                Times appTime = _unitOfWork._timesRepository.GetById(timeId);
                 if (appTime == null)
                 {
                     return new BadRequestObjectResult("this appointment doesn't exist");
                 }
                 // checking if booked or not (haven't implemented requests yet)
 
-                await unitOfWork._timesRepository.DeleteAsync(appTime);
-                await unitOfWork.SaveAsync();
+                await _unitOfWork._timesRepository.DeleteAsync(appTime);
+                await _unitOfWork.SaveAsync();
                 return new OkObjectResult("Appointment time has been removed successfully");
             }
             catch(Exception ex)
@@ -89,7 +89,7 @@ namespace Service_Layer.Services
 
         public async Task<IActionResult> EditAppointment(int timeId, string newTime)
         {
-            Times appTime = unitOfWork._timesRepository.GetById(timeId);
+            Times appTime = _unitOfWork._timesRepository.GetById(timeId);
             if (appTime == null) {
             return new BadRequestObjectResult("this appointment doesn't exist");
             }
@@ -98,13 +98,13 @@ namespace Service_Layer.Services
             appTime.time = TotTimeSpan(newTime);
 
             // check if there is a similar one then delete it
-           bool exists = unitOfWork._timesRepository.Exist(t=> t.id== appTime.id && t.time== appTime.time);
+           bool exists = _unitOfWork._timesRepository.Exist(t=> t.id== appTime.id && t.time== appTime.time);
             if (exists)
             {
                 return new BadRequestObjectResult("the appointment already exists");
             }
-           await unitOfWork._timesRepository.UpdateAsync(appTime);
-            await unitOfWork.SaveAsync();
+           await _unitOfWork._timesRepository.UpdateAsync(appTime);
+            await _unitOfWork.SaveAsync();
             return new OkObjectResult(appTime);
         }
     }

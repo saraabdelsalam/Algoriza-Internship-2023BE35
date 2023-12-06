@@ -14,12 +14,12 @@ namespace Service_Layer.Services
 {
     public class AppointmentServices : IAppointmentServices
     {
-        private readonly IUnitOfWork unitOfWork;
-        private readonly ITimesServices timesServices;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly ITimesServices _timesServices;
         public AppointmentServices(IUnitOfWork unitOfWork, ITimesServices timesServices)
         {
-            this.unitOfWork = unitOfWork;
-            this.timesServices = timesServices;
+            _unitOfWork = unitOfWork;
+          _timesServices = timesServices;
         }
 
         private IActionResult StringToDay(string day)
@@ -49,7 +49,7 @@ namespace Service_Layer.Services
             }
             WeekDays DayOfWeek = (WeekDays)okResult.Value;
 
-            Appointment appointment = unitOfWork._appointmentRepository.GetByDoctorIdAndDay(doctorId, DayOfWeek);
+            Appointment appointment = _unitOfWork._appointmentRepository.GetByDoctorIdAndDay(doctorId, DayOfWeek);
             int DayId = 0;
             if (appointment == null)
             {
@@ -64,7 +64,7 @@ namespace Service_Layer.Services
                 DayId = appointment.id;
             }
 
-            IActionResult DayTimesResult = timesServices.AddDayTimes(DayId, Day.Times);
+            IActionResult DayTimesResult = _timesServices.AddDayTimes(DayId, Day.Times);
             if (DayTimesResult is not OkObjectResult TimesResult)
             {
                 return DayTimesResult;
@@ -81,11 +81,11 @@ namespace Service_Layer.Services
             {
                 if (DayId == 0)
                 {
-                   await unitOfWork._appointmentRepository.AddAsync(appointment);
+                   await _unitOfWork._appointmentRepository.AddAsync(appointment);
                 }
                 else
                 {
-                  await  unitOfWork._appointmentRepository.UpdateAsync(appointment);
+                  await  _unitOfWork._appointmentRepository.UpdateAsync(appointment);
                 }
                 return new OkResult();
             }

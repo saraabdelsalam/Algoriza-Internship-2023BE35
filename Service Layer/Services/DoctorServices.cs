@@ -18,7 +18,8 @@ namespace Service_Layer.Services
     public class DoctorServices : AppUserServices, IDoctorServices
     {
         private readonly IAppointmentServices _appiontmentServices;
-        public DoctorServices(IUnitOfWork unitOfWork, IMapper mapper, IAppointmentServices appointmentServices) : base(unitOfWork, mapper) {
+        public DoctorServices(IUnitOfWork unitOfWork, IMapper mapper, IAppointmentServices appointmentServices) :
+            base(unitOfWork, mapper) {
         
         _appiontmentServices = appointmentServices;
         }
