@@ -68,7 +68,7 @@ namespace vezeeta.Controller
 
 
         [HttpPost("Book Appointment")]
-        public async Task<IActionResult> BookAppointment(int timeId, string discountCode)
+        public async Task<IActionResult> BookAppointment(int timeId, string? discountCode)
         {
 
             if (timeId <= 0)
@@ -81,6 +81,21 @@ namespace vezeeta.Controller
                 return new BadRequestObjectResult("Login First");
             }
             return await _request.AddRequest(patientId, timeId, discountCode);
+
+        }
+
+
+
+        [HttpPatch("Cancell Booking")]
+        public async Task<IActionResult> CancellBooking(int BookingId)
+        {
+            if (BookingId == 0)
+            {
+                return BadRequest("Invalid Id");
+
+            }
+
+            return await _Patient.CancelRequest(BookingId);
 
         }
     }

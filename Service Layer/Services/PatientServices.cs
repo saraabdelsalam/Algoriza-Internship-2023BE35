@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Core_Layer.Enums;
 using Core_Layer.Services;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Service_Layer.Interfaces;
 using System;
@@ -13,5 +15,10 @@ namespace Service_Layer.Services
     public class PatientServices:AppUserServices, IPatientServices
     {
         public PatientServices(IUnitOfWork unitOfWork, IMapper mapper ):base(unitOfWork, mapper) { }
+
+        public async Task<IActionResult> CancelRequest(int id)
+        {
+            return await ChangeRequestStatus(id, RequestStatus.Cancelled);
+        }
     }
 }

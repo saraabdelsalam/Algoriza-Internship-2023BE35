@@ -93,6 +93,10 @@ namespace Service_Layer.Services
             _unitOfWork.SaveAsync();
             return new OkObjectResult("Price & Appointments Added Successfully");
         }
+        public async Task<IActionResult> ConfirmRequest(int RequestId)
+        {
+            return await ChangeRequestStatus(RequestId, RequestStatus.Completed);
+        }
         public async Task<IActionResult> Edit(string id, UserDto userDto, string Specialize)
         {
             IActionResult result = await _unitOfWork._doctorRepository.GetDoctorUser(id);

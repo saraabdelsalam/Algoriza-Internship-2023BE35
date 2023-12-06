@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Core_Layer.Enums;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +10,6 @@ namespace Core_Layer.Services
 {
     public interface IPatientServices: IAppUserServices
     {
+        Task<IActionResult> CancelRequest(int RequestId);
     }
 }

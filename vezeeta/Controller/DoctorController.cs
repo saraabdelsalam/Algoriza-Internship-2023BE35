@@ -134,7 +134,18 @@ namespace vezeeta.Controller
 
         }
 
+        [HttpPatch("Confirm Booking")]
+        public async Task<IActionResult> ConfirmBooking(int BookingId)
+        {
+            if (BookingId == 0)
+            {
+                return BadRequest("Invalid Id");
 
+            }
+
+            return await _doctor.ConfirmRequest(BookingId);
+
+        }
 
 
 

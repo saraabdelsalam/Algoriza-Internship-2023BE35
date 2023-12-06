@@ -126,6 +126,29 @@ namespace Service_Layer.Services
 
 
         }
+
+        public async Task<IActionResult> ChangeRequestStatus(int RequestId, RequestStatus status)
+        {
+            Request request = _unitOfWork._requestRepository.GetById(RequestId);
+            if (request == null)
+            {
+                return new NotFoundResult();
+            }
+
+            request.Status = status;
+            try
+            {
+               await _unitOfWork._requestRepository.UpdateAsync(request);
+                await _unitOfWork.SaveAsync();
+                return new OkResult();
+            }
+            catch (Exception ex)
+            {
+                return new ObjectResult("couldn't update the status");
+            }
+        }
+
+
     }
 }
 

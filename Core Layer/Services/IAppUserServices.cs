@@ -19,6 +19,7 @@ namespace Core_Layer.Services
         public Task<IActionResult> GetUserById(string id);
         public Task<IActionResult> LogOut();
         public Task<IActionResult> UpdateUserData(UserDto UserDto);
+        public Task<IActionResult> ChangeRequestStatus(int RequestId, RequestStatus status);
 
 
     }
