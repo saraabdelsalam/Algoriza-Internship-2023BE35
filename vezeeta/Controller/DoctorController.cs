@@ -92,7 +92,7 @@ namespace vezeeta.Controller
                 return BadRequest("Appointments is required");
             }
 
-            string? doctorId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value; ;
+            string? doctorId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value; 
             if(doctorId is null)
             {
                 return BadRequest("Login First ");

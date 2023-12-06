@@ -24,7 +24,7 @@ namespace Service_Layer.Services.Admin
         public async Task AddDiscountCode(DiscountCode discountCode)
         {
             
-            await _unitOfWork._discount.AddAsync(discountCode);
+            await _unitOfWork._discountRepository.AddAsync(discountCode);
             await _unitOfWork.SaveAsync();
            
 
@@ -33,24 +33,24 @@ namespace Service_Layer.Services.Admin
         {
 
           
-              await _unitOfWork._discount.UpdateAsync(discountCode);
+              await _unitOfWork._discountRepository.UpdateAsync(discountCode);
                 await _unitOfWork.SaveAsync();
                 
      
         }
         public async Task DeleteDiscountCode(int id)
         {
-            var code =  _unitOfWork._discount.GetById(id);
-           await _unitOfWork._discount.DeleteAsync(code);
+            var code =  _unitOfWork._discountRepository.GetById(id);
+           await _unitOfWork._discountRepository.DeleteAsync(code);
             await _unitOfWork.SaveAsync();
         }
         public async Task ChangeStatus(int id)
         {
-            var code = _unitOfWork._discount.GetById(id);
+            var code = _unitOfWork._discountRepository.GetById(id);
             if(code.Activated == true)
             {
                 code.Activated= false;
-               await _unitOfWork._discount.UpdateAsync(code);
+               await _unitOfWork._discountRepository.UpdateAsync(code);
               await  _unitOfWork.SaveAsync();   
             }
 

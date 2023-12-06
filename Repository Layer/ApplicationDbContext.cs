@@ -23,7 +23,24 @@ namespace Repository_Layer
             base.OnModelCreating(builder);
             builder.Entity<Doctor>().ToTable("Doctors").HasAnnotation("MyCustomAnnotation", "SomeValue");
             builder.Entity<Doctor>().Property(p=> p.Price).HasDefaultValue(0);
+            #region
+            //assigning request relations with restricting on delete option
+            builder.Entity<Request>().HasOne<Times>().WithMany()
+                .HasForeignKey(r => r.TimeId).OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("FK_Requests_Times_TimeId");
 
+            builder.Entity<Request>().HasOne<Doctor>().WithMany()
+                .HasForeignKey(r => r.DoctorId).OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("FK_Requests_Doctors_DoctorId");
+
+            builder.Entity<Request>().HasOne<ApplicationUser>().WithMany()
+                .HasForeignKey(r => r.PatientId).OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("FK_Requests_AspNetUsers_PatientId");
+
+            builder.Entity<Request>().HasOne<DiscountCode>().WithMany()
+                .HasForeignKey(r => r.DiscountCodeId).OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("FK_Requests_discountCodes_DiscountCodeId");
+            #endregion
             builder.Entity<Specialization>()
             .HasData(new List<Specialization>
                {

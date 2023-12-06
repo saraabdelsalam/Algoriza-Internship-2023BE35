@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository_Layer;
 
@@ -11,9 +12,10 @@ using Repository_Layer;
 namespace Repository_Layer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231206172329_RequestRelations")]
+    partial class RequestRelations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,7 +106,7 @@ namespace Repository_Layer.Migrations
                         {
                             Id = "02174cf0–9412–4cfe - afbf - 59f706d72cf6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "150e6dbe-c2b4-4bfd-8628-49b35720c498",
+                            ConcurrencyStamp = "d6c06e8a-5471-479f-b243-ec7aa0dd4d73",
                             DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@vezeeta.com",
                             EmailConfirmed = true,
@@ -112,10 +114,10 @@ namespace Repository_Layer.Migrations
                             Gender = 0,
                             LockoutEnabled = false,
                             NormalizedUserName = "sara abdelsalam",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOZhTxW+fcAluCT7bwZ4VNJfa3LdLHQhwY/VFgWEbGNZtbjv6mzBbtXLL5Bl8LzPxA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPRUAF6HyjHV74UX0IupMWXR2jg8Cdn1i95hbsBS3d7aB6k8+FOqIOww0Ac36M82qA==",
                             PhoneNumber = "01021122226",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9f91e9cc-82b0-4725-b6c8-530d5f60c7e4",
+                            SecurityStamp = "8f961299-3fbf-486d-81d4-13a35d8d3bdb",
                             TwoFactorEnabled = false,
                             UserName = "sara abdelsalam"
                         });
@@ -202,11 +204,11 @@ namespace Repository_Layer.Migrations
 
             modelBuilder.Entity("Core_Layer.Models.Request", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("RequestId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RequestId"), 1L, 1);
 
                     b.Property<int?>("DiscountCodeId")
                         .HasColumnType("int");
@@ -223,7 +225,7 @@ namespace Repository_Layer.Migrations
                     b.Property<int?>("TimeId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("RequestId");
 
                     b.HasIndex("DiscountCodeId");
 
@@ -322,21 +324,21 @@ namespace Repository_Layer.Migrations
                         new
                         {
                             Id = "e014c5f9-775e-4112-bbc9-5a6859f60a6a",
-                            ConcurrencyStamp = "0495c067-2f9e-4764-b204-866c435262e6",
+                            ConcurrencyStamp = "bc3dd1f4-9873-4009-b134-7650cf0a088b",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "63d379ae-8133-4256-b413-20b3a402dc8c",
-                            ConcurrencyStamp = "aac38f6f-e5f1-4f0a-bcd0-25056359bcf7",
+                            ConcurrencyStamp = "cea08a49-a28d-48b1-8f37-28382729f2d6",
                             Name = "Doctor",
                             NormalizedName = "DOCTOR"
                         },
                         new
                         {
                             Id = "35ea9a1d-a34c-458d-a7cb-4fe2d240d95a",
-                            ConcurrencyStamp = "57bf7473-dc58-4174-b7c8-2940f63a80d2",
+                            ConcurrencyStamp = "6a6c1bbf-a2cc-4f13-886d-8db07783f2bc",
                             Name = "Patient",
                             NormalizedName = "PATIENT"
                         });

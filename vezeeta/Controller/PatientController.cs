@@ -4,6 +4,7 @@ using Core_Layer.Models;
 using Core_Layer.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace vezeeta.Controller
 {
@@ -12,8 +13,10 @@ namespace vezeeta.Controller
     public class PatientController : ControllerBase
     {
         private readonly IPatientServices _Patient;
-        public PatientController(IPatientServices patient) {
+        private readonly IRequestServices _request;
+        public PatientController(IPatientServices patient, IRequestServices request) {
             _Patient = patient;
+            _request = request;
         }
         [HttpPost("Register")]
         [Consumes("multipart/form-data")]
@@ -61,6 +64,24 @@ namespace vezeeta.Controller
         {
             await _Patient.LogOut();
             return Ok("LogOut Successfully");
+        }
+
+
+        [HttpPost("Book Appointment")]
+        public async Task<IActionResult> BookAppointment(int timeId, string discountCode)
+        {
+
+            if (timeId <= 0)
+            {
+                ModelState.AddModelError("timeId","Invalid timeId");
+            }
+            string? patientId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if(patientId == null)
+            {
+                return new BadRequestObjectResult("Login First");
+            }
+            return await _request.AddRequest(patientId, timeId, discountCode);
+
         }
     }
 }

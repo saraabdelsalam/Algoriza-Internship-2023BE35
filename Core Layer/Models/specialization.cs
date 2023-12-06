@@ -15,8 +15,7 @@ namespace Core_Layer.Models
         [Required]
         public string SpecializationName { get; set; }
         
-        //[NotMapped]
-        //public int NumOfRequests => Doctors.Sum(x => x.NumOfRequests);
+      
        
     }
 }

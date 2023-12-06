@@ -12,13 +12,14 @@ namespace Service_Layer.Services
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         // dependancy injection applied here
-        public ICRUD<DiscountCode> _discount { get; private set; }
+        public IDiscountCodeRepository _discountRepository { get; private set; }
         public ISpecializationRepo _specializationRepo { get; private set; }
         public IDoctorRepository _doctorRepository { get; private set; }
         public IAppUserRepository _userRepository { get; private set; }
        public IAppointmentRepository _appointmentRepository { get; private set; }
         public ITimesRepository _timesRepository { get; private set; }
         public IRequestRepository _requestRepository { get; private set; }
+        public IPatientRepository _patientRepository { get; private set; }
         public UnitOfWork(ApplicationDbContext dbContext , UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager,
             SignInManager<ApplicationUser> signInManager)
         {
@@ -26,13 +27,14 @@ namespace Service_Layer.Services
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
-            _discount = new CRUD<DiscountCode>(_dbContext);
+            _discountRepository = new DiscountCodeRepository(_dbContext);
             _specializationRepo = new SpecializationRepo(_dbContext);
             _doctorRepository = new DoctorRepository(_dbContext, _userManager);
             _userRepository = new AppUserRepository(_dbContext, _userManager,_roleManager,_signInManager);
             _appointmentRepository = new AppointmentRepository(_dbContext);
             _timesRepository = new TimesRepository(_dbContext);
             _requestRepository = new RequestsRepository(_dbContext);
+            _patientRepository = new PatientRepository(_dbContext, _userManager, _roleManager, _signInManager);
         }
 
   
