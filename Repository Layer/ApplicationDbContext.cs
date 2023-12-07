@@ -40,7 +40,10 @@ namespace Repository_Layer
             builder.Entity<Request>().HasOne<DiscountCode>().WithMany()
                 .HasForeignKey(r => r.DiscountCodeId).OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("FK_Requests_discountCodes_DiscountCodeId");
-           
+
+            builder.Entity<Appointment>().HasOne<Doctor>().WithMany()
+                 .HasForeignKey(r => r.doctorId).OnDelete(DeleteBehavior.Cascade).
+                 HasConstraintName("FK_Appointments_Doctors_DoctorId");
             #endregion
             builder.Entity<Specialization>()
             .HasData(new List<Specialization>

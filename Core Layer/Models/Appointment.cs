@@ -19,6 +19,6 @@ namespace Core_Layer.Models
         [ForeignKey("FK_Appointments_Doctors_DoctorId")]
         
         public string? doctorId { get; set; }
-        public Doctor doctor {  get; set; }
+       
     }
 }

@@ -97,51 +97,50 @@ namespace Service_Layer.Services
         {
             return await ChangeRequestStatus(RequestId, RequestStatus.Completed);
         }
-        public async Task<IActionResult> Edit(string id, UserDto userDto, string Specialize)
-        {
-            //IActionResult result = await _unitOfWork._doctorRepository.GetDoctorUser(id);
+        //public async Task<IActionResult> Edit(string id, UserDto userDto, string Specialize)
+        //{
+        //    //IActionResult result = await _unitOfWork._doctorRepository.GetDoctorUser(id);
 
-            //if (result is OkObjectResult okObjectResult)
-            //{
-            //    Doctor doc = okObjectResult.Value as Doctor;
+        //    //if (result is OkObjectResult okObjectResult)
+        //    //{
+        //    //    Doctor doc = okObjectResult.Value as Doctor;
                
-            //    Specialization specialization = _unitOfWork._specializationRepo.GetSpecialization(Specialize);
-            //    if (specialization == null)
-            //    {
-            //        return new NotFoundObjectResult("Specialization not found");
-            //    }
-            //    doc.Specialization = specialization;
+        //    //    Specialization specialization = _unitOfWork._specializationRepo.GetSpecialization(Specialize);
+        //    //    if (specialization == null)
+        //    //    {
+        //    //        return new NotFoundObjectResult("Specialization not found");
+        //    //    }
+        //    //    doc.Specialization = specialization;
 
-            //     //Update User
-            //    var UpdatesResults = await UpdateUserData(userDto);
+        //    //     //Update User
+        //    //    var UpdatesResults = await UpdateUserData(userDto);
 
                 
-            //    if (UpdatesResults is not OkObjectResult)
-            //    {
-            //        return UpdatesResults;
-            //    }
+        //    //    if (UpdatesResults is not OkObjectResult)
+        //    //    {
+        //    //        return UpdatesResults;
+        //    //    }
 
-            //    await _unitOfWork._doctorRepository.UpdateAsync(doc);
-            //   await _unitOfWork.SaveAsync();
-            //    return new OkObjectResult(doc);
-            //}
-            //else
-            //{
-            //    return new BadRequestObjectResult("Failed to get the user");
-            //}
-
-
+        //    //    await _unitOfWork._doctorRepository.UpdateAsync(doc);
+        //    //   await _unitOfWork.SaveAsync();
+        //    //    return new OkObjectResult(doc);
+        //    //}
+        //    //else
+        //    //{
+        //    //    return new BadRequestObjectResult("Failed to get the user");
+        //    //}
 
 
 
 
-        }
+
+
+        //}
 
         public async Task<IActionResult> Delete(string id)
         {
             try
             {
-                
                 ApplicationUser docUser = _unitOfWork._userRepository.GetById(id);
                 if (docUser == null)
                 {
@@ -152,11 +151,10 @@ namespace Service_Layer.Services
                 {
                     return new BadRequestObjectResult("doctor can't be deleted");
                 }
+
                
-
-
-                //await _unitOfWork._doctorRepository.DeleteAsync(doc);
                 await _unitOfWork._userRepository.DeleteUser(docUser);
+                //await _unitOfWork._doctorRepository.DeleteAsync(doc);
                 await _unitOfWork.SaveAsync();
 
                 return new OkResult();

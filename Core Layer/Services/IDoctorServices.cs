@@ -16,7 +16,7 @@ namespace Core_Layer.Services
         Task<IActionResult> AddPrice(string doctorId, int price);
         Task<IActionResult> AddAppointments(string DoctorId, AppointmentDto appointments);
         Task<IActionResult> Delete(string id);
-        Task<IActionResult> Edit(string id, UserDto userDto, string Specialize);
+        //Task<IActionResult> Edit(string id, UserDto userDto, string Specialize);
         public Task<IActionResult> ConfirmRequest(int RequestId);
     }
 
