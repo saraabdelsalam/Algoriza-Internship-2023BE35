@@ -45,5 +45,11 @@ namespace vezeeta.Controller
         {
             return _doctorServices.Top10Doctors();
         }
+
+        [HttpGet("Top 5 Specializationss")]
+        public IActionResult GetTopSpecializations()
+        {
+            return _appUserServices.Top5();
+        }
     }
 }

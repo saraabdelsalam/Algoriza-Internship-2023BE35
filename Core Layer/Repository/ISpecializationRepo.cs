@@ -1,4 +1,5 @@
 ﻿using Core_Layer.Models;
+using Microsoft.AspNetCore.Mvc;
 using Repository_Layer.Generic_Repo;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace Core_Layer.Repository
 {
    public interface ISpecializationRepo: IBaseRepository<Specialization>
     {
-        public Specialization GetSpecialization(string name);
+        Specialization GetSpecialization(string name);
+        IActionResult Top5Sepecializations();
     }
 }

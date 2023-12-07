@@ -172,7 +172,11 @@ namespace Service_Layer.Services
                 
             
         }
-
+        
+        public IActionResult Top5()
+        {
+            return _unitOfWork._specializationRepo.Top5Sepecializations();
+        }
 
     }
 }
