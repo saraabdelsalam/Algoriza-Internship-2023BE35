@@ -49,15 +49,7 @@ namespace vezeeta.Controller
                 return StatusCode(500, $"An error occurred while adding the Doctor: {ex.Message}");
             }
         }
-        [HttpGet("Doctor")]
-        public Task<IActionResult> GetDoctor(string id) {
-
-            
-              return  _userServices.GetUserById(id);
-            
-         
-           
-        }
+    
 
 
         [HttpPut]
@@ -73,7 +65,7 @@ namespace vezeeta.Controller
             //    ModelState.AddModelError("userDTO.Image", "Image Is Required");
             //}
 
-            if (id == null)
+            if (string.IsNullOrEmpty(id))
             {
                 ModelState.AddModelError("Id", "Id Is Required");
             }
@@ -90,7 +82,7 @@ namespace vezeeta.Controller
         public async Task<IActionResult> DeleteDoctor(string id)
         {
 
-            if(id == null)
+            if(string.IsNullOrEmpty(id))
             {
                 ModelState.AddModelError("id", "id is required");
             }
@@ -102,7 +94,7 @@ namespace vezeeta.Controller
         
         public IActionResult GetById([FromForm] string id)
         {
-            if (id==null)
+            if (string.IsNullOrEmpty(id))
             {
                 ModelState.AddModelError("Id", "Id is required");
             }
