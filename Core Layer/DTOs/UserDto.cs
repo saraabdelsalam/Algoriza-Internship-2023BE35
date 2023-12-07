@@ -34,7 +34,8 @@ namespace Core_Layer.DTOs
         [Required]
         [DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }
-        public bool RememberMe {  get; set; }
+       public bool RememberMe { get; set; }
+       
 
     }
 }

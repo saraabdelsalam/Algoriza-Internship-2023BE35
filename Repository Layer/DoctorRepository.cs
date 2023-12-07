@@ -30,5 +30,34 @@ namespace Repository_Layer
             return new BadRequestObjectResult("user id not found");
             
         }
+
+
+        public IActionResult Top10Doctors()
+        {
+            var Top10 = Context.Set<Request>().GroupBy(r => r.DoctorId).Select(
+                requestGrouping => new
+                {
+                    DoctorId = requestGrouping.Key,
+                    RequestsNum = requestGrouping.Count(),
+                }
+                 ).OrderByDescending(grouping => grouping.RequestsNum).Take(10).
+                 Join(Context.Set<Doctor>(),
+                 doc => doc.DoctorId,
+                 doct => doct.id,
+                (doc, doct) => new
+                {
+                    userId = doct.id,
+                    RequestsNum = doc.RequestsNum,
+                }).Join(Context.Set<ApplicationUser>(),
+                 doc => doc.userId,
+                 user => user.Id,
+                (doc, user) => new
+                {
+                    DoctorName = user.FullName,
+                    RequestsNum = doc.RequestsNum,
+                }).ToList();
+            return new OkObjectResult(Top10);
+
+        }
     }
 }

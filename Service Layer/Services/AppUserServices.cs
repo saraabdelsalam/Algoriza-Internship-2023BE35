@@ -67,8 +67,24 @@ namespace Service_Layer.Services
             }
 
         }
-      
-        
+
+        public async Task<IActionResult> Update_User(UserDto userDto,ApplicationUser user)
+        {
+            ApplicationUser EditedUser = _mapper.Map<ApplicationUser>(userDto);
+            user = EditedUser;
+            try
+            {
+
+                IActionResult result = await _unitOfWork._userRepository.UpdateUser(user);
+                return result;
+            }
+            catch (Exception ex)
+            {
+
+                return new BadRequestObjectResult($"{ex.Message}\n {ex.InnerException?.Message}");
+            }
+
+        }
 
         public async Task<IActionResult> SignInUser(SignInDto signInDto)
         {

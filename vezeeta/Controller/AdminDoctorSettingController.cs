@@ -60,31 +60,31 @@ namespace vezeeta.Controller
         }
 
 
-        //[HttpPut]
-        //[Consumes("multipart/form-data")]
-        //public async Task<IActionResult> UpdateDoctor([FromForm] string id, [FromForm] UserDto userDTO, [FromForm] string Specialize)
-        //{
-        //    if (string.IsNullOrEmpty(Specialize))
-        //    {
-        //        ModelState.AddModelError("Specialize", "Specialize Is Required");
-        //    }
-        //    //if (userDTO.Image == null || userDTO.Image.Length == 0)
-        //    //{
-        //    //    ModelState.AddModelError("userDTO.Image", "Image Is Required");
-        //    //}
+        [HttpPut]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> UpdateDoctor([FromForm] string id, [FromForm] UserDto userDTO, [FromForm] string Specialize)
+        {
+            if (string.IsNullOrEmpty(Specialize))
+            {
+                ModelState.AddModelError("Specialize", "Specialize Is Required");
+            }
+            //if (userDTO.Image == null || userDTO.Image.Length == 0)
+            //{
+            //    ModelState.AddModelError("userDTO.Image", "Image Is Required");
+            //}
 
-        //    if (id == null)
-        //    {
-        //        ModelState.AddModelError("Id", "Id Is Required");
-        //    }
+            if (id == null)
+            {
+                ModelState.AddModelError("Id", "Id Is Required");
+            }
 
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    };
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            };
 
-        //    return await _doctor.Edit(id, userDTO, Specialize);
-        //}
+            return await _doctor.Edit(id, userDTO, Specialize);
+        }
 
         [HttpDelete("delete doctor")]
         public async Task<IActionResult> DeleteDoctor([FromForm]string id)

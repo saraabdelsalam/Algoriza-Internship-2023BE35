@@ -11,9 +11,12 @@ namespace vezeeta.Controller
     {
         private readonly IAppUserServices _appUserServices;
         private readonly IRequestServices _requestServices;
-        public DashboardController(IAppUserServices appUserServices, IRequestServices requestServices) {
+        private readonly IDoctorServices _doctorServices;
+        public DashboardController(IAppUserServices appUserServices, IRequestServices requestServices,
+            IDoctorServices doctorServices) {
         _appUserServices = appUserServices;
             _requestServices = requestServices;
+            _doctorServices = doctorServices;
         }
 
         [HttpGet("TotalNumberOfDoctors")]
@@ -36,6 +39,11 @@ namespace vezeeta.Controller
         public IActionResult GetNumberOfRequests()
         {
             return _requestServices.NumOfRequests();
+        }
+        [HttpGet("Top 10 Doctors")]
+        public IActionResult GetTopDoctors()
+        {
+            return _doctorServices.Top10Doctors();
         }
     }
 }
