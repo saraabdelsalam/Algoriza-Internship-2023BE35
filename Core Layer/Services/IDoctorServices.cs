@@ -19,6 +19,7 @@ namespace Core_Layer.Services
         Task<IActionResult> Edit(string id, UserDto userDto, string Specialize);
         Task<IActionResult> ConfirmRequest(int RequestId);
         IActionResult Top10Doctors();
+        IActionResult GetDoctor(string id);
     }
 
 }

@@ -7,12 +7,14 @@ using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Service_Layer.Interfaces;
+using System.Drawing;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Service_Layer.Services
 {
@@ -104,8 +106,6 @@ namespace Service_Layer.Services
             return new OkResult();
         }
 
-     
-
        public async Task<int> NumOfUsers(string userRole)
         {
             
@@ -172,11 +172,22 @@ namespace Service_Layer.Services
                 
             
         }
-        
+       //top specializations 
         public IActionResult Top5()
         {
             return _unitOfWork._specializationRepo.Top5Sepecializations();
         }
+
+        protected Bitmap GetImage(string imagePath)
+        {
+            if (string.IsNullOrEmpty(imagePath))
+            {
+                return null;
+            }
+
+            return new Bitmap(imagePath);
+        }
+
 
     }
 }

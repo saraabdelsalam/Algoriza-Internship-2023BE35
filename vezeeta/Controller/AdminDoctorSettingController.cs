@@ -87,7 +87,7 @@ namespace vezeeta.Controller
         }
 
         [HttpDelete("delete doctor")]
-        public async Task<IActionResult> DeleteDoctor([FromForm]string id)
+        public async Task<IActionResult> DeleteDoctor(string id)
         {
 
             if(id == null)
@@ -95,6 +95,24 @@ namespace vezeeta.Controller
                 ModelState.AddModelError("id", "id is required");
             }
             return await _doctor.Delete(id);
+        }
+
+
+        [HttpGet("GetById")]
+        
+        public IActionResult GetById([FromForm] string id)
+        {
+            if (id==null)
+            {
+                ModelState.AddModelError("Id", "Id is required");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            return _doctor.GetDoctor(id);
         }
 
     }

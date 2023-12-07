@@ -13,5 +13,6 @@ namespace Core_Layer.Repository
 
         Task<IActionResult> GetDoctorUser(string userId);
         IActionResult Top10Doctors();
+        IActionResult GetDoctorById(string id);
     }
 }

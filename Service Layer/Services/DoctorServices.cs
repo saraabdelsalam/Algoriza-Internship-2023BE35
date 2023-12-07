@@ -165,5 +165,47 @@ namespace Service_Layer.Services
             return _unitOfWork._doctorRepository.Top10Doctors();
 
         }
+
+        public IActionResult GetDoctor(string id)
+        {
+           try {
+                bool exists = _unitOfWork._doctorRepository.Exist(d => d.id == id);
+            
+
+                if (!exists)
+                {
+                    return new NotFoundObjectResult("doctor doesn't exist");
+                }
+                var Info = _unitOfWork._doctorRepository.GetDoctorById(id);
+                if (Info is not OkObjectResult okResult)
+                {
+                    return Info;
+                }
+
+
+              DoctorInfoDto doctorInfo = okResult.Value as DoctorInfoDto;
+
+                doctorInfo.Image = GetImage(doctorInfo.ImagePath);
+                var AllInfo = new
+                {
+                    doctorInfo.Image,
+                    doctorInfo.FullName,
+                    doctorInfo.Email,
+                    doctorInfo.PhoneNumber,
+                    doctorInfo.Gender,
+                    doctorInfo.Specialization
+                };
+
+                return new OkObjectResult(AllInfo);
+
+
+            }
+            catch(Exception ex)
+            {
+                return new BadRequestObjectResult(ex.Message + ex.InnerException.Message);
+            }
+
+
+        }
     }
 }

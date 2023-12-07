@@ -1,9 +1,12 @@
-﻿using Core_Layer.Models;
+﻿using Core_Layer.DTOs;
+using Core_Layer.Enums;
+using Core_Layer.Models;
 using Core_Layer.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -57,6 +60,38 @@ namespace Repository_Layer
                     RequestsNum = doc.RequestsNum,
                 }).ToList();
             return new OkObjectResult(Top10);
+
+        }
+
+        public IActionResult GetDoctorById(string id)
+        {
+            try {
+
+                var Info = Context.Set<Doctor>().Where(I => I.id == id).Join(
+
+                    Context.Set<ApplicationUser>(),
+                    Info => Info.UserId,
+                    user => user.Id,
+                    (Info, user) => new DoctorInfoDto
+                    {
+                        ImagePath = user.Image,
+                        FullName = user.FullName,
+                        Email = user.Email,
+                        PhoneNumber = user.PhoneNumber,
+                        Gender = Enum.GetName(user.Gender),
+                        Price = Info.Price??0,
+                        Specialization = Info.Specialization.SpecializationName,
+                    }).FirstOrDefault();
+
+
+
+                return new OkObjectResult(Info);
+            
+            }
+            catch(Exception ex)
+            {
+                return new BadRequestObjectResult(ex.Message + ex.InnerException.Message);
+            }
 
         }
     }
