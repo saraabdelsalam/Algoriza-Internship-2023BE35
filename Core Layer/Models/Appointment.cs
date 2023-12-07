@@ -17,6 +17,7 @@ namespace Core_Layer.Models
        public WeekDays day { get; set; }
         public List<Times>? times {  get; set; }
         [ForeignKey("FK_Appointments_Doctors_DoctorId")]
+        
         public string? doctorId { get; set; }
         public Doctor doctor {  get; set; }
     }

@@ -10,8 +10,9 @@ namespace Repository_Layer.Generic_Repo
 {
         Task<IQueryable<T>> GetAllAsync(int pageNumber, int pageSize, string search);
         T GetById(int id);
-       
-       
+        T GetById(string id);
+
+
 
 
 

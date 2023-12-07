@@ -86,6 +86,16 @@ namespace vezeeta.Controller
             return await _doctor.Edit(id, userDTO, Specialize);
         }
 
+        [HttpDelete("delete doctor")]
+        public async Task<IActionResult> DeleteDoctor([FromForm]string id)
+        {
+
+            if(id == null)
+            {
+                ModelState.AddModelError("id", "id is required");
+            }
+            return await _doctor.Delete(id);
+        }
 
     }
 }

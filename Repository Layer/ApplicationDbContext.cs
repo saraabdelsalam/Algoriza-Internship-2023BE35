@@ -40,6 +40,7 @@ namespace Repository_Layer
             builder.Entity<Request>().HasOne<DiscountCode>().WithMany()
                 .HasForeignKey(r => r.DiscountCodeId).OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("FK_Requests_discountCodes_DiscountCodeId");
+           
             #endregion
             builder.Entity<Specialization>()
             .HasData(new List<Specialization>
