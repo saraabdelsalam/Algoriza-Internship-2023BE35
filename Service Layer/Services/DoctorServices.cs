@@ -244,5 +244,46 @@ namespace Service_Layer.Services
                 return new BadRequestObjectResult(ex.Message + ex.InnerException.Message);
             }
         }
+        public IActionResult GetDoctorsRequests(string doctorId, int PageNum, int PageSize, string search)
+        {
+            try {
+                Func<DoctorsRequestsDto, bool> condition = null;
+                if (string.IsNullOrEmpty(search))
+                {
+                    condition = (c=> c.PatientName.Contains(search) ||c.PatientEmail.Contains(search));
+
+                }
+                var Result = _unitOfWork._requestRepository.DoctorsRequests(doctorId,PageSize,PageNum,condition);
+                 if( Result is not OkObjectResult res)
+                {
+                    return  Result;
+                }
+                List<DoctorsRequestsDto> RequestsList = res.Value as List<DoctorsRequestsDto>;
+
+                if (RequestsList == null || RequestsList.Count == 0)
+                {
+                    return new NotFoundObjectResult("There is no bookings");
+                }
+                
+                var doctorsRequests = RequestsList.Select(r => new
+                {
+                    Image = GetImage(r.ImagePath),
+                    r.PatientName,
+                    r.PatientEmail,
+                     r.PatientPhone,
+                    r.PatientGender,
+                    r.Day,
+                    r.time
+                }).ToList();
+
+                return new OkObjectResult(doctorsRequests);
+            }
+            catch (Exception ex)
+            {
+                return new BadRequestObjectResult(ex.Message + ex.InnerException.Message);
+            }
+
+
+        }
     }
 }

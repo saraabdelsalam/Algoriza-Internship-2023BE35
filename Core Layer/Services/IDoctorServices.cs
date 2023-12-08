@@ -21,6 +21,7 @@ namespace Core_Layer.Services
         IActionResult Top10Doctors();
         IActionResult GetDoctor(string id);
         IActionResult GetAllDoctors(int PageSize, int PageNumber, String search);
+        IActionResult GetDoctorsRequests(string doctorId, int PageNum, int PageSize, string search);
     }
 
 }

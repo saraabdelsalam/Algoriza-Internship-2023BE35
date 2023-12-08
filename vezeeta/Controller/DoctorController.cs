@@ -3,7 +3,9 @@ using Core_Layer.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Service_Layer.Services;
+using System.Drawing.Printing;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
 
@@ -147,7 +149,16 @@ namespace vezeeta.Controller
 
         }
 
+        [HttpGet("Requests")]
+        public IActionResult GetRequests(int PageNumber, int PageSize, string? search) {
 
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            string? DoctorId = User.Claims.FirstOrDefault(d => d.Type == ClaimTypes.NameIdentifier)?.Value;
+            return _doctor.GetDoctorsRequests(DoctorId, PageNumber, PageSize, search);
+        }
 
     }
 }
