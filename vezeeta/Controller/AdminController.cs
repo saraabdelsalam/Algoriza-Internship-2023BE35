@@ -116,5 +116,16 @@ namespace vezeeta.Controller
 
             return await _petientServices.GetAllPatients(PageNumber,PageSize,search);
         }
+        [Microsoft.AspNetCore.Mvc.HttpGet("PatientById")]
+        public async Task<IActionResult> GetPatientById(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return new BadRequestObjectResult("Id is required");
+            }
+            return await _petientServices.GetPatientByIdAsync(id);
+        }
+
+
     }
 }

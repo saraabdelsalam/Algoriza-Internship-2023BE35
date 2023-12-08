@@ -79,7 +79,11 @@ namespace Repository_Layer
 
         }
 
-  
+        public async Task<bool> InRole(ApplicationUser user)
+        {
+            return await _userManager.IsInRoleAsync(user, "Patient");
+
+        }
 
     }
 }

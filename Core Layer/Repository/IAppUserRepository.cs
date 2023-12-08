@@ -18,6 +18,7 @@ namespace Repository_Layer
         public Task<int> NumberOfUsersAsync(string userRole);
         public Task<IdentityResult> AddUser(ApplicationUser user);
        public Task<ApplicationUser> FindByEmail(string email);
+        Task<bool> InRole(ApplicationUser user);
         public  Task AssignRole(ApplicationUser user, string role);
         public Task AddSignInCookie(ApplicationUser user, bool rememberMe);
         public Task SignIn(ApplicationUser User, bool RememberMe);

@@ -90,7 +90,7 @@ namespace Service_Layer.Services
                 return DayOfWeekResult;
             }
 
-            _unitOfWork.SaveAsync();
+            await _unitOfWork.SaveAsync();
             return new OkObjectResult("Price & Appointments Added Successfully");
         }
         public async Task<IActionResult> ConfirmRequest(int RequestId)

@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Core_Layer.DTOs;
 using Core_Layer.Enums;
+using Core_Layer.Models;
 using Core_Layer.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Service_Layer.Interfaces;
@@ -62,6 +64,56 @@ namespace Service_Layer.Services
             }
            
 
+        }
+        public async Task<IActionResult> GetPatientByIdAsync(string id)
+        {
+            try {
+
+              
+
+                ApplicationUser Patient = _unitOfWork._patientRepository.GetById(id);
+
+                if (Patient == null)
+                {
+                    return new NotFoundResult();
+                }
+                // Check if the user is in the "patient" role
+                if (!await _unitOfWork._patientRepository.InRole(Patient))
+                {
+                    return new ForbidResult();
+                }
+              
+
+
+               
+                IActionResult Requests = GetPatientRequests(id);
+
+                object PatientRequests = null;
+                if (Requests is OkObjectResult OkObject)
+                {
+                    PatientRequests = OkObject.Value;
+                }
+
+                
+                var patientInfo = new
+                {
+                    Image = GetImage(Patient.Image),
+                    Patient.FullName,
+                    Patient.Email,
+                    Patient.PhoneNumber,
+                    Patient.Gender,
+                    Patient.DateOfBirth,
+                    
+                   Requests = PatientRequests
+                };
+
+                return new OkObjectResult(patientInfo);
+
+
+            } catch(Exception ex)
+            {
+                return new BadRequestObjectResult(ex.Message + ex.InnerException.Message);
+            }
         }
 
         public IActionResult GetPatientRequests(string PatientId)
