@@ -248,7 +248,7 @@ namespace Service_Layer.Services
         {
             try {
                 Func<DoctorsRequestsDto, bool> condition = null;
-                if (string.IsNullOrEmpty(search))
+                if (!string.IsNullOrEmpty(search))
                 {
                     condition = (c=> c.patientInfo.PatientName.Contains(search) ||c.patientInfo.PatientEmail.Contains(search));
 

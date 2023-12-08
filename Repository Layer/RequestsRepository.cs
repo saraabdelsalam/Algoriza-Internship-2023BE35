@@ -73,9 +73,9 @@ namespace Repository_Layer
         PatientPhone = req.PhoneNumber,
         PatientGender = req.Gender.ToString(),
         },
-         
-        Day = a.day.ToString(),
         time = req.time,
+        Day = a.day.ToString(),
+       
     });
 
                 if(condition != null)
