@@ -1,6 +1,7 @@
 ﻿using Core_Layer.DTOs;
 using Core_Layer.Enums;
 using Core_Layer.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service_Layer.Interfaces.Admin;
@@ -11,6 +12,7 @@ namespace vezeeta.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles="Admin")]
     public class AdminDoctorSettingController : ControllerBase
     {
         private readonly IDoctorServices _doctor;

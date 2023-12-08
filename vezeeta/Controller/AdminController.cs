@@ -9,11 +9,12 @@ using Service_Layer.Interfaces.Admin;
 using Service_Layer.Services;
 using Service_Layer.Services.Admin;
 using System.Web.Http;
-
+using Microsoft.AspNetCore.Authorization;
 namespace vezeeta.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
     public class AdminController : ControllerBase
     {
 
@@ -28,27 +29,7 @@ namespace vezeeta.Controller
         }
 
 
-        [Microsoft.AspNetCore.Mvc.HttpPost("SignIn")]
-        [Consumes("multipart/form-data")]
-        public async Task<IActionResult> SignIn([FromForm] SignInDto UserDto)
-        {
-            try
-            {
-
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                };
-
-                return await _appUserServices.SignInUser(UserDto);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"An error occurred while Signing In: {ex.Message}");
-            }
-
-        }
-        [Authorize(Roles ="Admin")]
+     
         [Microsoft.AspNetCore.Mvc.HttpPost]
         public async Task<IActionResult> CreateDiscountCode(DiscountCode code)
         {
@@ -67,7 +48,7 @@ namespace vezeeta.Controller
             return Ok(code);
         }
 
-        [Authorize(Roles = "Admin")]
+       
         [Microsoft.AspNetCore.Mvc.HttpPut]
        
       public async Task<IActionResult> EditDiscountCode(DiscountCode code)
@@ -85,7 +66,7 @@ namespace vezeeta.Controller
             await _discountCodeServices.EditDiscountCode(code);
             return Ok(code);
         }
-        [Authorize(Roles = "Admin")]
+       
         [Microsoft.AspNetCore.Mvc.HttpDelete]
         public async Task<IActionResult> DeleteDiscountCode(int id)
         {
@@ -96,7 +77,7 @@ namespace vezeeta.Controller
             await _discountCodeServices.DeleteDiscountCode(id);   
             return Ok();
         }
-        [Authorize(Roles = "Admin")]
+        
         [Microsoft.AspNetCore.Mvc.HttpPatch]
         [Route("Deactivate")]
         public async Task<IActionResult> DeactivateDiscountCode(int id)

@@ -93,8 +93,6 @@ if (app.Environment.IsDevelopment())
 //}
 #endregion
 app.UseHttpsRedirection();
-
-// to read cookies
 app.UseAuthentication();
 app.UseAuthorization();
 

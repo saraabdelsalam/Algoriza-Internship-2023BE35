@@ -13,6 +13,7 @@ namespace vezeeta.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Doctor")]
     public class DoctorController : ControllerBase
     {
         private readonly IDoctorServices _doctor;
@@ -26,35 +27,8 @@ namespace vezeeta.Controller
             _timesServices = timesServices;
         }
 
-        [HttpPost("SignIn")]
-        [Consumes("multipart/form-data")]
-        public async Task<IActionResult> SignIn([FromForm] SignInDto UserDto)
-        {
-            try
-            {
 
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                };
-
-                return await _doctor.SignInUser(UserDto);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"An error occurred while Signing In: {ex.Message}");
-            }
-
-        }
-    
-
-        [HttpPost("LogOut")]
-        public async Task<IActionResult> LogOut()
-        {
-           await _doctor.LogOut();
-            return Ok("LogOut Successfully");
-        }
-
+ 
         [HttpPost("Set Price")]
 
         public async Task<IActionResult> SetPrice(int price)
