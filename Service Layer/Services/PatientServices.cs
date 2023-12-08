@@ -63,5 +63,57 @@ namespace Service_Layer.Services
            
 
         }
+
+        public IActionResult GetPatientRequests(string PatientId)
+        {
+            try {
+
+                var result = _unitOfWork._requestRepository.GetPatientRequests(PatientId);
+                if(result is not OkObjectResult ok)
+                {
+                    return result;
+                }
+                List<PatientRequestsDto> Requests = ok.Value as List<PatientRequestsDto>;
+                if (Requests == null || Requests.Count() == 0)
+                {
+                    return new BadRequestObjectResult(" ther's no appointments booked");
+                }
+                //load the image and final price
+                var PatientRequests = Requests.Select(
+
+                    r => new
+                    {
+                        Image = GetImage(r.ImagePath),
+                        r.DoctorName,
+                        r.SpecializationName,
+                        r.RequestStatus,
+                        r.Day,
+                        r.Time,
+                        r.discoundCodeName,
+                        FinalPrice = FinalPrice(r.price, r.discoundValue, r.DiscountType),
+                    }
+                    );
+                return new OkObjectResult(PatientRequests);
+            }
+            catch(Exception ex)
+            {
+                return new BadRequestObjectResult(ex.Message + ex.InnerException.Message);
+
+            }
+        }
+
+        private int FinalPrice(int price, int DiscountValue, DiscountType discountType)
+        {
+            int Value = 0;
+
+            if (discountType == DiscountType.value)
+               Value = DiscountValue;
+            else
+            {
+                Value = (price * DiscountValue) / 100;
+            }
+
+            return price - Value;
+        }
     }
 }

@@ -99,5 +99,94 @@ namespace Repository_Layer
                 return new BadRequestObjectResult(ex.Message + ex.InnerException.Message);
             }
         }
+
+
+
+        public IActionResult GetPatientRequests(string PatientId)
+        {
+            try
+            {
+                var Requests = Context.Set<Request>().Where(r => r.PatientId == PatientId);
+                var Requests_Appointment = Requests.Join(
+                    Context.Set<Times>(),
+                    r=>r.TimeId,
+                    t=>t.id,
+                    (r,t)=> new
+                    {
+                        r.DoctorId,
+                        r.Status,
+                        r.DiscountCodeId,
+                       Time= t.time.ToString(),
+                       t.AppointmentId,
+                    }
+                    
+                    ).Join(
+                    Context.Set<Appointment>(),
+                    r=>r.AppointmentId,
+                    a=>a.id,
+                    (r,a)=> new
+                    {
+                        r.DoctorId,
+                        r.Status,
+                        r.DiscountCodeId,
+                        r.Time,
+                       Day= a.day.ToString(),
+
+                    }
+                    );
+
+                var Requests_Discount = Requests_Appointment.GroupJoin(
+                                            Context.Set<DiscountCode>(),
+                                           request => request.DiscountCodeId,
+                                            coupon => coupon.id,
+                                            (request, coupon) => new
+                                            {
+                                               request,
+                                                coupon
+                                            }).SelectMany(
+                                                coupon => coupon.coupon.DefaultIfEmpty(),
+                                                (r, c) => new
+                                                {
+                                                    r.request.DoctorId,
+                                                    r.request.Status,
+                                                    r.request.Day,
+                                                    r.request.Time,
+                                                    DiscountType = (c == null) ? 0 : c.discountType,
+                                                    Value = (c == null) ? 0 : c.value,
+                                                    Name = (c == null) ? "No Discount" : c.code
+                                                }
+                                            );
+
+                var Requests_Doctor = Requests_Discount.Join(
+                    Context.Set<Doctor>(),
+                    r=>r.DoctorId,
+                    d=>d.id,
+                    (r,d)=> new PatientRequestsDto
+                    { 
+                    ImagePath = d.User.Image,
+                    DoctorName =d.User.FullName,
+                    SpecializationName =d.Specialization.SpecializationName,
+                    price =d.Price??0,
+                    Day = r.Day,
+                    Time =r.Time,
+                    RequestStatus = r.Status.ToString(),
+                    discoundCodeName =r.Name,
+                    DiscountType =r.DiscountType,
+                    discoundValue =r.Value
+                    
+                    });
+
+         
+                return new OkObjectResult(Requests_Doctor.ToList());
+            }
+            catch (Exception ex)
+            {
+                return new BadRequestObjectResult(ex.Message + ex.InnerException.ToString);
+            }
+
+
+        }
+
+
     }
 }

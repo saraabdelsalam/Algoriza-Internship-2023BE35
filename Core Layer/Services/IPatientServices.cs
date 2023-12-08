@@ -12,5 +12,6 @@ namespace Core_Layer.Services
     {
         Task<IActionResult> CancelRequest(int RequestId);
         Task<IActionResult> GetAllPatients(int PageNumber, int PageSize, string search);
+        IActionResult GetPatientRequests(string PatientId);
     }
 }

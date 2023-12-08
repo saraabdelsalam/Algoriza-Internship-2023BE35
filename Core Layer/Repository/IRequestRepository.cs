@@ -12,10 +12,11 @@ namespace Core_Layer.Repository
 {
     public interface IRequestRepository: ICommonFunctions<Request>
     {
-             int TotalNumOfRequests();
+      int TotalNumOfRequests();
       int TotalNumOfRequests(Expression<Func<Request, bool>> condition);
 
-        IActionResult DoctorsRequests(string DoctorId, int PageSize, int PageNumber,
+      IActionResult DoctorsRequests(string DoctorId, int PageSize, int PageNumber,
             Func<DoctorsRequestsDto, bool> condition);
+      IActionResult GetPatientRequests(string PatientId);
     }
 }

@@ -98,5 +98,16 @@ namespace vezeeta.Controller
             return await _Patient.CancelRequest(BookingId);
 
         }
+
+        [HttpGet("GetBookings")]
+        public IActionResult GetBooking()
+        {
+            string? PatientId = User.Claims.FirstOrDefault(u=>u.Type==ClaimTypes.NameIdentifier)?.Value;
+            if(string.IsNullOrEmpty(PatientId))
+            {
+                return NotFound();
+            }
+            return _Patient.GetPatientRequests(PatientId);
+        }
     }
 }
