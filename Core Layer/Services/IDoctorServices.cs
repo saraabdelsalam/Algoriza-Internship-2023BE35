@@ -20,6 +20,7 @@ namespace Core_Layer.Services
         Task<IActionResult> ConfirmRequest(int RequestId);
         IActionResult Top10Doctors();
         IActionResult GetDoctor(string id);
+        IActionResult GetAllDoctors(int PageSize, int PageNumber, String search);
     }
 
 }

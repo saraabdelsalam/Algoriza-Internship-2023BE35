@@ -1,4 +1,5 @@
-﻿using Core_Layer.Models;
+﻿using Core_Layer.DTOs;
+using Core_Layer.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,5 +15,6 @@ namespace Core_Layer.Repository
         Task<IActionResult> GetDoctorUser(string userId);
         IActionResult Top10Doctors();
         IActionResult GetDoctorById(string id);
+        IActionResult GetAllDoctors(int pageSize, int pageNumber, Func<DoctorInfoDto, bool> predicate = null);
     }
 }

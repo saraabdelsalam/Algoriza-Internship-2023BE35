@@ -207,5 +207,42 @@ namespace Service_Layer.Services
 
 
         }
+        public IActionResult GetAllDoctors(int PageSize, int PageNumber, String search)
+        {
+            try {
+                Func<DoctorInfoDto, bool> predicate = null;
+
+                if (!string.IsNullOrEmpty(search))
+                    predicate = (d=> d.FullName.Contains(search) || d.Email.Contains(search));
+
+               
+                var Doctors = _unitOfWork._doctorRepository.GetAllDoctors(PageSize,PageNumber, predicate);
+                if (Doctors is not OkObjectResult okResult)
+                {
+                    return Doctors;
+                }
+                List<DoctorInfoDto> Alldoctors = okResult.Value as List<DoctorInfoDto>;
+
+                // Load doctor images
+                var AllDoctorsInfo = Alldoctors.Select(d => new
+                {
+                    Image = GetImage(d.ImagePath),
+                    FullName = d.FullName,
+                    Phone = d.PhoneNumber,
+                    Email = d.Email,
+                    Gender = d.Gender,
+                    Specialization = d.Specialization
+                }).ToList();
+
+                return new OkObjectResult(AllDoctorsInfo);
+
+
+
+            }
+            catch(Exception ex)
+            {
+                return new BadRequestObjectResult(ex.Message + ex.InnerException.Message);
+            }
+        }
     }
 }

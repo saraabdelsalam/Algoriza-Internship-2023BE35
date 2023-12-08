@@ -49,7 +49,7 @@ namespace vezeeta.Controller
                 return StatusCode(500, $"An error occurred while adding the Doctor: {ex.Message}");
             }
         }
-    
+     
 
 
         [HttpPut]
@@ -105,6 +105,16 @@ namespace vezeeta.Controller
             }
 
             return _doctor.GetDoctor(id);
+        }
+
+
+        [HttpGet("GetAll")]
+
+        public IActionResult GetAll(int PageSize, int PageNumber, string? search)
+        {
+         
+        return _doctor.GetAllDoctors(PageSize, PageNumber, search);
+            
         }
 
     }

@@ -20,10 +20,7 @@ namespace Repository_Layer
       
       
 
-        public Task<IQueryable<T>> GetAllAsync(int pageNumber, int pageSize, string search)
-        {
-            throw new NotImplementedException();
-        }
+      
         public T GetById(int id)
         {
 

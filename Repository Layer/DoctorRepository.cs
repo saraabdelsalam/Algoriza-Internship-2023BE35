@@ -94,5 +94,45 @@ namespace Repository_Layer
             }
 
         }
+
+        public IActionResult GetAllDoctors(int pageSize,int pageNumber,Func<DoctorInfoDto, bool> predicate= null)
+        {
+            try
+            {
+                IEnumerable<DoctorInfoDto> AllDoctors = Context.Set<Doctor>().Join(  
+                    Context.Set<ApplicationUser>(),
+                    Info => Info.UserId,
+                    user => user.Id,
+                    (Info, user) => new DoctorInfoDto
+                    {
+                        ImagePath = user.Image,
+                        FullName = user.FullName,
+                        Email = user.Email,
+                        PhoneNumber = user.PhoneNumber,
+                        Gender = Enum.GetName(user.Gender),
+                        Price = Info.Price ?? 0,
+                        Specialization = Info.Specialization.SpecializationName,
+                    });
+
+                if(predicate  != null)
+                {
+                    AllDoctors =AllDoctors.Where(predicate);
+                }
+                if(pageNumber != 0)
+                {
+                    AllDoctors = AllDoctors.Skip((pageNumber-1)*pageSize);
+                }
+            if(pageSize != 0)
+                {
+                    AllDoctors = AllDoctors.Take(pageSize);
+                }
+            return new OkObjectResult(AllDoctors.ToList());
+            }catch( Exception ex)
+            {
+                return new BadRequestObjectResult(ex.Message + ex.InnerException.Message);
+            }
+           
+
+        }
     }
 }
