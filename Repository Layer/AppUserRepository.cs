@@ -12,9 +12,9 @@ namespace Repository_Layer
 {
     public class AppUserRepository : BaseRepository<ApplicationUser>,IAppUserRepository
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        protected readonly UserManager<ApplicationUser> _userManager;
+        protected readonly RoleManager<IdentityRole> _roleManager;
+        protected readonly SignInManager<ApplicationUser> _signInManager;
         public AppUserRepository(ApplicationDbContext context, UserManager<ApplicationUser> userManager,RoleManager<IdentityRole> roleManager, SignInManager<ApplicationUser> signInManager):base(context)
         { 
             _userManager = userManager;

@@ -66,11 +66,14 @@ namespace Repository_Layer
     a=> a.id,
     (req,a)=> new DoctorsRequestsDto
     {
-        ImagePath= req.Image,
+        patientInfo = new PatientInfoDto{
+        ImagePath =req.Image,
         PatientName = req.FullName,
         PatientEmail = req.Email,
         PatientPhone = req.PhoneNumber,
         PatientGender = req.Gender.ToString(),
+        },
+         
         Day = a.day.ToString(),
         time = req.time,
     });

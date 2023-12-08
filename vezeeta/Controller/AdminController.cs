@@ -19,11 +19,12 @@ namespace vezeeta.Controller
 
         private readonly IDiscountCode _discountCodeServices;
         private readonly IAppUserServices _appUserServices;
-        
-        public AdminController(IDiscountCode DiscountCode, IAppUserServices appUserServices)
+        private readonly IPatientServices _petientServices;
+        public AdminController(IDiscountCode DiscountCode, IAppUserServices appUserServices, IPatientServices petientServices)
         {
             _discountCodeServices = DiscountCode;
             _appUserServices = appUserServices;
+            _petientServices = petientServices;
         }
 
 
@@ -106,6 +107,14 @@ namespace vezeeta.Controller
             };
             await _discountCodeServices.ChangeStatus(id);
             return Ok();
+        }
+
+
+        [Microsoft.AspNetCore.Mvc.HttpGet("AllPatients")]
+        public async Task<IActionResult> GetAllPatientsAsync( int PageNumber, int PageSize, string? search)
+        {
+
+            return await _petientServices.GetAllPatients(PageNumber,PageSize,search);
         }
     }
 }

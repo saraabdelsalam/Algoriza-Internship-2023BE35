@@ -9,12 +9,7 @@ namespace Core_Layer.DTOs
 {
     public class DoctorsRequestsDto
     {
-        public Image? PatientImage;
-        public string ImagePath;
-        public string PatientName;
-        public string PatientEmail;
-        public string PatientPhone;
-        public string PatientGender;
+        public PatientInfoDto patientInfo;
         public string Day;
         public string time;
     }

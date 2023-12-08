@@ -250,7 +250,7 @@ namespace Service_Layer.Services
                 Func<DoctorsRequestsDto, bool> condition = null;
                 if (string.IsNullOrEmpty(search))
                 {
-                    condition = (c=> c.PatientName.Contains(search) ||c.PatientEmail.Contains(search));
+                    condition = (c=> c.patientInfo.PatientName.Contains(search) ||c.patientInfo.PatientEmail.Contains(search));
 
                 }
                 var Result = _unitOfWork._requestRepository.DoctorsRequests(doctorId,PageSize,PageNum,condition);
@@ -267,11 +267,11 @@ namespace Service_Layer.Services
                 
                 var doctorsRequests = RequestsList.Select(r => new
                 {
-                    Image = GetImage(r.ImagePath),
-                    r.PatientName,
-                    r.PatientEmail,
-                     r.PatientPhone,
-                    r.PatientGender,
+                    Image = GetImage(r.patientInfo.ImagePath),
+                    r.patientInfo.PatientName,
+                    r.patientInfo.PatientEmail,
+                     r.patientInfo.PatientPhone,
+                    r.patientInfo.PatientGender,
                     r.Day,
                     r.time
                 }).ToList();
