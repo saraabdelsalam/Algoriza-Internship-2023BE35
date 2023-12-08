@@ -14,9 +14,12 @@ namespace vezeeta.Controller
     {
         private readonly IPatientServices _Patient;
         private readonly IRequestServices _request;
-        public PatientController(IPatientServices patient, IRequestServices request) {
+        private readonly IDoctorServices _doctor;
+        public PatientController(IPatientServices patient, IRequestServices request, IDoctorServices doctor = null)
+        {
             _Patient = patient;
             _request = request;
+            _doctor = doctor;
         }
         [HttpPost("Register")]
         [Consumes("multipart/form-data")]
@@ -108,6 +111,11 @@ namespace vezeeta.Controller
                 return NotFound();
             }
             return _Patient.GetPatientRequests(PatientId);
+        }
+        [HttpGet("GetDoctors")]
+        public IActionResult SearchDoctors(int PageNumber, int PageSize, string?search)
+        {
+           return _doctor.SearchDoctorsData(PageNumber,PageSize, search);
         }
     }
 }

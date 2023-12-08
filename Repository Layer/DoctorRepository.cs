@@ -4,6 +4,7 @@ using Core_Layer.Models;
 using Core_Layer.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -132,6 +133,59 @@ namespace Repository_Layer
                 return new BadRequestObjectResult(ex.Message + ex.InnerException.Message);
             }
            
+
+        }
+
+        public IActionResult SearchDoctors(int PageSize, int PageNumber, Func<DoctorInfoDto, bool> predicate=null)
+        {
+            try {
+
+
+                IEnumerable<DoctorInfoDto> DoctorsResult = Context.Set<Doctor>()
+                                            .Join
+                (
+                                                Context.Users,
+                                                doctor => doctor.UserId,
+                                                user => user.Id,
+                                                (doctor, user) => new DoctorInfoDto
+                                                {
+                                                    ImagePath = user.Image,
+                                                    FullName = user.FullName,
+                                                    Email = user.Email,
+                                                    PhoneNumber = user.PhoneNumber,
+                                                    Gender = user.Gender.ToString(),
+                                                    Specialization = doctor.Specialization.SpecializationName,
+                                                    Price = doctor.Price??0,
+                                                    Appointments = Context.Set<Appointment>()
+                                                                .Where(a => a.doctorId == doctor.id)
+                                                                .Select(a => new Days
+                                                                {
+                                                                    Day = a.day.ToString(),
+                                                                    Times = Context.Set<Times>()
+                                                                   .Where(at => at.AppointmentId == a.id)
+                                                                   .Select(at => at.time.ToString()).ToList(),
+                                                                }).ToList(),
+                                                }
+                                            );
+                if (predicate != null)
+                {
+                    DoctorsResult = DoctorsResult.Where(predicate);
+                }
+
+                if (PageNumber != 0)
+                    DoctorsResult = DoctorsResult.Skip((PageNumber - 1) * PageSize);
+
+                if (PageSize != 0)
+                    DoctorsResult = DoctorsResult.Take(PageSize);
+
+                return new OkObjectResult(DoctorsResult.ToList());
+
+
+            }
+            catch(Exception ex)
+            {
+                return new BadRequestObjectResult(ex.Message + ex.InnerException.Message);
+            }
 
         }
     }

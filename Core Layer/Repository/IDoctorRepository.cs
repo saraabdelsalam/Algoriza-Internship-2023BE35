@@ -14,6 +14,7 @@ namespace Core_Layer.Repository
 
         Task<IActionResult> GetDoctorUser(string userId);
         IActionResult Top10Doctors();
+        IActionResult SearchDoctors(int PageSize, int PageNumber, Func<DoctorInfoDto, bool> predicate);
         IActionResult GetDoctorById(string id);
         IActionResult GetAllDoctors(int pageSize, int pageNumber, Func<DoctorInfoDto, bool> predicate = null);
     }

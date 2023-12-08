@@ -19,6 +19,7 @@ namespace Core_Layer.Services
         Task<IActionResult> Edit(string id, UserDto userDto, string Specialize);
         Task<IActionResult> ConfirmRequest(int RequestId);
         IActionResult Top10Doctors();
+        IActionResult SearchDoctorsData(int PageNumber, int PageSize, string? search);
         IActionResult GetDoctor(string id);
         IActionResult GetAllDoctors(int PageSize, int PageNumber, String search);
         IActionResult GetDoctorsRequests(string doctorId, int PageNum, int PageSize, string search);

@@ -18,5 +18,6 @@ namespace Core_Layer.DTOs
         public string Gender;
         public string Specialization;
         public int Price;
+        public List<Days> Appointments;
     }
 }

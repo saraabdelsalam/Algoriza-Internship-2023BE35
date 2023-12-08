@@ -285,5 +285,51 @@ namespace Service_Layer.Services
 
 
         }
+   
+        public IActionResult SearchDoctorsData(int PageNumber, int PageSize, string? search)
+        {
+            try
+            {
+                Func<DoctorInfoDto, bool> condition = null;
+
+                if (!string.IsNullOrEmpty(search))
+                    condition= (a => a.FullName.Contains(search) || a.Email.Contains(search));
+
+              
+                var DoctorsResult = _unitOfWork._doctorRepository.SearchDoctors(PageNumber, PageSize, condition);
+                if (DoctorsResult is not OkObjectResult Result)
+                {
+                    return DoctorsResult;
+                }
+                List<DoctorInfoDto> ListOfDoctors = Result.Value as List<DoctorInfoDto>;
+
+                // Load doctor images
+                var doctorsInfo = ListOfDoctors.Select(d => new
+                {
+                    Image = GetImage(d.ImagePath),
+                    d.FullName,
+                    d.Email,
+                    d.PhoneNumber,
+                    d.Gender,
+                    d.Price,
+                    d.Specialization,
+                    d.Appointments
+                }).ToList();
+
+                return new OkObjectResult(doctorsInfo);
+            }
+            catch (Exception ex)
+            {
+                return new ObjectResult($"An error occurred while Getting Doctors info \n: {ex.Message}" +
+                    $"\n {ex.InnerException?.Message}")
+                {
+                    StatusCode = 500
+                };
+            }
+
+
+
+
+        }
     }
 }
