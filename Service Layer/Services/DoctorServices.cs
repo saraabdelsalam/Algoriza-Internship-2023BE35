@@ -132,7 +132,7 @@ namespace Service_Layer.Services
 
 
         }
-        public async Task<IActionResult> Edit(string id, UserDto userDto, string Specialize)
+        public async Task<IActionResult> Edit(string id, EditDoctorDTo userDto, string Specialize)
         {
             IActionResult result = await _unitOfWork._doctorRepository.GetDoctorUser(id);
 
@@ -147,7 +147,7 @@ namespace Service_Layer.Services
                 }
                 doc.Specialization = specialization;
 
-                ApplicationUser DoctorUser = _unitOfWork._userRepository.GetById(id);
+                ApplicationUser DoctorUser = _unitOfWork._userRepository.GetById(doc.UserId);
                 IActionResult updatesResult =await  Update_User(userDto, DoctorUser);
                 await _unitOfWork._doctorRepository.UpdateAsync(doc);
                 await _unitOfWork.SaveAsync();

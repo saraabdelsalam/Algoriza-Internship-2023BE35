@@ -30,7 +30,18 @@ namespace Service_Layer
             CreateMap<SignInDto, ApplicationUser>().
                 ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
                 .ForMember(dest => dest.PasswordHash, opt => opt.MapFrom(src => HashPassord(src.Password))).ReverseMap();
-         
+
+
+            CreateMap<EditDoctorDTo, ApplicationUser>()
+                  .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"))
+                  .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.Phone))
+                  .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Gender))
+                  .ForMember(dest => dest.DateOfBirth, opt => opt.MapFrom(src => src.DateOfBirth))
+                  .ForMember(dest => dest.Image, opt => opt.MapFrom(src => SaveImage(src.Image)))
+                  .ReverseMap();
+
+
+
         }
 
 

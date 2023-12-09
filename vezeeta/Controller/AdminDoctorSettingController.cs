@@ -56,17 +56,9 @@ namespace vezeeta.Controller
 
         [HttpPut]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> UpdateDoctor([FromForm] string id, [FromForm] UserDto userDTO, [FromForm] string Specialize)
+        public async Task<IActionResult> UpdateDoctor([FromForm] string id, [FromForm] EditDoctorDTo userDTO, [FromForm] string Specialize)
         {
-            if (string.IsNullOrEmpty(Specialize))
-            {
-                ModelState.AddModelError("Specialize", "Specialize Is Required");
-            }
-            //if (userDTO.Image == null || userDTO.Image.Length == 0)
-            //{
-            //    ModelState.AddModelError("userDTO.Image", "Image Is Required");
-            //}
-
+           
             if (string.IsNullOrEmpty(id))
             {
                 ModelState.AddModelError("Id", "Id Is Required");

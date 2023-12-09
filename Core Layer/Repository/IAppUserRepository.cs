@@ -13,17 +13,17 @@ namespace Repository_Layer
 {
     public interface IAppUserRepository: IBaseRepository<ApplicationUser>
     {
-        public Task<ApplicationUser> GetUserByID(string id);
-        public Task<bool> CheckPassword(ApplicationUser user, string password);
-        public Task<int> NumberOfUsersAsync(string userRole);
-        public Task<IdentityResult> AddUser(ApplicationUser user);
-       public Task<ApplicationUser> FindByEmail(string email);
+        Task<ApplicationUser> GetUserByID(string id);
+        Task<bool> CheckPassword(ApplicationUser user, string password);
+        Task<int> NumberOfUsersAsync(string userRole);
+        Task<IdentityResult> AddUser(ApplicationUser user);
+        Task<ApplicationUser> FindByEmail(string email);
         Task<bool> InRole(ApplicationUser user);
-        public  Task AssignRole(ApplicationUser user, string role);
-        public Task AddSignInCookie(ApplicationUser user, bool rememberMe);
-        public Task SignIn(ApplicationUser User, bool RememberMe);
-        public Task<IActionResult> UpdateUser(ApplicationUser user);
-        public Task DeleteUser(ApplicationUser user);
-        public Task SignOut();
+        Task AssignRole(ApplicationUser user, string role);
+        Task AddSignInCookie(ApplicationUser user, bool rememberMe);
+        Task SignIn(ApplicationUser User, bool RememberMe);
+        Task<IActionResult> UpdateUser(ApplicationUser user);
+        Task DeleteUser(ApplicationUser user);
+        Task SignOut();
     }
 }

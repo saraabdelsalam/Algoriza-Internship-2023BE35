@@ -15,6 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
+using Microsoft.EntityFrameworkCore;
 
 namespace Service_Layer.Services
 {
@@ -70,15 +71,25 @@ namespace Service_Layer.Services
 
         }
 
-        public async Task<IActionResult> Update_User(UserDto userDto,ApplicationUser user)
+        public async Task<IActionResult> Update_User(EditDoctorDTo userDto,ApplicationUser user)
         {
             ApplicationUser EditedUser = _mapper.Map<ApplicationUser>(userDto);
-            user = EditedUser;
+            user.FullName = EditedUser.FullName;
+            user.PhoneNumber = EditedUser.PhoneNumber;
+            user.DateOfBirth = EditedUser.DateOfBirth;
+            user.Image = EditedUser.Image;
+            user.Gender = EditedUser.Gender;
             try
             {
 
                 IActionResult result = await _unitOfWork._userRepository.UpdateUser(user);
                 return result;
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                // Handle concurrency conflict
+                // You might choose to reload the entity again, prompt the user, or take another action
+                return new BadRequestObjectResult($"Concurrency conflict: {ex.Message}");
             }
             catch (Exception ex)
             {
