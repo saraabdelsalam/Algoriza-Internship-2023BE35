@@ -8,7 +8,7 @@ namespace Repository_Layer.Generic_Repo
 {
     public interface IBaseRepository< T> where T : class
 {
-      
+      //method overloading
         T GetById(int id);
         T GetById(string id);
 

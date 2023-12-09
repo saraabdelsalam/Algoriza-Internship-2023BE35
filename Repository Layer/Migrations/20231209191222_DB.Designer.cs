@@ -12,8 +12,8 @@ using Repository_Layer;
 namespace Repository_Layer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231205152516_roles2")]
-    partial class roles2
+    [Migration("20231209191222_DB")]
+    partial class DB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -106,20 +106,21 @@ namespace Repository_Layer.Migrations
                         {
                             Id = "02174cf0–9412–4cfe - afbf - 59f706d72cf6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1712f35e-0987-43ec-928a-29cb67e39704",
-                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ConcurrencyStamp = "ed0d2d46-78a9-4e58-a832-d850b5a72c3e",
+                            DateOfBirth = new DateTime(2001, 6, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@vezeeta.com",
                             EmailConfirmed = true,
                             FullName = "sara abdelsalam",
                             Gender = 0,
                             LockoutEnabled = false,
-                            NormalizedUserName = "sara abdelsalam",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOMLucXvDpbpSGLu1fF6vXV7PLFVbfXdWn06FDEW/J4PnB742+lYnfQrQDpz5n96HA==",
+                            NormalizedEmail = "ADMIN@VEZEETA.COM",
+                            NormalizedUserName = "02174cf0–9412–4cfe - afbf - 59f706d72cf6",
+                            PasswordHash = "AQAAAAEAACcQAAAAEICMJ7ssohIhaqTzBOhgeSQRuSDzfkc7Sqle9fiIhY9oNED/Q/2IpmINNL0gkweRRA==",
                             PhoneNumber = "01021122226",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "32d24df3-f59b-4442-8848-3b8036a53da6",
+                            SecurityStamp = "c15a3122-22ee-402f-8c72-6c52fb49995f",
                             TwoFactorEnabled = false,
-                            UserName = "sara abdelsalam"
+                            UserName = "02174cf0–9412–4cfe - afbf - 59f706d72cf6"
                         });
                 });
 
@@ -134,12 +135,12 @@ namespace Repository_Layer.Migrations
                     b.Property<int>("day")
                         .HasColumnType("int");
 
-                    b.Property<string>("docid")
+                    b.Property<string>("doctorId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("id");
 
-                    b.HasIndex("docid");
+                    b.HasIndex("doctorId");
 
                     b.ToTable("Appointments");
                 });
@@ -204,34 +205,36 @@ namespace Repository_Layer.Migrations
 
             modelBuilder.Entity("Core_Layer.Models.Request", b =>
                 {
-                    b.Property<int>("RequestId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RequestId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Doctorid")
+                    b.Property<int?>("DiscountCodeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DoctorId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PatientId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("Status")
+                    b.Property<int?>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int>("finalPrice")
+                    b.Property<int?>("TimeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("timeId")
-                        .HasColumnType("int");
+                    b.HasKey("Id");
 
-                    b.HasKey("RequestId");
+                    b.HasIndex("DiscountCodeId");
 
-                    b.HasIndex("Doctorid");
+                    b.HasIndex("DoctorId");
 
                     b.HasIndex("PatientId");
 
-                    b.HasIndex("timeId");
+                    b.HasIndex("TimeId");
 
                     b.ToTable("Requests");
                 });
@@ -267,6 +270,26 @@ namespace Repository_Layer.Migrations
                         {
                             id = 3,
                             SpecializationName = "Nutrition"
+                        },
+                        new
+                        {
+                            id = 4,
+                            SpecializationName = "Pediatrics"
+                        },
+                        new
+                        {
+                            id = 5,
+                            SpecializationName = "Psychiatry"
+                        },
+                        new
+                        {
+                            id = 6,
+                            SpecializationName = "Ear, Nose and Throat"
+                        },
+                        new
+                        {
+                            id = 7,
+                            SpecializationName = "Orthopedics(Bones)"
                         });
                 });
 
@@ -278,15 +301,16 @@ namespace Repository_Layer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
-                    b.Property<int>("Appointmentid")
+                    b.Property<int>("AppointmentId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("time")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeSpan?>("time")
+                        .IsRequired()
+                        .HasColumnType("time");
 
                     b.HasKey("id");
 
-                    b.HasIndex("Appointmentid");
+                    b.HasIndex("AppointmentId");
 
                     b.ToTable("times");
                 });
@@ -321,21 +345,21 @@ namespace Repository_Layer.Migrations
                         new
                         {
                             Id = "e014c5f9-775e-4112-bbc9-5a6859f60a6a",
-                            ConcurrencyStamp = "1e2bcf3b-66f9-4405-a72d-5f21f8406799",
+                            ConcurrencyStamp = "f53984fe-91f6-4f26-af37-20ff3832896a",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "63d379ae-8133-4256-b413-20b3a402dc8c",
-                            ConcurrencyStamp = "988f6fc7-e1c4-4e66-8ea0-9a84d0418c9a",
+                            ConcurrencyStamp = "191cfa43-3537-4dab-97d9-b0a6c2735491",
                             Name = "Doctor",
                             NormalizedName = "DOCTOR"
                         },
                         new
                         {
                             Id = "35ea9a1d-a34c-458d-a7cb-4fe2d240d95a",
-                            ConcurrencyStamp = "cc14c763-78c1-404d-aba0-fbc52d46082c",
+                            ConcurrencyStamp = "bb800914-b683-4ddb-8b55-be1a342074d8",
                             Name = "Patient",
                             NormalizedName = "PATIENT"
                         });
@@ -456,11 +480,11 @@ namespace Repository_Layer.Migrations
 
             modelBuilder.Entity("Core_Layer.Models.Appointment", b =>
                 {
-                    b.HasOne("Core_Layer.Models.Doctor", "doc")
+                    b.HasOne("Core_Layer.Models.Doctor", null)
                         .WithMany()
-                        .HasForeignKey("docid");
-
-                    b.Navigation("doc");
+                        .HasForeignKey("doctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_Appointments_Doctors_DoctorId");
                 });
 
             modelBuilder.Entity("Core_Layer.Models.Doctor", b =>
@@ -482,32 +506,36 @@ namespace Repository_Layer.Migrations
 
             modelBuilder.Entity("Core_Layer.Models.Request", b =>
                 {
-                    b.HasOne("Core_Layer.Models.Doctor", "Doctor")
+                    b.HasOne("Core_Layer.Models.DiscountCode", null)
                         .WithMany()
-                        .HasForeignKey("Doctorid");
+                        .HasForeignKey("DiscountCodeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasConstraintName("FK_Requests_discountCodes_DiscountCodeId");
 
-                    b.HasOne("Core_Layer.Models.ApplicationUser", "Patient")
+                    b.HasOne("Core_Layer.Models.Doctor", null)
                         .WithMany()
-                        .HasForeignKey("PatientId");
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasConstraintName("FK_Requests_Doctors_DoctorId");
 
-                    b.HasOne("Core_Layer.Models.Times", "time")
+                    b.HasOne("Core_Layer.Models.ApplicationUser", null)
                         .WithMany()
-                        .HasForeignKey("timeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasConstraintName("FK_Requests_AspNetUsers_PatientId");
 
-                    b.Navigation("Doctor");
-
-                    b.Navigation("Patient");
-
-                    b.Navigation("time");
+                    b.HasOne("Core_Layer.Models.Times", null)
+                        .WithMany()
+                        .HasForeignKey("TimeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasConstraintName("FK_Requests_Times_TimeId");
                 });
 
             modelBuilder.Entity("Core_Layer.Models.Times", b =>
                 {
                     b.HasOne("Core_Layer.Models.Appointment", "Appointment")
                         .WithMany("times")
-                        .HasForeignKey("Appointmentid")
+                        .HasForeignKey("AppointmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

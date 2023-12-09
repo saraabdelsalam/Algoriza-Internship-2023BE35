@@ -30,7 +30,8 @@ namespace vezeeta.Controller
 
 
      
-        [Microsoft.AspNetCore.Mvc.HttpPost]
+        [Microsoft.AspNetCore.Mvc.HttpPost("AddDiscountCode")]
+        
         public async Task<IActionResult> CreateDiscountCode(DiscountCode code)
         {
             if (code == null)
@@ -49,9 +50,9 @@ namespace vezeeta.Controller
         }
 
        
-        [Microsoft.AspNetCore.Mvc.HttpPut]
-       
-      public async Task<IActionResult> EditDiscountCode(DiscountCode code)
+        [Microsoft.AspNetCore.Mvc.HttpPut("EditDiscountCode")]
+     
+        public async Task<IActionResult> EditDiscountCode(DiscountCode code)
         {
             if(code == null)
             {
@@ -68,6 +69,7 @@ namespace vezeeta.Controller
         }
        
         [Microsoft.AspNetCore.Mvc.HttpDelete]
+        [Route("DeleteDiscountCode")]
         public async Task<IActionResult> DeleteDiscountCode(int id)
         {
             if (!ModelState.IsValid)

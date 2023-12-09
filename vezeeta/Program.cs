@@ -33,8 +33,7 @@ builder.Services.AddTransient<IAppointmentServices, AppointmentServices>();
 builder.Services.AddTransient<ITimesServices, TimesServices>(); 
 builder.Services.AddTransient<IRequestServices, RequestServices>();
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
-////localization
-//builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
 
 // inject auto mapper
 var mapperConfig = new MapperConfiguration(cfg =>
@@ -55,13 +54,7 @@ builder.Services.AddSwaggerGen();
 
 
     var app = builder.Build();
-//var supportedCultures = new[] { "en-US", "ar" };
-//var localizationOptions =
-//    new RequestLocalizationOptions().SetDefaultCulture(supportedCultures[0])
-//    .AddSupportedCultures(supportedCultures)
-//    .AddSupportedUICultures(supportedCultures);
 
-//app.UseRequestLocalization(localizationOptions);
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

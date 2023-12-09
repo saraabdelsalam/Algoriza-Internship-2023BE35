@@ -20,6 +20,7 @@ namespace Repository_Layer
         {
             return Context.Set<Specialization>().FirstOrDefault(s=> s.SpecializationName==name);
         }
+        //Top Specializations depending on number of requests for doctors in certain specialization
         public IActionResult Top5Sepecializations()
         {
             var Top = Context.Set<Request>().Join(

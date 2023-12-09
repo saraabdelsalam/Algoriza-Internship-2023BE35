@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Repository_Layer.Migrations
 {
-    public partial class first : Migration
+    public partial class DB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -194,7 +194,7 @@ namespace Repository_Layer.Migrations
                 {
                     id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Specializationid = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -204,7 +204,8 @@ namespace Repository_Layer.Migrations
                         name: "FK_Doctors_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Doctors_specializations_Specializationid",
                         column: x => x.Specializationid,
@@ -219,16 +220,17 @@ namespace Repository_Layer.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     day = table.Column<int>(type: "int", nullable: false),
-                    docid = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    doctorId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Appointments", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Appointments_Doctors_docid",
-                        column: x => x.docid,
+                        name: "FK_Appointments_Doctors_DoctorId",
+                        column: x => x.doctorId,
                         principalTable: "Doctors",
-                        principalColumn: "id");
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -237,15 +239,15 @@ namespace Repository_Layer.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    time = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Appointmentid = table.Column<int>(type: "int", nullable: false)
+                    time = table.Column<TimeSpan>(type: "time", nullable: false),
+                    AppointmentId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_times", x => x.id);
                     table.ForeignKey(
-                        name: "FK_times_Appointments_Appointmentid",
-                        column: x => x.Appointmentid,
+                        name: "FK_times_Appointments_AppointmentId",
+                        column: x => x.AppointmentId,
                         principalTable: "Appointments",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -255,39 +257,41 @@ namespace Repository_Layer.Migrations
                 name: "Requests",
                 columns: table => new
                 {
-                    RequestId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    finalPrice = table.Column<int>(type: "int", nullable: false),
-                    timeId = table.Column<int>(type: "int", nullable: false),
-                    Doctorid = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: true),
+                    TimeId = table.Column<int>(type: "int", nullable: true),
+                    DoctorId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     PatientId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    DiscountCodeid = table.Column<int>(type: "int", nullable: true)
+                    DiscountCodeId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Requests", x => x.RequestId);
+                    table.PrimaryKey("PK_Requests", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Requests_AspNetUsers_PatientId",
                         column: x => x.PatientId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Requests_discountCodes_DiscountCodeid",
-                        column: x => x.DiscountCodeid,
+                        name: "FK_Requests_discountCodes_DiscountCodeId",
+                        column: x => x.DiscountCodeId,
                         principalTable: "discountCodes",
-                        principalColumn: "id");
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Requests_Doctors_Doctorid",
-                        column: x => x.Doctorid,
+                        name: "FK_Requests_Doctors_DoctorId",
+                        column: x => x.DoctorId,
                         principalTable: "Doctors",
-                        principalColumn: "id");
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Requests_times_timeId",
-                        column: x => x.timeId,
+                        name: "FK_Requests_Times_TimeId",
+                        column: x => x.TimeId,
                         principalTable: "times",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
@@ -295,15 +299,15 @@ namespace Repository_Layer.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "84f9279f-3572-4994-acac-2048071ab9d9", "d322cd00-4e56-49e7-9d06-2443b0480096", "Doctor", "DOCTOR" },
-                    { "947f3b28-c7cc-4309-bbf0-023ac6f207a4", "ebf56277-fc6e-4d6f-8112-750f04db599f", "Patient", "PATIENT" },
-                    { "e014c5f9-775e-4112-bbc9-5a6859f60a6a", "80054619-cfb9-4d90-b003-be8f47123ff5", "Admin", "ADMIN" }
+                    { "35ea9a1d-a34c-458d-a7cb-4fe2d240d95a", "bb800914-b683-4ddb-8b55-be1a342074d8", "Patient", "PATIENT" },
+                    { "63d379ae-8133-4256-b413-20b3a402dc8c", "191cfa43-3537-4dab-97d9-b0a6c2735491", "Doctor", "DOCTOR" },
+                    { "e014c5f9-775e-4112-bbc9-5a6859f60a6a", "f53984fe-91f6-4f26-af37-20ff3832896a", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DateOfBirth", "Email", "EmailConfirmed", "FullName", "Gender", "Image", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "02174cf0–9412–4cfe - afbf - 59f706d72cf6", 0, "122a68e5-4cc2-4d4f-abd4-77b89bd2854d", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@vezeeta.com", true, "sara abdelsalam", 0, null, false, null, null, "sara abdelsalam", "AQAAAAEAACcQAAAAEFA5eCirYG0KCOHP32J7w3KBagnJ8KOUHS2KR/1ikczy8vdh6+NFeG1zAty/n8HxCw==", "01021122226", false, "012ffeb2-eb5b-4f05-8d27-86825d8cdab2", false, "sara abdelsalam" });
+                values: new object[] { "02174cf0–9412–4cfe - afbf - 59f706d72cf6", 0, "ed0d2d46-78a9-4e58-a832-d850b5a72c3e", new DateTime(2001, 6, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@vezeeta.com", true, "sara abdelsalam", 0, null, false, null, "ADMIN@VEZEETA.COM", "02174cf0–9412–4cfe - afbf - 59f706d72cf6", "AQAAAAEAACcQAAAAEICMJ7ssohIhaqTzBOhgeSQRuSDzfkc7Sqle9fiIhY9oNED/Q/2IpmINNL0gkweRRA==", "01021122226", false, "c15a3122-22ee-402f-8c72-6c52fb49995f", false, "02174cf0–9412–4cfe - afbf - 59f706d72cf6" });
 
             migrationBuilder.InsertData(
                 table: "specializations",
@@ -312,7 +316,11 @@ namespace Repository_Layer.Migrations
                 {
                     { 1, "Dermatology" },
                     { 2, "Dentistry" },
-                    { 3, "Nutrition" }
+                    { 3, "Nutrition" },
+                    { 4, "Pediatrics" },
+                    { 5, "Psychiatry" },
+                    { 6, "Ear, Nose and Throat" },
+                    { 7, "Orthopedics(Bones)" }
                 });
 
             migrationBuilder.InsertData(
@@ -321,9 +329,9 @@ namespace Repository_Layer.Migrations
                 values: new object[] { "e014c5f9-775e-4112-bbc9-5a6859f60a6a", "02174cf0–9412–4cfe - afbf - 59f706d72cf6" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Appointments_docid",
+                name: "IX_Appointments_doctorId",
                 table: "Appointments",
-                column: "docid");
+                column: "doctorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -375,14 +383,14 @@ namespace Repository_Layer.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Requests_DiscountCodeid",
+                name: "IX_Requests_DiscountCodeId",
                 table: "Requests",
-                column: "DiscountCodeid");
+                column: "DiscountCodeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Requests_Doctorid",
+                name: "IX_Requests_DoctorId",
                 table: "Requests",
-                column: "Doctorid");
+                column: "DoctorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Requests_PatientId",
@@ -390,14 +398,14 @@ namespace Repository_Layer.Migrations
                 column: "PatientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Requests_timeId",
+                name: "IX_Requests_TimeId",
                 table: "Requests",
-                column: "timeId");
+                column: "TimeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_times_Appointmentid",
+                name: "IX_times_AppointmentId",
                 table: "times",
-                column: "Appointmentid");
+                column: "AppointmentId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
