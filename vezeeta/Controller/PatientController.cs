@@ -11,7 +11,7 @@ namespace vezeeta.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Patient")]
+   
     public class PatientController : ControllerBase
     {
         private readonly IPatientServices _Patient;
@@ -47,6 +47,7 @@ namespace vezeeta.Controller
 
 
         [HttpPost("Book Appointment")]
+        [Authorize(Roles = "Patient")]
         public async Task<IActionResult> BookAppointment(int timeId, string? discountCode)
         {
 
@@ -66,6 +67,7 @@ namespace vezeeta.Controller
 
 
         [HttpPatch("Cancell Booking")]
+        [Authorize(Roles = "Patient")]
         public async Task<IActionResult> CancellBooking(int BookingId)
         {
             if (BookingId == 0)
@@ -79,6 +81,7 @@ namespace vezeeta.Controller
         }
 
         [HttpGet("GetBookings")]
+        [Authorize(Roles = "Patient")]
         public IActionResult GetBooking()
         {
             string? PatientId = User.Claims.FirstOrDefault(u=>u.Type==ClaimTypes.NameIdentifier)?.Value;
@@ -89,6 +92,7 @@ namespace vezeeta.Controller
             return _Patient.GetPatientRequests(PatientId);
         }
         [HttpGet("GetDoctors")]
+        [Authorize(Roles = "Patient")]
         public IActionResult SearchDoctors(int PageNumber, int PageSize, string?search)
         {
            return _doctor.SearchDoctorsData(PageNumber,PageSize, search);
