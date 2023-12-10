@@ -183,12 +183,7 @@ namespace Service_Layer.Services
                 
             
         }
-       //top specializations 
-        public IActionResult Top5()
-        {
-            return _unitOfWork._specializationRepo.Top5Sepecializations();
-        }
-
+      
         protected Bitmap GetImage(string imagePath)
         {
             if (string.IsNullOrEmpty(imagePath))

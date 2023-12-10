@@ -12,7 +12,6 @@ using Service_Layer;
 using Service_Layer.Interfaces;
 using Service_Layer.Interfaces.Admin;
 using Service_Layer.Services;
-using Service_Layer.Services.Admin;
 using vezeeta;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,6 +31,7 @@ builder.Services.AddTransient<IPatientServices, PatientServices>();
 builder.Services.AddTransient<IAppointmentServices, AppointmentServices>();
 builder.Services.AddTransient<ITimesServices, TimesServices>(); 
 builder.Services.AddTransient<IRequestServices, RequestServices>();
+builder.Services.AddTransient<ISpecializationServices, SpecializationServices>();
 builder.Services.AddTransient<IEmailSender,EmailSenderService>();
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 

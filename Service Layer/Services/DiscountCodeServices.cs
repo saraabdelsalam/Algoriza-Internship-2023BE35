@@ -9,9 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service_Layer.Services.Admin
+namespace Service_Layer.Services
 {
-    public class DiscountCodeServices: IDiscountCode
+    public class DiscountCodeServices : IDiscountCode
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -23,40 +23,40 @@ namespace Service_Layer.Services.Admin
 
         public async Task AddDiscountCode(DiscountCode discountCode)
         {
-            
+
             await _unitOfWork._discountRepository.AddAsync(discountCode);
             await _unitOfWork.SaveAsync();
-           
+
 
         }
-        public  async Task EditDiscountCode(DiscountCode discountCode)
+        public async Task EditDiscountCode(DiscountCode discountCode)
         {
 
-          
-              await _unitOfWork._discountRepository.UpdateAsync(discountCode);
-                await _unitOfWork.SaveAsync();
-                
-     
+
+            await _unitOfWork._discountRepository.UpdateAsync(discountCode);
+            await _unitOfWork.SaveAsync();
+
+
         }
         public async Task DeleteDiscountCode(int id)
         {
-            var code =  _unitOfWork._discountRepository.GetById(id);
-           await _unitOfWork._discountRepository.DeleteAsync(code);
+            var code = _unitOfWork._discountRepository.GetById(id);
+            await _unitOfWork._discountRepository.DeleteAsync(code);
             await _unitOfWork.SaveAsync();
         }
         public async Task ChangeStatus(int id)
         {
             var code = _unitOfWork._discountRepository.GetById(id);
-            if(code.Activated == true)
+            if (code.Activated == true)
             {
-                code.Activated= false;
-               await _unitOfWork._discountRepository.UpdateAsync(code);
-              await  _unitOfWork.SaveAsync();   
+                code.Activated = false;
+                await _unitOfWork._discountRepository.UpdateAsync(code);
+                await _unitOfWork.SaveAsync();
             }
 
         }
 
-     
-       
+
+
     }
 }

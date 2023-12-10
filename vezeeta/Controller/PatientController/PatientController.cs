@@ -7,11 +7,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace vezeeta.Controller
+namespace vezeeta.Controller.PatientController
 {
     [Route("api/[controller]")]
     [ApiController]
-   
+
     public class PatientController : ControllerBase
     {
         private readonly IPatientServices _Patient;
@@ -53,10 +53,10 @@ namespace vezeeta.Controller
 
             if (timeId <= 0)
             {
-                ModelState.AddModelError("timeId","Invalid timeId");
+                ModelState.AddModelError("timeId", "Invalid timeId");
             }
             string? patientId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if(patientId == null)
+            if (patientId == null)
             {
                 return new BadRequestObjectResult("Login First");
             }
@@ -84,8 +84,8 @@ namespace vezeeta.Controller
         [Authorize(Roles = "Patient")]
         public IActionResult GetBooking()
         {
-            string? PatientId = User.Claims.FirstOrDefault(u=>u.Type==ClaimTypes.NameIdentifier)?.Value;
-            if(string.IsNullOrEmpty(PatientId))
+            string? PatientId = User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(PatientId))
             {
                 return NotFound();
             }
@@ -93,9 +93,9 @@ namespace vezeeta.Controller
         }
         [HttpGet("GetDoctors")]
         [Authorize(Roles = "Patient")]
-        public IActionResult SearchDoctors(int PageNumber, int PageSize, string?search)
+        public IActionResult SearchDoctors(int PageNumber, int PageSize, string? search)
         {
-           return _doctor.SearchDoctorsData(PageNumber,PageSize, search);
+            return _doctor.SearchDoctorsData(PageNumber, PageSize, search);
         }
     }
 }

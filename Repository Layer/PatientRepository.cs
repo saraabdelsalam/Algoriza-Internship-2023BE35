@@ -36,13 +36,13 @@ namespace Repository_Layer
                     PatientGender = p.Gender.ToString(),
                 });
 
-               
+                // Apply Search & Pagination 
                 if (criteria != null)
                 {
                     PatientsResult = PatientsResult.Where(criteria);
                 }
 
-                // Apply Pagination 
+             
                 if (Page != 0)
                     PatientsResult = PatientsResult.Skip((Page - 1) * PageSize);
 

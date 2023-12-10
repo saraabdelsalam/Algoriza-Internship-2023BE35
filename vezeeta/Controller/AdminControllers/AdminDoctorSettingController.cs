@@ -6,21 +6,21 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service_Layer.Interfaces.Admin;
 using Service_Layer.Services;
-using Service_Layer.Services.Admin;
 
-namespace vezeeta.Controller
+
+namespace vezeeta.Controller.AdminControllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles="Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminDoctorSettingController : ControllerBase
     {
         private readonly IDoctorServices _doctor;
         private readonly IAppUserServices _userServices;
 
-        public AdminDoctorSettingController( IDoctorServices doctor, IAppUserServices userServices)
+        public AdminDoctorSettingController(IDoctorServices doctor, IAppUserServices userServices)
         {
-            
+
             _doctor = doctor;
             _userServices = userServices;
         }
@@ -52,14 +52,14 @@ namespace vezeeta.Controller
                 return StatusCode(500, $"An error occurred while adding the Doctor: {ex.Message}");
             }
         }
-     
+
 
 
         [HttpPut]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> UpdateDoctor([FromForm] string id, [FromForm] EditDoctorDTo userDTO, [FromForm] string Specialize)
         {
-           
+
             if (string.IsNullOrEmpty(id))
             {
                 ModelState.AddModelError("Id", "Id Is Required");
@@ -77,7 +77,7 @@ namespace vezeeta.Controller
         public async Task<IActionResult> DeleteDoctor(string id)
         {
 
-            if(string.IsNullOrEmpty(id))
+            if (string.IsNullOrEmpty(id))
             {
                 ModelState.AddModelError("id", "id is required");
             }
@@ -86,7 +86,7 @@ namespace vezeeta.Controller
 
 
         [HttpGet("GetById")]
-        
+
         public IActionResult GetById([FromForm] string id)
         {
             if (string.IsNullOrEmpty(id))
@@ -107,9 +107,9 @@ namespace vezeeta.Controller
 
         public IActionResult GetAll(int PageSize, int PageNumber, string? search)
         {
-         
-        return _doctor.GetAllDoctors(PageSize, PageNumber, search);
-            
+
+            return _doctor.GetAllDoctors(PageSize, PageNumber, search);
+
         }
 
     }

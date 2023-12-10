@@ -38,6 +38,7 @@ namespace Repository_Layer
 
         public IActionResult Top10Doctors()
         {
+            //join Requests table with Doctors table
             var Top10 = Context.Set<Request>().GroupBy(r => r.DoctorId).Select(
                 requestGrouping => new
                 {
@@ -52,6 +53,7 @@ namespace Repository_Layer
                 {
                     userId = doct.id,
                     RequestsNum = doc.RequestsNum,
+                    //join with Application user table to get the rest of doctor's information
                 }).Join(Context.Set<ApplicationUser>(),
                  doc => doc.userId,
                  user => user.Id,
@@ -95,7 +97,7 @@ namespace Repository_Layer
             }
 
         }
-
+        //Get All doctors in admin side
         public IActionResult GetAllDoctors(int pageSize,int pageNumber,Func<DoctorInfoDto, bool> predicate= null)
         {
             try
@@ -114,7 +116,7 @@ namespace Repository_Layer
                         Price = Info.Price ?? 0,
                         Specialization = Info.Specialization.SpecializationName,
                     });
-
+                //search & pagination part
                 if(predicate  != null)
                 {
                     AllDoctors =AllDoctors.Where(predicate);
@@ -136,6 +138,7 @@ namespace Repository_Layer
 
         }
 
+        //search doctors in patient side
         public IActionResult SearchDoctors(int PageSize, int PageNumber, Func<DoctorInfoDto, bool> predicate=null)
         {
             try {
@@ -166,7 +169,9 @@ namespace Repository_Layer
                                                                    .Select(at => at.time.ToString()).ToList(),
                                                                 }).ToList(),
                                                 }
-                                            );
+                         
+                                                );
+                //search & pagination part
                 if (predicate != null)
                 {
                     DoctorsResult = DoctorsResult.Where(predicate);

@@ -9,7 +9,7 @@ using System.Drawing.Printing;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
 
-namespace vezeeta.Controller
+namespace vezeeta.Controller.DoctorController
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -28,7 +28,7 @@ namespace vezeeta.Controller
         }
 
 
- 
+
         [HttpPost("Set Price")]
 
         public async Task<IActionResult> SetPrice(int price)
@@ -52,12 +52,12 @@ namespace vezeeta.Controller
 
 
         [HttpPost("Appointments")]
-      
+
         public async Task<IActionResult> AddAppointments(AppointmentDto appointments)
         {
-        
 
-           
+
+
             if (appointments == null)
             {
                 return BadRequest("Price and appointment are required");
@@ -68,23 +68,23 @@ namespace vezeeta.Controller
                 return BadRequest("Appointments is required");
             }
 
-            string? doctorId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value; 
-            if(doctorId is null)
+            string? doctorId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (doctorId is null)
             {
                 return BadRequest("Login First ");
             }
 
             return await _doctor.AddAppointments(doctorId, appointments);
-            
-          
+
+
         }
 
 
         [HttpPatch("Appointments")]
 
-        public async Task<IActionResult> UpdateAppointments(int Id, string timeValue )
+        public async Task<IActionResult> UpdateAppointments(int Id, string timeValue)
         {
-               if (Id == 0)
+            if (Id == 0)
             {
                 return BadRequest("Invalid Id");
 
@@ -105,7 +105,7 @@ namespace vezeeta.Controller
                 return BadRequest("Invalid Id");
 
             }
-          
+
             return await _timesServices.DeleteAppointment(Id);
 
         }
@@ -124,7 +124,8 @@ namespace vezeeta.Controller
         }
 
         [HttpGet("Requests")]
-        public IActionResult GetRequests(int PageNumber, int PageSize, string? search) {
+        public IActionResult GetRequests(int PageNumber, int PageSize, string? search)
+        {
 
             if (!ModelState.IsValid)
             {

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace vezeeta.Controller
+namespace vezeeta.Controller.AdminControllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -14,11 +14,14 @@ namespace vezeeta.Controller
         private readonly IAppUserServices _appUserServices;
         private readonly IRequestServices _requestServices;
         private readonly IDoctorServices _doctorServices;
+        private readonly ISpecializationServices _specializationsServices;
         public DashboardController(IAppUserServices appUserServices, IRequestServices requestServices,
-            IDoctorServices doctorServices) {
-        _appUserServices = appUserServices;
+            IDoctorServices doctorServices, ISpecializationServices specializationServices)
+        {
+            _appUserServices = appUserServices;
             _requestServices = requestServices;
             _doctorServices = doctorServices;
+            _specializationsServices = specializationServices;
         }
 
         [HttpGet("TotalNumberOfDoctors")]
@@ -51,7 +54,7 @@ namespace vezeeta.Controller
         [HttpGet("Top 5 Specializationss")]
         public IActionResult GetTopSpecializations()
         {
-            return _appUserServices.Top5();
+            return _specializationsServices.Top5();
         }
     }
 }

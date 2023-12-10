@@ -24,7 +24,7 @@ namespace Repository_Layer
             builder.Entity<Doctor>().ToTable("Doctors").HasAnnotation("MyCustomAnnotation", "SomeValue");
             builder.Entity<Doctor>().Property(p=> p.Price).HasDefaultValue(0);
             #region
-            //assigning request relations with restricting on delete option
+            //assigning request relations with restriction on delete option
             builder.Entity<Request>().HasOne<Times>().WithMany()
                 .HasForeignKey(r => r.TimeId).OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("FK_Requests_Times_TimeId");
@@ -45,9 +45,11 @@ namespace Repository_Layer
                  .HasForeignKey(r => r.doctorId).OnDelete(DeleteBehavior.Cascade).
                  HasConstraintName("FK_Appointments_Doctors_DoctorId");
             #endregion
+            #region Data Seeding
+            // specialization seeding
             builder.Entity<Specialization>()
-            .HasData(new List<Specialization>
-               {
+           .HasData(new List<Specialization>
+              {
                     new Specialization
                     { id=1,
                         SpecializationName="Dermatology"
@@ -82,10 +84,10 @@ namespace Repository_Layer
                                 id =  7,
                                 SpecializationName="Orthopedics(Bones)"
                             },
-            });
+           });
 
 
-            // specialization seeding
+            // Roles & Admin seeding
             string ROLE_ID = "e014c5f9-775e-4112-bbc9-5a6859f60a6a";
             string ROLE_PATIENT_ID = "35ea9a1d-a34c-458d-a7cb-4fe2d240d95a";
             string ROLE_DOCTOR_ID = "63d379ae-8133-4256-b413-20b3a402dc8c";
@@ -111,12 +113,12 @@ namespace Repository_Layer
                 UserName = "02174cf0–9412–4cfe - afbf - 59f706d72cf6",
                 NormalizedUserName = "02174cf0–9412–4cfe - afbf - 59f706d72cf6",
                 PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "1234"),
-                ConcurrencyStamp= "ed0d2d46-78a9-4e58-a832-d850b5a72c3e",
-                SecurityStamp= "c15a3122-22ee-402f-8c72-6c52fb49995f",
+                ConcurrencyStamp = "ed0d2d46-78a9-4e58-a832-d850b5a72c3e",
+                SecurityStamp = "c15a3122-22ee-402f-8c72-6c52fb49995f",
                 DateOfBirth = new DateTime(2001, 6, 4),
             };
 
-           
+
 
             builder.Entity<ApplicationUser>().HasData(appuser);
             builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
@@ -124,6 +126,8 @@ namespace Repository_Layer
                 RoleId = ROLE_ID,
                 UserId = ADMIN_ID
             });
+            #endregion
+
         }
     
 
