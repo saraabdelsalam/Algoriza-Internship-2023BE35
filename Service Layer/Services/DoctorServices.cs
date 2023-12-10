@@ -18,10 +18,13 @@ namespace Service_Layer.Services
     public class DoctorServices : AppUserServices, IDoctorServices
     {
         private readonly IAppointmentServices _appiontmentServices;
-        public DoctorServices(IUnitOfWork unitOfWork, IMapper mapper, IAppointmentServices appointmentServices) :
+        private readonly IEmailSender _emailSender;
+        public DoctorServices(IUnitOfWork unitOfWork, IMapper mapper, IAppointmentServices appointmentServices,
+            IEmailSender emailSender) :
             base(unitOfWork, mapper) {
         
         _appiontmentServices = appointmentServices;
+            _emailSender = emailSender;
         }
         public async Task<IActionResult> AddDoctor(UserDto userDTO, UserRole DoctorRole, string specialize)
         {
@@ -49,6 +52,9 @@ namespace Service_Layer.Services
             try
             {
                 await _unitOfWork._doctorRepository.AddAsync(doctor);
+                await _emailSender.SendEmailAsync(User.Email,"New Vezeeta Account",
+                    $"Welcome to Vezeeta!, you can now login to your account with Email: {User.Email} \n Password:{userDTO.Password}" 
+                   );
                 await _unitOfWork.SaveAsync();
                 return new OkObjectResult(doctor);
             }

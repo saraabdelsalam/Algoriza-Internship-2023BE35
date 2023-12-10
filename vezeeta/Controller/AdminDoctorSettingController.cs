@@ -17,6 +17,7 @@ namespace vezeeta.Controller
     {
         private readonly IDoctorServices _doctor;
         private readonly IAppUserServices _userServices;
+
         public AdminDoctorSettingController( IDoctorServices doctor, IAppUserServices userServices)
         {
             
