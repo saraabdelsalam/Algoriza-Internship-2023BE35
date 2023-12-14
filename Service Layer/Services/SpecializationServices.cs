@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Service_Layer.Services
 {
-   public class SpecializationServices:ISpecializationServices
+    public class SpecializationServices : ISpecializationServices
     {
         private readonly IUnitOfWork _unitOfWork;
         public SpecializationServices(IUnitOfWork unitOfWork)

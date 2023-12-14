@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Core_Layer.Repository
 {
-    public interface ITimesRepository: ICRUD<Times>
+    public interface ITimesRepository : ICRUD<Times>
     {
-        Times GetByDayIdAndTime(int  dayId, TimeSpan timeSpan);
+        Times GetByDayIdAndTime(int dayId, TimeSpan timeSpan);
     }
 }

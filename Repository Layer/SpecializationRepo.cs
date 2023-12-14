@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Repository_Layer
 {
-    public class SpecializationRepo: BaseRepository<Specialization>, ISpecializationRepo
+    public class SpecializationRepo : BaseRepository<Specialization>, ISpecializationRepo
     {
         public SpecializationRepo(ApplicationDbContext context) : base(context)
         {
@@ -18,7 +18,7 @@ namespace Repository_Layer
 
         public Specialization GetSpecialization(string name)
         {
-            return Context.Set<Specialization>().FirstOrDefault(s=> s.SpecializationName==name);
+            return Context.Set<Specialization>().FirstOrDefault(s => s.SpecializationName == name);
         }
         //Top Specializations depending on number of requests for doctors in certain specialization
         public IActionResult Top5Sepecializations()
@@ -31,18 +31,18 @@ namespace Repository_Layer
                 (req, doct) => new
                 {
                     //accessing the specialization name from the specialization nav property
-                  Specialization = doct.Specialization.SpecializationName,
-                }).GroupBy(s=> s.Specialization).Select(
+                    Specialization = doct.Specialization.SpecializationName,
+                }).GroupBy(s => s.Specialization).Select(
 
                 s => new
                 {
                     SpecializationName = s.Key,
                     NumberOfRequests = s.Count(),
 
-                }).Take(5).OrderByDescending(s=>s.NumberOfRequests).ToList();
+                }).Take(5).OrderByDescending(s => s.NumberOfRequests).ToList();
             return new OkObjectResult(Top);
         }
     }
 
-   
+
 }

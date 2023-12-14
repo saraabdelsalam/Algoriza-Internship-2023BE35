@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Service_Layer.Interfaces.Admin
 {
-    public interface IDiscountCode 
+    public interface IDiscountCode
     {
         Task AddDiscountCode(DiscountCode discountCode);
         Task EditDiscountCode(DiscountCode discountCode);

@@ -8,7 +8,7 @@ using System.Drawing;
 
 namespace Core_Layer.DTOs
 {
-   public class DoctorInfoDto
+    public class DoctorInfoDto
     {
         public Image Image;
         public string ImagePath;

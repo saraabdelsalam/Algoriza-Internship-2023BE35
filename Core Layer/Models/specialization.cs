@@ -14,8 +14,8 @@ namespace Core_Layer.Models
 
         [Required]
         public string SpecializationName { get; set; }
-        
-      
-       
+
+
+
     }
 }

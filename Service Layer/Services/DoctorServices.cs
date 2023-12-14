@@ -21,9 +21,10 @@ namespace Service_Layer.Services
         private readonly IEmailSender _emailSender;
         public DoctorServices(IUnitOfWork unitOfWork, IMapper mapper, IAppointmentServices appointmentServices,
             IEmailSender emailSender) :
-            base(unitOfWork, mapper) {
-        
-        _appiontmentServices = appointmentServices;
+            base(unitOfWork, mapper)
+        {
+
+            _appiontmentServices = appointmentServices;
             _emailSender = emailSender;
         }
         public async Task<IActionResult> AddDoctor(UserDto userDTO, UserRole DoctorRole, string specialize)
@@ -52,8 +53,8 @@ namespace Service_Layer.Services
             try
             {
                 await _unitOfWork._doctorRepository.AddAsync(doctor);
-                await _emailSender.SendEmailAsync(User.Email,"New Vezeeta Account",
-                    $"Welcome to Vezeeta!, you can now login to your account with Email: {User.Email} \n Password:{userDTO.Password}" 
+                await _emailSender.SendEmailAsync(User.Email, "New Vezeeta Account",
+                    $"Welcome to Vezeeta!, you can now login to your account with Email: {User.Email} \n Password:{userDTO.Password}"
                    );
                 await _unitOfWork.SaveAsync();
                 return new OkObjectResult(doctor);
@@ -90,7 +91,7 @@ namespace Service_Layer.Services
         {
 
             // set Days
-            var DayOfWeekResult =await _appiontmentServices.AddAppointmentDaysAsync(DoctorId, appointments.Days);
+            var DayOfWeekResult = await _appiontmentServices.AddAppointmentDaysAsync(DoctorId, appointments.Days);
             if (DayOfWeekResult is not OkResult)
             {
                 return DayOfWeekResult;
@@ -154,7 +155,7 @@ namespace Service_Layer.Services
                 doc.Specialization = specialization;
 
                 ApplicationUser DoctorUser = _unitOfWork._userRepository.GetById(doc.UserId);
-                IActionResult updatesResult =await  Update_User(userDto, DoctorUser);
+                IActionResult updatesResult = await Update_User(userDto, DoctorUser);
                 await _unitOfWork._doctorRepository.UpdateAsync(doc);
                 await _unitOfWork.SaveAsync();
                 return new OkObjectResult(updatesResult);
@@ -174,9 +175,10 @@ namespace Service_Layer.Services
 
         public IActionResult GetDoctor(string id)
         {
-           try {
+            try
+            {
                 bool exists = _unitOfWork._doctorRepository.Exist(d => d.id == id);
-            
+
 
                 if (!exists)
                 {
@@ -189,7 +191,7 @@ namespace Service_Layer.Services
                 }
 
 
-              DoctorInfoDto doctorInfo = okResult.Value as DoctorInfoDto;
+                DoctorInfoDto doctorInfo = okResult.Value as DoctorInfoDto;
 
                 doctorInfo.Image = GetImage(doctorInfo.ImagePath);
                 var AllInfo = new
@@ -206,7 +208,7 @@ namespace Service_Layer.Services
 
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new BadRequestObjectResult(ex.Message + ex.InnerException.Message);
             }
@@ -215,14 +217,15 @@ namespace Service_Layer.Services
         }
         public IActionResult GetAllDoctors(int PageSize, int PageNumber, String search)
         {
-            try {
+            try
+            {
                 Func<DoctorInfoDto, bool> predicate = null;
 
                 if (!string.IsNullOrEmpty(search))
-                    predicate = (d=> d.FullName.Contains(search) || d.Email.Contains(search));
+                    predicate = (d => d.FullName.Contains(search) || d.Email.Contains(search));
 
-               
-                var Doctors = _unitOfWork._doctorRepository.GetAllDoctors(PageSize,PageNumber, predicate);
+
+                var Doctors = _unitOfWork._doctorRepository.GetAllDoctors(PageSize, PageNumber, predicate);
                 if (Doctors is not OkObjectResult okResult)
                 {
                     return Doctors;
@@ -245,24 +248,25 @@ namespace Service_Layer.Services
 
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new BadRequestObjectResult(ex.Message + ex.InnerException.Message);
             }
         }
         public IActionResult GetDoctorsRequests(string doctorId, int PageNum, int PageSize, string search)
         {
-            try {
+            try
+            {
                 Func<DoctorsRequestsDto, bool> condition = null;
                 if (!string.IsNullOrEmpty(search))
                 {
-                    condition = (c=> c.patientInfo.PatientName.Contains(search) ||c.patientInfo.PatientEmail.Contains(search));
+                    condition = (c => c.patientInfo.PatientName.Contains(search) || c.patientInfo.PatientEmail.Contains(search));
 
                 }
-                var Result = _unitOfWork._requestRepository.DoctorsRequests(doctorId,PageSize,PageNum,condition);
-                 if( Result is not OkObjectResult res)
+                var Result = _unitOfWork._requestRepository.DoctorsRequests(doctorId, PageSize, PageNum, condition);
+                if (Result is not OkObjectResult res)
                 {
-                    return  Result;
+                    return Result;
                 }
                 List<DoctorsRequestsDto> RequestsList = res.Value as List<DoctorsRequestsDto>;
 
@@ -270,13 +274,13 @@ namespace Service_Layer.Services
                 {
                     return new NotFoundObjectResult("There is no bookings");
                 }
-                
+
                 var doctorsRequests = RequestsList.Select(r => new
                 {
                     Image = GetImage(r.patientInfo.ImagePath),
                     r.patientInfo.PatientName,
                     r.patientInfo.PatientEmail,
-                     r.patientInfo.PatientPhone,
+                    r.patientInfo.PatientPhone,
                     r.patientInfo.PatientGender,
                     r.Day,
                     r.time
@@ -291,7 +295,7 @@ namespace Service_Layer.Services
 
 
         }
-   
+
         public IActionResult SearchDoctorsData(int PageNumber, int PageSize, string? search)
         {
             try
@@ -299,9 +303,9 @@ namespace Service_Layer.Services
                 Func<DoctorInfoDto, bool> condition = null;
 
                 if (!string.IsNullOrEmpty(search))
-                    condition= (a => a.FullName.Contains(search) || a.Email.Contains(search));
+                    condition = (a => a.FullName.Contains(search) || a.Email.Contains(search));
 
-              
+
                 var DoctorsResult = _unitOfWork._doctorRepository.SearchDoctors(PageNumber, PageSize, condition);
                 if (DoctorsResult is not OkObjectResult Result)
                 {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Core_Layer.DTOs
 {
-   public class PatientRequestsDto
+    public class PatientRequestsDto
     {
         public string ImagePath;
         public string DoctorName;

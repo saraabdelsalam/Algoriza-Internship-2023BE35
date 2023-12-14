@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Core_Layer.Services
 {
-    public interface IPatientServices: IAppUserServices
+    public interface IPatientServices : IAppUserServices
     {
         Task<IActionResult> CancelRequest(int RequestId);
         Task<IActionResult> GetAllPatients(int PageNumber, int PageSize, string search);

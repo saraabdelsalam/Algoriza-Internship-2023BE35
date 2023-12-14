@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Core_Layer.Repository
 {
-    public interface IDiscountCodeRepository:ICRUD<DiscountCode>
+    public interface IDiscountCodeRepository : ICRUD<DiscountCode>
     {
         DiscountCode GetByName(string CouponName);
-      
+
     }
 }

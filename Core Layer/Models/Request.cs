@@ -12,9 +12,9 @@ namespace Core_Layer.Models
 {
     public class Request
     {
-      
 
-        public  int Id { get; set; }
+
+        public int Id { get; set; }
 
         [EnumDataType(typeof(RequestStatus))]
         public RequestStatus? Status { get; set; }
@@ -29,9 +29,9 @@ namespace Core_Layer.Models
         public string? PatientId { get; set; }
 
         [ForeignKey("FK_Requests_DiscountCode_DiscountCodeId")]
-      
+
         public int? DiscountCodeId { get; set; }
-    
+
 
     }
 }

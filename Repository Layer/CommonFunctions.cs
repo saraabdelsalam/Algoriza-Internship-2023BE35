@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace Repository_Layer
 {
-    public class CommonFunctions<T>: BaseRepository<T>,ICommonFunctions<T> where T : class
+    public class CommonFunctions<T> : BaseRepository<T>, ICommonFunctions<T> where T : class
     {
-        public CommonFunctions(ApplicationDbContext Context): base(Context) { }
+        public CommonFunctions(ApplicationDbContext Context) : base(Context) { }
         public async Task AddAsync(T entity)
         {
             await Task.Run(() => Context.Set<T>().Add(entity));
-           
+
 
         }
         public async Task UpdateAsync(T entity)

@@ -15,9 +15,9 @@ using System.Threading.Tasks;
 
 namespace Service_Layer.Services
 {
-    public class PatientServices:AppUserServices, IPatientServices
+    public class PatientServices : AppUserServices, IPatientServices
     {
-        public PatientServices(IUnitOfWork unitOfWork, IMapper mapper ):base(unitOfWork, mapper) { }
+        public PatientServices(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper) { }
 
         public async Task<IActionResult> CancelRequest(int id)
         {
@@ -35,7 +35,7 @@ namespace Service_Layer.Services
                     critertia = (p => p.PatientName.Contains(search) || p.PatientEmail.Contains(search));
                 }
                 var result = await _unitOfWork._patientRepository.GetAllPatients(PageNumber, PageSize, critertia);
-                if(result is not OkObjectResult okObjectResult)
+                if (result is not OkObjectResult okObjectResult)
                 {
                     return result;
                 }
@@ -54,22 +54,24 @@ namespace Service_Layer.Services
                     d.PatientEmail,
                     d.PatientPhone,
                     d.PatientGender,
-                   
+
                 }).ToList();
 
                 return new OkObjectResult(Info);
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 return new BadRequestObjectResult(ex.Message + ex.InnerException.Message);
             }
-           
+
 
         }
         public async Task<IActionResult> GetPatientByIdAsync(string id)
         {
-            try {
+            try
+            {
 
-              
+
 
                 ApplicationUser Patient = _unitOfWork._patientRepository.GetById(id);
 
@@ -82,10 +84,10 @@ namespace Service_Layer.Services
                 {
                     return new ForbidResult();
                 }
-              
 
 
-               
+
+
                 IActionResult Requests = GetPatientRequests(id);
 
                 object PatientRequests = null;
@@ -94,7 +96,7 @@ namespace Service_Layer.Services
                     PatientRequests = OkObject.Value;
                 }
 
-                
+
                 var patientInfo = new
                 {
                     Image = GetImage(Patient.Image),
@@ -103,14 +105,15 @@ namespace Service_Layer.Services
                     Patient.PhoneNumber,
                     Patient.Gender,
                     Patient.DateOfBirth,
-                    
-                   Requests = PatientRequests
+
+                    Requests = PatientRequests
                 };
 
                 return new OkObjectResult(patientInfo);
 
 
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return new BadRequestObjectResult(ex.Message + ex.InnerException.Message);
             }
@@ -118,10 +121,11 @@ namespace Service_Layer.Services
 
         public IActionResult GetPatientRequests(string PatientId)
         {
-            try {
+            try
+            {
 
                 var result = _unitOfWork._requestRepository.GetPatientRequests(PatientId);
-                if(result is not OkObjectResult ok)
+                if (result is not OkObjectResult ok)
                 {
                     return result;
                 }
@@ -147,7 +151,7 @@ namespace Service_Layer.Services
                     );
                 return new OkObjectResult(PatientRequests);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new BadRequestObjectResult(ex.Message + ex.InnerException.Message);
 
@@ -159,7 +163,7 @@ namespace Service_Layer.Services
             int Value = 0;
 
             if (discountType == DiscountType.value)
-               Value = DiscountValue;
+                Value = DiscountValue;
             else
             {
                 Value = (price * DiscountValue) / 100;

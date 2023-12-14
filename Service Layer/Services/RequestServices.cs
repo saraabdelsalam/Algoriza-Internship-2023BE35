@@ -14,7 +14,7 @@ namespace Service_Layer.Services
     public class RequestServices : IRequestServices
     {
         private readonly IUnitOfWork _unitOfWork;
-      public RequestServices(IUnitOfWork unitOfWork)
+        public RequestServices(IUnitOfWork unitOfWork)
         {
 
             _unitOfWork = unitOfWork;
@@ -23,10 +23,11 @@ namespace Service_Layer.Services
         public async Task<IActionResult> AddRequest(string PatientId, int TimeId, string DiscountCode)
         {
             Times RequestTime = GetAppointmentTime(TimeId);
-            if(RequestTime == null) {
-            return new BadRequestObjectResult("Invalid Time Span");
+            if (RequestTime == null)
+            {
+                return new BadRequestObjectResult("Invalid Time Span");
             }
-            if(IsAvailable(TimeId)== false)
+            if (IsAvailable(TimeId) == false)
             {
                 return new BadRequestObjectResult("Appointment is already booked");
 
@@ -35,50 +36,54 @@ namespace Service_Layer.Services
             string? DoctorId = GetDoctorId(RequestTime.AppointmentId);
             Request NewRequest = new Request()
             {
-        
+
                 DoctorId = DoctorId,
                 PatientId = PatientId,
                 TimeId = TimeId,
                 Status = RequestStatus.Pending,
 
             };
-             if(!string.IsNullOrEmpty(DiscountCode))
+            if (!string.IsNullOrEmpty(DiscountCode))
             {
 
                 DiscountCode code = _unitOfWork._discountRepository.GetByName(DiscountCode);
-                if(code == null) {
+                if (code == null)
+                {
                     return new BadRequestResult();
                 }
                 bool? actived = CheckDiscountCode(code);
-                if(actived == null || actived==false) {
+                if (actived == null || actived == false)
+                {
 
                     return new BadRequestObjectResult("Discount code is not activated");
                 }
                 bool minmumRequests = CheckNumOfRequests(code.RequestsNumber, PatientId);
-                if(minmumRequests == false)
+                if (minmumRequests == false)
                 {
                     return new BadRequestObjectResult("Discount code can't be used");
                 }
                 bool usedBefore = IsUsedBefore(code.id, PatientId);
-                if(usedBefore == true) {
+                if (usedBefore == true)
+                {
 
 
                     return new BadRequestObjectResult("you have used this discount code before");
                 }
-                NewRequest.DiscountCodeId= code.id;
+                NewRequest.DiscountCodeId = code.id;
             }
             try
             {
                 await _unitOfWork._requestRepository.AddAsync(NewRequest);
-               await _unitOfWork.SaveAsync();
+                await _unitOfWork.SaveAsync();
                 return new OkObjectResult(NewRequest);
             }
-            catch(Exception ex) { 
-            
+            catch (Exception ex)
+            {
+
                 return new BadRequestObjectResult(ex.Message + ex.InnerException.Message);
             }
-           
-         
+
+
         }
         private bool? CheckDiscountCode(DiscountCode discountCode)
         {
@@ -90,7 +95,8 @@ namespace Service_Layer.Services
             int NumberOfRequests = _unitOfWork._requestRepository.TotalNumOfRequests(b => b.PatientId == patientId);
             return NumberOfRequests >= numOfRequests;
         }
-        private bool IsUsedBefore(int discountCodeId, string PatientId) {
+        private bool IsUsedBefore(int discountCodeId, string PatientId)
+        {
 
             bool IsUsedBefore = _unitOfWork._requestRepository.Exist(r => r.DiscountCodeId == discountCodeId
             && r.PatientId == PatientId);
@@ -102,36 +108,38 @@ namespace Service_Layer.Services
             return app.doctorId;
 
         }
-        private bool IsAvailable(int timeId) {
-        
-         bool Exists =_unitOfWork._requestRepository.Exist(r=>r.TimeId==timeId && r.Status== RequestStatus.Pending);
-        return !Exists;
+        private bool IsAvailable(int timeId)
+        {
+
+            bool Exists = _unitOfWork._requestRepository.Exist(r => r.TimeId == timeId && r.Status == RequestStatus.Pending);
+            return !Exists;
         }
-        private Appointment GetAppointment(int AppointmentId) {
-        return _unitOfWork._appointmentRepository.GetById(AppointmentId);
+        private Appointment GetAppointment(int AppointmentId)
+        {
+            return _unitOfWork._appointmentRepository.GetById(AppointmentId);
         }
-        private  Times GetAppointmentTime(int id)
+        private Times GetAppointmentTime(int id)
         {
             return _unitOfWork._timesRepository.GetById(id);
         }
 
-     
+
         public IActionResult NumOfRequests()
         {
             int TotalRequests = _unitOfWork._requestRepository.TotalNumOfRequests();
             int TotalCompletedRequests = _unitOfWork._requestRepository.TotalNumOfRequests(r => r.Status == RequestStatus.Completed);
             int TotalPendingRequests = _unitOfWork._requestRepository.TotalNumOfRequests(r => r.Status == RequestStatus.Pending);
             int TotalCancelledRequests = _unitOfWork._requestRepository.TotalNumOfRequests(r => r.Status == RequestStatus.Cancelled);
-            var Total = new 
+            var Total = new
             {
-                totalRequests=TotalRequests,
-                totalcompleted=TotalCompletedRequests,
-                totalPending=TotalPendingRequests,
-                totalCancelled=TotalCancelledRequests,  
+                totalRequests = TotalRequests,
+                totalcompleted = TotalCompletedRequests,
+                totalPending = TotalPendingRequests,
+                totalCancelled = TotalCancelledRequests,
             };
 
             return new OkObjectResult(Total);
         }
-        
+
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Core_Layer.Repository
 {
-    public interface IDoctorRepository: ICRUD<Doctor>
+    public interface IDoctorRepository : ICRUD<Doctor>
     {
 
         Task<IActionResult> GetDoctorUser(string userId);

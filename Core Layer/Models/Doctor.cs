@@ -10,7 +10,7 @@ namespace Core_Layer.Models
 {
     public class Doctor
     {
-       public string id { get; set; }
+        public string id { get; set; }
 
         [Required(ErrorMessage = "Price is required.")]
         public int? Price { get; set; }
@@ -20,7 +20,7 @@ namespace Core_Layer.Models
         public ApplicationUser? User { get; set; }
 
         public Specialization? Specialization { get; set; }
-    
+
 
     }
 }

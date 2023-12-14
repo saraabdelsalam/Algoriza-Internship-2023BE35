@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Core_Layer.Repository
 {
-    public interface IPatientRepository:IAppUserRepository
+    public interface IPatientRepository : IAppUserRepository
     {
         Task<IActionResult> GetAllPatients(int Page, int PageSize, Func<PatientInfoDto, bool> criteria = null);
     }

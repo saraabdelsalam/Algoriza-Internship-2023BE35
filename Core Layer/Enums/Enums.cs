@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 namespace Core_Layer.Enums
 {
 
-   public enum WeekDays
+    public enum WeekDays
     {
         Saturday,
-        Sunday, 
+        Sunday,
         Monday,
         Tuesday,
         Wednesday,
         Thursday,
         Friday,
     }
-  public  enum Gender { Male, Female,}
-     public enum DiscountType
+    public enum Gender { Male, Female, }
+    public enum DiscountType
     {
         percentage,
         value,
@@ -30,10 +30,11 @@ namespace Core_Layer.Enums
         Completed,
         Cancelled
     }
-    public enum UserRole { 
-   
-    Doctor,
-    Patient ,
+    public enum UserRole
+    {
+
+        Doctor,
+        Patient,
         Admin
     }
 
