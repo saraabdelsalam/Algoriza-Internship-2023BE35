@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core_Layer.Repository
 {
-    public  interface ICRUD<T>: ICommonFunctions<T> where T : class
+    public interface ICRUD<T> : ICommonFunctions<T> where T : class
     {
         Task DeleteAsync(T entity);
     }

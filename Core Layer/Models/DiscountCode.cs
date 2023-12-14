@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace Core_Layer.Models
 {
-   public class DiscountCode
+    public class DiscountCode
     {
-        public int id {  get; set; }
+        public int id { get; set; }
         [Required(ErrorMessage = "Code is required.")]
         public string code { get; set; }
 
         [Required(ErrorMessage = "Discount Type is required.")]
         [EnumDataType(typeof(DiscountType))]
-       public DiscountType discountType { get; set; }
+        public DiscountType discountType { get; set; }
 
         [Required(ErrorMessage = "Discount Value is required.")]
         public int value { get; set; }
@@ -24,6 +24,6 @@ namespace Core_Layer.Models
         [Required(ErrorMessage = "Minimum Requests is required.")]
         [Range(0, int.MaxValue)]
         public int RequestsNumber { get; set; }
-       
+
     }
 }

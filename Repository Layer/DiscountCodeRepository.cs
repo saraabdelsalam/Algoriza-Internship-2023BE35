@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace Repository_Layer
 {
-   public class DiscountCodeRepository:CRUD<DiscountCode>, IDiscountCodeRepository
+    public class DiscountCodeRepository : CRUD<DiscountCode>, IDiscountCodeRepository
     {
-        public DiscountCodeRepository(ApplicationDbContext context):base(context) { }
+        public DiscountCodeRepository(ApplicationDbContext context) : base(context) { }
         public DiscountCode GetByName(string Name)
         {
             return Context.Set<DiscountCode>().FirstOrDefault(s => s.code == Name);

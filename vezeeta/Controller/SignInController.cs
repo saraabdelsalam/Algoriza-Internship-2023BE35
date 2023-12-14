@@ -12,14 +12,14 @@ namespace vezeeta.Controller
     public class SignInController : ControllerBase
     {
 
-       
+
         private readonly IAppUserServices _appUserServices;
-        
-        public SignInController( IAppUserServices appUserServices)
+
+        public SignInController(IAppUserServices appUserServices)
         {
-            
+
             _appUserServices = appUserServices;
-           
+
         }
 
         [HttpPost("SignIn")]

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Service_Layer
 {
-    public class MappingProfiles: Profile
+    public class MappingProfiles : Profile
     {
         public MappingProfiles()
         {

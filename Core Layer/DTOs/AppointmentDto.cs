@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Core_Layer.DTOs
 {
-   public class AppointmentDto
+    public class AppointmentDto
     {
-        
-       public List<Days> Days { get; set; }
+
+        public List<Days> Days { get; set; }
 
     }
     public class Days

@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace Core_Layer.Models
 {
-   public class Appointment
+    public class Appointment
     {
-        public int id {  get; set; }
-        [Required(ErrorMessage ="Day is required")]
+        public int id { get; set; }
+        [Required(ErrorMessage = "Day is required")]
         [EnumDataType(typeof(WeekDays))]
-       public WeekDays day { get; set; }
-        public List<Times>? times {  get; set; }
+        public WeekDays day { get; set; }
+        public List<Times>? times { get; set; }
         [ForeignKey("FK_Appointments_Doctors_DoctorId")]
-        
+
         public string? doctorId { get; set; }
-       
+
     }
 }

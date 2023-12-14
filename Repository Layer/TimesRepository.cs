@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace Repository_Layer
 {
-   public class TimesRepository: CRUD<Times>, ITimesRepository
+    public class TimesRepository : CRUD<Times>, ITimesRepository
     {
-        public TimesRepository(ApplicationDbContext context):base(context) { }
+        public TimesRepository(ApplicationDbContext context) : base(context) { }
 
         public Times GetByDayIdAndTime(int dayId, TimeSpan timeSpan)
         {
-            return Context.Set<Times>().FirstOrDefault(a => a.AppointmentId == dayId && a.time==timeSpan);
+            return Context.Set<Times>().FirstOrDefault(a => a.AppointmentId == dayId && a.time == timeSpan);
         }
     }
 }

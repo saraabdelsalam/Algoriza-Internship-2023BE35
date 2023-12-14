@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace Service_Layer.Interfaces
 {
-    public interface IUnitOfWork: IDisposable
+    public interface IUnitOfWork : IDisposable
     {
         //define each repository here
-        public IDiscountCodeRepository _discountRepository {  get; } 
+        public IDiscountCodeRepository _discountRepository { get; }
         public ISpecializationRepo _specializationRepo { get; }
-        public IAppUserRepository _userRepository {  get; }
+        public IAppUserRepository _userRepository { get; }
         public IDoctorRepository _doctorRepository { get; }
         public IAppointmentRepository _appointmentRepository { get; }
         public ITimesRepository _timesRepository { get; }

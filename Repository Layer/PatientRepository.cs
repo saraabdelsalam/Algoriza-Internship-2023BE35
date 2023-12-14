@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 
 namespace Repository_Layer
 {
-     public class PatientRepository:AppUserRepository, IPatientRepository
+    public class PatientRepository : AppUserRepository, IPatientRepository
     {
-        public PatientRepository(ApplicationDbContext context,UserManager<ApplicationUser> userManager,
+        public PatientRepository(ApplicationDbContext context, UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager, SignInManager<ApplicationUser> signInManager) :
            base(context, userManager, roleManager, signInManager)
         { }
@@ -42,7 +42,7 @@ namespace Repository_Layer
                     PatientsResult = PatientsResult.Where(criteria);
                 }
 
-             
+
                 if (Page != 0)
                     PatientsResult = PatientsResult.Skip((Page - 1) * PageSize);
 

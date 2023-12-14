@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Core_Layer.Repository
 {
-     public interface ICommonFunctions<T>:IBaseRepository<T> where T : class
+    public interface ICommonFunctions<T> : IBaseRepository<T> where T : class
     {
         Task AddAsync(T entity);
         Task UpdateAsync(T entity);

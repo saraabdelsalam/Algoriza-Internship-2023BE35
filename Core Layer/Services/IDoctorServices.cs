@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Core_Layer.Services
 {
-    public interface IDoctorServices: IAppUserServices
+    public interface IDoctorServices : IAppUserServices
     {
 
         Task<IActionResult> AddDoctor(UserDto userDTO, UserRole doctorRole, string specialization);

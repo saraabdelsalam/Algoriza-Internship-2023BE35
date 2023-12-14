@@ -17,10 +17,10 @@ namespace Repository_Layer
 
             Context = repositoryContext;
         }
-      
-      
 
-      
+
+
+
         public T GetById(int id)
         {
 

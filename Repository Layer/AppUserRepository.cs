@@ -10,26 +10,26 @@ using System.Threading.Tasks;
 
 namespace Repository_Layer
 {
-    public class AppUserRepository : BaseRepository<ApplicationUser>,IAppUserRepository
+    public class AppUserRepository : BaseRepository<ApplicationUser>, IAppUserRepository
     {
         protected readonly UserManager<ApplicationUser> _userManager;
         protected readonly RoleManager<IdentityRole> _roleManager;
         protected readonly SignInManager<ApplicationUser> _signInManager;
-        public AppUserRepository(ApplicationDbContext context, UserManager<ApplicationUser> userManager,RoleManager<IdentityRole> roleManager, SignInManager<ApplicationUser> signInManager):base(context)
-        { 
+        public AppUserRepository(ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, SignInManager<ApplicationUser> signInManager) : base(context)
+        {
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
- }
+        }
         public async Task<IdentityResult> AddUser(ApplicationUser user)
         {
-          return await _userManager.CreateAsync(user);   
-           
+            return await _userManager.CreateAsync(user);
+
         }
-  
+
         public async Task AddSignInCookie(ApplicationUser user, bool rememberMe)
         {
-           await _signInManager.SignInAsync(user, rememberMe);
+            await _signInManager.SignInAsync(user, rememberMe);
         }
         public async Task AssignRole(ApplicationUser user, string role)
         {
@@ -55,12 +55,12 @@ namespace Repository_Layer
         {
             var role = await _roleManager.FindByNameAsync(UserRole);
             var RoleUsers = await _userManager.GetUsersInRoleAsync(role.Name);
-            return  RoleUsers.Count();
+            return RoleUsers.Count();
         }
         public async Task<IActionResult> UpdateUser(ApplicationUser user)
         {
             var result = await _userManager.UpdateAsync(user);
-           
+
             return result.Succeeded ? new OkResult() : new BadRequestObjectResult(result.Errors);
         }
         public async Task DeleteUser(ApplicationUser user)
@@ -70,8 +70,8 @@ namespace Repository_Layer
 
         public async Task<ApplicationUser> FindByEmail(string email)
         {
-         return await _userManager.FindByEmailAsync(email);
-           
+            return await _userManager.FindByEmailAsync(email);
+
         }
         public async Task<ApplicationUser> GetUserByID(string id)
         {

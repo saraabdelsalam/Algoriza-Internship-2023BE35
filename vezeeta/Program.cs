@@ -22,17 +22,17 @@ builder.Services.AddDbContext<ApplicationDbContext>(
                  b => b.MigrationsAssembly("Repository Layer")));
 
 // dependency injection for services
-builder.Services.AddTransient<IUnitOfWork,UnitOfWork>();
-builder.Services.AddTransient<IDiscountCode,DiscountCodeServices>();
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+builder.Services.AddTransient<IDiscountCode, DiscountCodeServices>();
 builder.Services.AddTransient<IAppUserServices, AppUserServices>();
 builder.Services.AddTransient<ISpecializationRepo, SpecializationRepo>();
 builder.Services.AddTransient<IDoctorServices, DoctorServices>();
 builder.Services.AddTransient<IPatientServices, PatientServices>();
 builder.Services.AddTransient<IAppointmentServices, AppointmentServices>();
-builder.Services.AddTransient<ITimesServices, TimesServices>(); 
+builder.Services.AddTransient<ITimesServices, TimesServices>();
 builder.Services.AddTransient<IRequestServices, RequestServices>();
 builder.Services.AddTransient<ISpecializationServices, SpecializationServices>();
-builder.Services.AddTransient<IEmailSender,EmailSenderService>();
+builder.Services.AddTransient<IEmailSender, EmailSenderService>();
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
 
@@ -54,7 +54,7 @@ builder.Services.AddSwaggerGen();
 
 
 
-    var app = builder.Build();
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

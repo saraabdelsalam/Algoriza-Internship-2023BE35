@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Core_Layer.Services
 {
-   public interface IRequestServices
+    public interface IRequestServices
     {
         IActionResult NumOfRequests();
         Task<IActionResult> AddRequest(string PatientId, int TimeId, string DiscountCode);

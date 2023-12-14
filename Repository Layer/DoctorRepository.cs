@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Repository_Layer
 {
- public class DoctorRepository: CRUD<Doctor>, IDoctorRepository
+    public class DoctorRepository : CRUD<Doctor>, IDoctorRepository
     {
         private UserManager<ApplicationUser> _userManager;
 
@@ -32,7 +32,7 @@ namespace Repository_Layer
                 return new OkObjectResult(doc);
             }
             return new BadRequestObjectResult("user id not found");
-            
+
         }
 
 
@@ -68,7 +68,8 @@ namespace Repository_Layer
 
         public IActionResult GetDoctorById(string id)
         {
-            try {
+            try
+            {
 
                 var Info = Context.Set<Doctor>().Where(I => I.id == id).Join(
 
@@ -82,27 +83,27 @@ namespace Repository_Layer
                         Email = user.Email,
                         PhoneNumber = user.PhoneNumber,
                         Gender = Enum.GetName(user.Gender),
-                        Price = Info.Price??0,
+                        Price = Info.Price ?? 0,
                         Specialization = Info.Specialization.SpecializationName,
                     }).FirstOrDefault();
 
 
 
                 return new OkObjectResult(Info);
-            
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new BadRequestObjectResult(ex.Message + ex.InnerException.Message);
             }
 
         }
         //Get All doctors in admin side
-        public IActionResult GetAllDoctors(int pageSize,int pageNumber,Func<DoctorInfoDto, bool> predicate= null)
+        public IActionResult GetAllDoctors(int pageSize, int pageNumber, Func<DoctorInfoDto, bool> predicate = null)
         {
             try
             {
-                IEnumerable<DoctorInfoDto> AllDoctors = Context.Set<Doctor>().Join(  
+                IEnumerable<DoctorInfoDto> AllDoctors = Context.Set<Doctor>().Join(
                     Context.Set<ApplicationUser>(),
                     Info => Info.UserId,
                     user => user.Id,
@@ -117,31 +118,33 @@ namespace Repository_Layer
                         Specialization = Info.Specialization.SpecializationName,
                     });
                 //search & pagination part
-                if(predicate  != null)
+                if (predicate != null)
                 {
-                    AllDoctors =AllDoctors.Where(predicate);
+                    AllDoctors = AllDoctors.Where(predicate);
                 }
-                if(pageNumber != 0)
+                if (pageNumber != 0)
                 {
-                    AllDoctors = AllDoctors.Skip((pageNumber-1)*pageSize);
+                    AllDoctors = AllDoctors.Skip((pageNumber - 1) * pageSize);
                 }
-            if(pageSize != 0)
+                if (pageSize != 0)
                 {
                     AllDoctors = AllDoctors.Take(pageSize);
                 }
-            return new OkObjectResult(AllDoctors.ToList());
-            }catch( Exception ex)
+                return new OkObjectResult(AllDoctors.ToList());
+            }
+            catch (Exception ex)
             {
                 return new BadRequestObjectResult(ex.Message + ex.InnerException.Message);
             }
-           
+
 
         }
 
         //search doctors in patient side
-        public IActionResult SearchDoctors(int PageSize, int PageNumber, Func<DoctorInfoDto, bool> predicate=null)
+        public IActionResult SearchDoctors(int PageSize, int PageNumber, Func<DoctorInfoDto, bool> predicate = null)
         {
-            try {
+            try
+            {
 
 
                 IEnumerable<DoctorInfoDto> DoctorsResult = Context.Set<Doctor>()
@@ -158,7 +161,7 @@ namespace Repository_Layer
                                                     PhoneNumber = user.PhoneNumber,
                                                     Gender = user.Gender.ToString(),
                                                     Specialization = doctor.Specialization.SpecializationName,
-                                                    Price = doctor.Price??0,
+                                                    Price = doctor.Price ?? 0,
                                                     Appointments = Context.Set<Appointment>()
                                                                 .Where(a => a.doctorId == doctor.id)
                                                                 .Select(a => new Days
@@ -169,7 +172,7 @@ namespace Repository_Layer
                                                                    .Select(at => at.time.ToString()).ToList(),
                                                                 }).ToList(),
                                                 }
-                         
+
                                                 );
                 //search & pagination part
                 if (predicate != null)
@@ -187,7 +190,7 @@ namespace Repository_Layer
 
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new BadRequestObjectResult(ex.Message + ex.InnerException.Message);
             }

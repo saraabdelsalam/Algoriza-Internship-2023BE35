@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Core_Layer.Repository
 {
-    public interface IAppointmentRepository: ICommonFunctions<Appointment>
+    public interface IAppointmentRepository : ICommonFunctions<Appointment>
     {
         Appointment GetByDoctorIdAndDay(string docId, WeekDays day);
     }

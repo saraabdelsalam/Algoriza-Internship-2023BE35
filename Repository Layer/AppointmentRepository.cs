@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace Repository_Layer
 {
-    public class AppointmentRepository: CommonFunctions<Appointment>, IAppointmentRepository
+    public class AppointmentRepository : CommonFunctions<Appointment>, IAppointmentRepository
     {
-        public AppointmentRepository(ApplicationDbContext context):base(context) { }
+        public AppointmentRepository(ApplicationDbContext context) : base(context) { }
 
         public Appointment GetByDoctorIdAndDay(string docId, WeekDays day)
         {
-           return Context.Set<Appointment>().FirstOrDefault(a => a.doctorId == docId && a.day == day);
+            return Context.Set<Appointment>().FirstOrDefault(a => a.doctorId == docId && a.day == day);
         }
     }
 }

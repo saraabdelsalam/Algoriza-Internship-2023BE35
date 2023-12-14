@@ -19,7 +19,7 @@ namespace Service_Layer.Services
         public AppointmentServices(IUnitOfWork unitOfWork, ITimesServices timesServices)
         {
             _unitOfWork = unitOfWork;
-          _timesServices = timesServices;
+            _timesServices = timesServices;
         }
 
         private IActionResult StringToDay(string day)
@@ -81,11 +81,11 @@ namespace Service_Layer.Services
             {
                 if (DayId == 0)
                 {
-                   await _unitOfWork._appointmentRepository.AddAsync(appointment);
+                    await _unitOfWork._appointmentRepository.AddAsync(appointment);
                 }
                 else
                 {
-                  await  _unitOfWork._appointmentRepository.UpdateAsync(appointment);
+                    await _unitOfWork._appointmentRepository.UpdateAsync(appointment);
                 }
                 return new OkResult();
             }

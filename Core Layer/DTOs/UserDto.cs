@@ -7,7 +7,7 @@ namespace Core_Layer.DTOs
     public class UserDto
     {
 
-      
+
         public IFormFile? Image { get; set; }
 
         [Required]
@@ -34,8 +34,8 @@ namespace Core_Layer.DTOs
         [Required]
         [DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }
-       public bool RememberMe { get; set; }
-       
+        public bool RememberMe { get; set; }
+
 
     }
 }

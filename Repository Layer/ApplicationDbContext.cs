@@ -13,16 +13,16 @@ using System.Threading.Tasks;
 
 namespace Repository_Layer
 {
-    public class ApplicationDbContext: IdentityDbContext<ApplicationUser>
-    { 
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    {
         public ApplicationDbContext() { }
-        public ApplicationDbContext (DbContextOptions options) : base(options) { }
+        public ApplicationDbContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             builder.Entity<Doctor>().ToTable("Doctors").HasAnnotation("MyCustomAnnotation", "SomeValue");
-            builder.Entity<Doctor>().Property(p=> p.Price).HasDefaultValue(0);
+            builder.Entity<Doctor>().Property(p => p.Price).HasDefaultValue(0);
             #region
             //assigning request relations with restriction on delete option
             builder.Entity<Request>().HasOne<Times>().WithMany()
@@ -129,19 +129,19 @@ namespace Repository_Layer
             #endregion
 
         }
-    
 
 
 
 
-        DbSet<Doctor> doctors {  get; set; }
-        DbSet<Specialization> specializations {  get; set; }
+
+        DbSet<Doctor> doctors { get; set; }
+        DbSet<Specialization> specializations { get; set; }
         DbSet<Times> times { get; set; }
         DbSet<Appointment> Appointments { get; set; }
         DbSet<Request> Requests { get; set; }
         DbSet<DiscountCode> discountCodes { get; set; }
-      
-      
+
+
 
 
     }

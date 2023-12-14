@@ -85,20 +85,21 @@ namespace Service_Layer.Services
                 await _unitOfWork.SaveAsync();
                 return new OkObjectResult("Appointment time has been removed successfully");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new BadRequestObjectResult(ex.Message);
             }
-           
+
         }
 
         public async Task<IActionResult> EditAppointment(int timeId, string newTime)
         {
             Times appTime = _unitOfWork._timesRepository.GetById(timeId);
-            if (appTime == null) {
-            return new BadRequestObjectResult("this appointment doesn't exist");
+            if (appTime == null)
+            {
+                return new BadRequestObjectResult("this appointment doesn't exist");
             }
-            
+
             // checking if booked or not
             bool Booked = _unitOfWork._requestRepository.Exist(b => b.TimeId == timeId && b.Status != RequestStatus.Cancelled);
             if (Booked)
@@ -108,12 +109,12 @@ namespace Service_Layer.Services
             appTime.time = TotTimeSpan(newTime);
 
             // check if there is a similar one then delete it
-           bool exists = _unitOfWork._timesRepository.Exist(t=> t.id== appTime.id && t.time== appTime.time);
+            bool exists = _unitOfWork._timesRepository.Exist(t => t.id == appTime.id && t.time == appTime.time);
             if (exists)
             {
                 return new BadRequestObjectResult("the appointment already exists");
             }
-           await _unitOfWork._timesRepository.UpdateAsync(appTime);
+            await _unitOfWork._timesRepository.UpdateAsync(appTime);
             await _unitOfWork.SaveAsync();
             return new OkObjectResult(appTime);
         }

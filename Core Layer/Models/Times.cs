@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 namespace Core_Layer.Models
 {
     public class Times
-    { public int id {  get; set; }
+    {
+        public int id { get; set; }
         [Required]
         [DataType(DataType.Time)]
         public TimeSpan? time { get; set; }

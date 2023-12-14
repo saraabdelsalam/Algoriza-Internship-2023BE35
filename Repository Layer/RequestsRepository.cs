@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 
 namespace Repository_Layer
 {
-    public class RequestsRepository: CommonFunctions<Request>,IRequestRepository
+    public class RequestsRepository : CommonFunctions<Request>, IRequestRepository
     {
-        public RequestsRepository(ApplicationDbContext context):base(context) { }
+        public RequestsRepository(ApplicationDbContext context) : base(context) { }
 
         public int TotalNumOfRequests()
         {
@@ -30,8 +30,9 @@ namespace Repository_Layer
             Func<DoctorsRequestsDto, bool> condition)
         {
 
-            try {
-            var DoctorRequests = Context.Set<Request>().Where(r=>r.DoctorId==DoctorId);
+            try
+            {
+                var DoctorRequests = Context.Set<Request>().Where(r => r.DoctorId == DoctorId);
                 var Requests = DoctorRequests.Join(
                     Context.Set<ApplicationUser>(),
                     req => req.PatientId,
@@ -58,35 +59,37 @@ namespace Repository_Layer
                         req.PhoneNumber,
                         req.Gender,
                         t.AppointmentId,
-                        time = t.time.ToString(), });
+                        time = t.time.ToString(),
+                    });
 
- IEnumerable < DoctorsRequestsDto > doctorsRequests = RequestTimes.Join(
-    Context.Set<Appointment>(),
-    req => req.AppointmentId,
-    a=> a.id,
-    (req,a)=> new DoctorsRequestsDto
-    {
-        patientInfo = new PatientInfoDto{
-        ImagePath =req.Image,
-        PatientName = req.FullName,
-        PatientEmail = req.Email,
-        PatientPhone = req.PhoneNumber,
-        PatientGender = req.Gender.ToString(),
-        },
-        time = req.time,
-        Day = a.day.ToString(),
-       
-    });
+                IEnumerable<DoctorsRequestsDto> doctorsRequests = RequestTimes.Join(
+                   Context.Set<Appointment>(),
+                   req => req.AppointmentId,
+                   a => a.id,
+                   (req, a) => new DoctorsRequestsDto
+                   {
+                       patientInfo = new PatientInfoDto
+                       {
+                           ImagePath = req.Image,
+                           PatientName = req.FullName,
+                           PatientEmail = req.Email,
+                           PatientPhone = req.PhoneNumber,
+                           PatientGender = req.Gender.ToString(),
+                       },
+                       time = req.time,
+                       Day = a.day.ToString(),
 
-                if(condition != null)
+                   });
+
+                if (condition != null)
                 {
                     doctorsRequests = doctorsRequests.Where(condition);
                 }
-                if(PageNumber != 0)
+                if (PageNumber != 0)
                 {
                     doctorsRequests = doctorsRequests.Skip((PageNumber - 1) * PageSize);
                 }
-                if(PageSize!= 0)
+                if (PageSize != 0)
                 {
                     doctorsRequests = doctorsRequests.Take(PageSize);
                 }
@@ -109,28 +112,28 @@ namespace Repository_Layer
                 var Requests = Context.Set<Request>().Where(r => r.PatientId == PatientId);
                 var Requests_Appointment = Requests.Join(
                     Context.Set<Times>(),
-                    r=>r.TimeId,
-                    t=>t.id,
-                    (r,t)=> new
+                    r => r.TimeId,
+                    t => t.id,
+                    (r, t) => new
                     {
                         r.DoctorId,
                         r.Status,
                         r.DiscountCodeId,
-                       Time= t.time.ToString(),
-                       t.AppointmentId,
+                        Time = t.time.ToString(),
+                        t.AppointmentId,
                     }
-                    
+
                     ).Join(
                     Context.Set<Appointment>(),
-                    r=>r.AppointmentId,
-                    a=>a.id,
-                    (r,a)=> new
+                    r => r.AppointmentId,
+                    a => a.id,
+                    (r, a) => new
                     {
                         r.DoctorId,
                         r.Status,
                         r.DiscountCodeId,
                         r.Time,
-                       Day= a.day.ToString(),
+                        Day = a.day.ToString(),
 
                     }
                     );
@@ -141,7 +144,7 @@ namespace Repository_Layer
                                             coupon => coupon.id,
                                             (request, coupon) => new
                                             {
-                                               request,
+                                                request,
                                                 coupon
                                             }).SelectMany(
                                                 coupon => coupon.coupon.DefaultIfEmpty(),
@@ -159,24 +162,24 @@ namespace Repository_Layer
 
                 var Requests_Doctor = Requests_Discount.Join(
                     Context.Set<Doctor>(),
-                    r=>r.DoctorId,
-                    d=>d.id,
-                    (r,d)=> new PatientRequestsDto
-                    { 
-                    ImagePath = d.User.Image,
-                    DoctorName =d.User.FullName,
-                    SpecializationName =d.Specialization.SpecializationName,
-                    price =d.Price??0,
-                    Day = r.Day,
-                    Time =r.Time,
-                    RequestStatus = r.Status.ToString(),
-                    discoundCodeName =r.Name,
-                    DiscountType =r.DiscountType,
-                    discoundValue =r.Value
-                    
+                    r => r.DoctorId,
+                    d => d.id,
+                    (r, d) => new PatientRequestsDto
+                    {
+                        ImagePath = d.User.Image,
+                        DoctorName = d.User.FullName,
+                        SpecializationName = d.Specialization.SpecializationName,
+                        price = d.Price ?? 0,
+                        Day = r.Day,
+                        Time = r.Time,
+                        RequestStatus = r.Status.ToString(),
+                        discoundCodeName = r.Name,
+                        DiscountType = r.DiscountType,
+                        discoundValue = r.Value
+
                     });
 
-         
+
                 return new OkObjectResult(Requests_Doctor.ToList());
             }
             catch (Exception ex)

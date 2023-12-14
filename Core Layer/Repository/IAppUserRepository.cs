@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Repository_Layer
 {
-    public interface IAppUserRepository: IBaseRepository<ApplicationUser>
+    public interface IAppUserRepository : IBaseRepository<ApplicationUser>
     {
         Task<ApplicationUser> GetUserByID(string id);
         Task<bool> CheckPassword(ApplicationUser user, string password);

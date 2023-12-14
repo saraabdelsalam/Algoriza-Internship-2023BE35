@@ -39,14 +39,14 @@ namespace Service_Layer.Services
 
             try
             {
-                 
+
                 IdentityResult result = await _unitOfWork._userRepository.AddUser(newUser);
                 if (result.Succeeded)
                 {
-                    await _unitOfWork._userRepository.AssignRole(newUser,NewUserRole);
+                    await _unitOfWork._userRepository.AssignRole(newUser, NewUserRole);
                     try
                     {
-                        await _unitOfWork._userRepository.AddSignInCookie(newUser,userDto.RememberMe);
+                        await _unitOfWork._userRepository.AddSignInCookie(newUser, userDto.RememberMe);
                     }
                     catch (Exception ex)
                     {
@@ -71,7 +71,7 @@ namespace Service_Layer.Services
 
         }
 
-        public async Task<IActionResult> Update_User(EditDoctorDTo userDto,ApplicationUser user)
+        public async Task<IActionResult> Update_User(EditDoctorDTo userDto, ApplicationUser user)
         {
             ApplicationUser EditedUser = _mapper.Map<ApplicationUser>(userDto);
             user.FullName = EditedUser.FullName;
@@ -103,47 +103,49 @@ namespace Service_Layer.Services
         {
             ApplicationUser user = await _unitOfWork._userRepository.FindByEmail(signInDto.Email);
             bool pass = await _unitOfWork._userRepository.CheckPassword(user, signInDto.Password);
-            if (user == null || pass==false)
+            if (user == null || pass == false)
             {
                 return new NotFoundResult();
             }
-  
-             await _unitOfWork._userRepository.SignIn(user, signInDto.RememberMe);
+
+            await _unitOfWork._userRepository.SignIn(user, signInDto.RememberMe);
             return new OkObjectResult(user);
         }
         public async Task<IActionResult> LogOut()
         {
-          await  _unitOfWork._userRepository.SignOut();
+            await _unitOfWork._userRepository.SignOut();
             return new OkResult();
         }
 
-       public async Task<int> NumOfUsers(string userRole)
+        public async Task<int> NumOfUsers(string userRole)
         {
-            
+
             return await _unitOfWork._userRepository.NumberOfUsersAsync(userRole);
-         
+
         }
 
         public async Task<IActionResult> GetUserById(string id)
         {
             ApplicationUser user = await _unitOfWork._userRepository.GetUserByID(id);
-            if(user == null)
+            if (user == null)
             {
                 return new NotFoundResult();
             }
-          UserDto userDto  = _mapper.Map<UserDto>(user);
+            UserDto userDto = _mapper.Map<UserDto>(user);
             return new OkObjectResult(userDto);
         }
 
         public async Task<IActionResult> UpdateUserData(UserDto UserDto)
         {
-            try {
+            try
+            {
                 ApplicationUser applicationUser = _mapper.Map<ApplicationUser>(UserDto);
                 IActionResult updated = await _unitOfWork._userRepository.UpdateUser(applicationUser);
 
-               return updated;
+                return updated;
 
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
 
                 return new BadRequestObjectResult(ex.Message.ToString());
@@ -161,7 +163,7 @@ namespace Service_Layer.Services
             {
                 return new NotFoundResult();
             }
-            if(request.Status == RequestStatus.Pending)
+            if (request.Status == RequestStatus.Pending)
             {
                 request.Status = status;
                 try
@@ -170,20 +172,21 @@ namespace Service_Layer.Services
                     await _unitOfWork.SaveAsync();
                     return new OkResult();
                 }
-                catch (Exception ex)
+                catch
                 {
                     return new ObjectResult("couldn't update the status");
                 }
 
             }
-            else {
+            else
+            {
 
                 return new ObjectResult("couldn't update the status");
             }
-                
-            
+
+
         }
-      
+
         protected Bitmap GetImage(string imagePath)
         {
             if (string.IsNullOrEmpty(imagePath))

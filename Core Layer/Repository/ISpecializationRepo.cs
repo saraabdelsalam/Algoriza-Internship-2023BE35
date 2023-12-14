@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Core_Layer.Repository
 {
-   public interface ISpecializationRepo: IBaseRepository<Specialization>
+    public interface ISpecializationRepo : IBaseRepository<Specialization>
     {
         Specialization GetSpecialization(string name);
         IActionResult Top5Sepecializations();
