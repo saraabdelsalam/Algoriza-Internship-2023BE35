@@ -12,12 +12,12 @@ public sealed class AppDbContext : IdentityDbContext<ApplicationUser>
     {
     }
 
-    DbSet<Doctor> Doctors { get; set; }
-    DbSet<Specialization> Specializations { get; set; }
-    DbSet<Times> Times { get; set; }
-    DbSet<Appointment> Appointments { get; set; }
-    DbSet<Request> Requests { get; set; }
-    DbSet<DiscountCode> DiscountCodes { get; set; }
+    public DbSet<Doctor> Doctors { get; set; }
+    public DbSet<Specialization> Specializations { get; set; }
+    public DbSet<Times> Times { get; set; }
+    public DbSet<Appointment> Appointments { get; set; }
+    public DbSet<Request> Requests { get; set; }
+    public DbSet<DiscountCode> DiscountCodes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
