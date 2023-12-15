@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
     <PackageReference Include="NLog" Version="5.2.7" />
     <PackageReference Include="SimpleInjector" Version="5.4.3" />
     <PackageReference Include="SimpleInjector.Integration.Web" Version="5.0.0" />

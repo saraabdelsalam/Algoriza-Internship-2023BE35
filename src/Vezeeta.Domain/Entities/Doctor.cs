@@ -1,8 +1,25 @@
-﻿using Vezeeta.Domain.Common;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Vezeeta.Domain.Entities;
-
-public sealed class Doctor : BaseEntity<string>
+namespace Vezeeta.Domain.Entities
 {
-    // TODO: Fill with properties
+    public class Doctor
+    {
+        public string Id { get; set; }
+
+     
+        public int? Price { get; set; }
+
+       
+        public ApplicationUser? User { get; set; }
+
+        public Specialization? Specialization { get; set; }
+
+
+    }
 }
