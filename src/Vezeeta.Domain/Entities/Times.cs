@@ -5,12 +5,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Vezeeta.Domain.Common;
 
 namespace Vezeeta.Domain.Entities
 { 
-    public class Times
+    public class Times: BaseEntity<int>
     {
-        public int id { get; set; }
+      
       
         public TimeSpan? time { get; set; }
      

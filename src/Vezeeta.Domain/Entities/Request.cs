@@ -7,15 +7,13 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Vezeeta.Domain.Common;
 using Vezeeta.Domain.Enums;
 
 namespace Vezeeta.Domain.Entities
 {
-    public class Request
+    public class Request: BaseEntity<int>
     {
-
-
-        public int Id { get; set; }
 
       
         public RequestStatus? Status { get; set; }

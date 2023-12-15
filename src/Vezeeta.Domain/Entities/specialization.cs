@@ -5,12 +5,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Vezeeta.Domain.Common;
 
 namespace Vezeeta.Domain.Entities
 {
-    public class Specialization
+    public class Specialization: BaseEntity<int>
     {
-        public int id { get; set; }
+       
 
    
         public string SpecializationName { get; set; }

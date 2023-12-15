@@ -5,13 +5,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Vezeeta.Domain.Common;
 using Vezeeta.Domain.Enums;
 
 namespace Vezeeta.Domain.Entities
 {
-    public class DiscountCode
+    public class DiscountCode: BaseEntity<int>
     {
-        public int id { get; set; }
+       
        
         public string code { get; set; }
 

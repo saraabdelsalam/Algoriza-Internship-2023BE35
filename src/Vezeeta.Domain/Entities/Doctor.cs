@@ -8,11 +8,9 @@ using System.Threading.Tasks;
 
 namespace Vezeeta.Domain.Entities
 {
-    public class Doctor
+    public class Doctor:ApplicationUser
     {
-        public string Id { get; set; }
-
-     
+       
         public int? Price { get; set; }
 
        

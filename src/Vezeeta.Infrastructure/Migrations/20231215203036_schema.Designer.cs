@@ -12,7 +12,7 @@ using Vezeeta.Infrastructure.Data;
 namespace Vezeeta.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231215190434_schema")]
+    [Migration("20231215203036_schema")]
     partial class schema
     {
         /// <inheritdoc />
@@ -173,6 +173,11 @@ namespace Vezeeta.Infrastructure.Migrations
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(21)
+                        .HasColumnType("nvarchar(21)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -234,15 +239,19 @@ namespace Vezeeta.Infrastructure.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("ApplicationUser");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Vezeeta.Domain.Entities.Appointment", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("DoctorId")
                         .HasColumnType("nvarchar(450)");
@@ -250,7 +259,7 @@ namespace Vezeeta.Infrastructure.Migrations
                     b.Property<int>("day")
                         .HasColumnType("int");
 
-                    b.HasKey("id");
+                    b.HasKey("ID");
 
                     b.HasIndex("DoctorId");
 
@@ -259,11 +268,11 @@ namespace Vezeeta.Infrastructure.Migrations
 
             modelBuilder.Entity("Vezeeta.Domain.Entities.DiscountCode", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<bool?>("Activated")
                         .HasColumnType("bit");
@@ -281,47 +290,23 @@ namespace Vezeeta.Infrastructure.Migrations
                     b.Property<int>("value")
                         .HasColumnType("int");
 
-                    b.HasKey("id");
+                    b.HasKey("ID");
 
                     b.ToTable("DiscountCodes");
                 });
 
-            modelBuilder.Entity("Vezeeta.Domain.Entities.Doctor", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int?>("Price")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Specializationid")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Specializationid");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Doctors");
-                });
-
             modelBuilder.Entity("Vezeeta.Domain.Entities.Request", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<int>("DiscountCodeid")
+                    b.Property<int>("DiscountCodeID")
                         .HasColumnType("int");
 
                     b.Property<string>("DoctorId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PatientId")
@@ -330,58 +315,78 @@ namespace Vezeeta.Infrastructure.Migrations
                     b.Property<int?>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int>("Timeid")
+                    b.Property<int>("TimeID")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.HasIndex("DiscountCodeid");
+                    b.HasIndex("DiscountCodeID");
 
                     b.HasIndex("DoctorId");
 
                     b.HasIndex("PatientId");
 
-                    b.HasIndex("Timeid");
+                    b.HasIndex("TimeID");
 
                     b.ToTable("Requests");
                 });
 
             modelBuilder.Entity("Vezeeta.Domain.Entities.Specialization", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("SpecializationName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("id");
+                    b.HasKey("ID");
 
                     b.ToTable("Specializations");
                 });
 
             modelBuilder.Entity("Vezeeta.Domain.Entities.Times", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<int>("Appointmentid")
+                    b.Property<int>("AppointmentID")
                         .HasColumnType("int");
 
                     b.Property<TimeSpan?>("time")
                         .HasColumnType("time");
 
-                    b.HasKey("id");
+                    b.HasKey("ID");
 
-                    b.HasIndex("Appointmentid");
+                    b.HasIndex("AppointmentID");
 
                     b.ToTable("Times");
+                });
+
+            modelBuilder.Entity("Vezeeta.Domain.Entities.Doctor", b =>
+                {
+                    b.HasBaseType("Vezeeta.Domain.Entities.ApplicationUser");
+
+                    b.Property<int?>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SpecializationID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasIndex("SpecializationID");
+
+                    b.HasIndex("UserId");
+
+                    b.HasDiscriminator().HasValue("Doctor");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -444,34 +449,17 @@ namespace Vezeeta.Infrastructure.Migrations
                     b.Navigation("Doctor");
                 });
 
-            modelBuilder.Entity("Vezeeta.Domain.Entities.Doctor", b =>
-                {
-                    b.HasOne("Vezeeta.Domain.Entities.Specialization", "Specialization")
-                        .WithMany()
-                        .HasForeignKey("Specializationid");
-
-                    b.HasOne("Vezeeta.Domain.Entities.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Specialization");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Vezeeta.Domain.Entities.Request", b =>
                 {
                     b.HasOne("Vezeeta.Domain.Entities.DiscountCode", "DiscountCode")
                         .WithMany()
-                        .HasForeignKey("DiscountCodeid")
+                        .HasForeignKey("DiscountCodeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Vezeeta.Domain.Entities.Doctor", "Doctor")
                         .WithMany()
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DoctorId");
 
                     b.HasOne("Vezeeta.Domain.Entities.ApplicationUser", "Patient")
                         .WithMany()
@@ -479,7 +467,7 @@ namespace Vezeeta.Infrastructure.Migrations
 
                     b.HasOne("Vezeeta.Domain.Entities.Times", "Time")
                         .WithMany()
-                        .HasForeignKey("Timeid")
+                        .HasForeignKey("TimeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -496,11 +484,26 @@ namespace Vezeeta.Infrastructure.Migrations
                 {
                     b.HasOne("Vezeeta.Domain.Entities.Appointment", "Appointment")
                         .WithMany("times")
-                        .HasForeignKey("Appointmentid")
+                        .HasForeignKey("AppointmentID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Appointment");
+                });
+
+            modelBuilder.Entity("Vezeeta.Domain.Entities.Doctor", b =>
+                {
+                    b.HasOne("Vezeeta.Domain.Entities.Specialization", "Specialization")
+                        .WithMany()
+                        .HasForeignKey("SpecializationID");
+
+                    b.HasOne("Vezeeta.Domain.Entities.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Specialization");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Vezeeta.Domain.Entities.Appointment", b =>
