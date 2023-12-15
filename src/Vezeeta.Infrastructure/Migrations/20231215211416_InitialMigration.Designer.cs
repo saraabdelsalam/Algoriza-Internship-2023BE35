@@ -12,8 +12,8 @@ using Vezeeta.Infrastructure.Data;
 namespace Vezeeta.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231215203036_schema")]
-    partial class schema
+    [Migration("20231215211416_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -253,11 +253,11 @@ namespace Vezeeta.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
+                    b.Property<int>("Day")
+                        .HasColumnType("int");
+
                     b.Property<string>("DoctorId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("day")
-                        .HasColumnType("int");
 
                     b.HasKey("ID");
 
@@ -277,17 +277,17 @@ namespace Vezeeta.Infrastructure.Migrations
                     b.Property<bool?>("Activated")
                         .HasColumnType("bit");
 
-                    b.Property<int>("RequestsNumber")
-                        .HasColumnType("int");
-
-                    b.Property<string>("code")
+                    b.Property<string>("Code")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("discountType")
+                    b.Property<int>("DiscountType")
                         .HasColumnType("int");
 
-                    b.Property<int>("value")
+                    b.Property<int>("RequestsNumber")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Value")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
@@ -359,7 +359,7 @@ namespace Vezeeta.Infrastructure.Migrations
                     b.Property<int>("AppointmentID")
                         .HasColumnType("int");
 
-                    b.Property<TimeSpan?>("time")
+                    b.Property<TimeSpan?>("Time")
                         .HasColumnType("time");
 
                     b.HasKey("ID");
@@ -483,7 +483,7 @@ namespace Vezeeta.Infrastructure.Migrations
             modelBuilder.Entity("Vezeeta.Domain.Entities.Times", b =>
                 {
                     b.HasOne("Vezeeta.Domain.Entities.Appointment", "Appointment")
-                        .WithMany("times")
+                        .WithMany("Times")
                         .HasForeignKey("AppointmentID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -508,7 +508,7 @@ namespace Vezeeta.Infrastructure.Migrations
 
             modelBuilder.Entity("Vezeeta.Domain.Entities.Appointment", b =>
                 {
-                    b.Navigation("times");
+                    b.Navigation("Times");
                 });
 #pragma warning restore 612, 618
         }
