@@ -1,8 +1,10 @@
-﻿using Vezeeta.Domain.Common;
+﻿namespace Vezeeta.Domain.Entities;
 
-namespace Vezeeta.Domain.Entities;
-
-public sealed class Doctor : BaseEntity<string>
+public sealed class Doctor : ApplicationUser
 {
-    // TODO: Fill with properties
+    public int? Price { get; set; }
+
+    public ApplicationUser? User { get; set; }
+
+    public Specialization? Specialization { get; set; }
 }
