@@ -1,3 +1,4 @@
+using Vezeeta.API.EndPoints.Admin;
 using Vezeeta.Application;
 using Vezeeta.Infrastructure;
 
@@ -19,7 +20,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseRouting();
 app.UseHttpsRedirection();
 
+//registering the grouped endpoints
+app.AdminDashboardEndpoints();
 app.Run();
