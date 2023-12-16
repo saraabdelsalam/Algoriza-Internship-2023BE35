@@ -1,13 +1,13 @@
-using Vezeeta.API.EndPoints.Admin;
+using Vezeeta.API.Endpoints;
 using Vezeeta.Application;
 using Vezeeta.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.RegisterInfrastructureServices(builder.Configuration)
     .RegisterApplicationServices();
 
+// Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -20,9 +20,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseRouting();
+
 app.UseHttpsRedirection();
 
-//registering the grouped endpoints
-app.AdminDashboardEndpoints();
+app.MapAdminDashboardEndpoints();
+
 app.Run();

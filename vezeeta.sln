@@ -15,13 +15,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{12414B2B-23C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{927BC81B-29DE-4122-A9F5-3423C6D130B1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vezeeta.API", "src\Vezeeta.API\Vezeeta.API.csproj", "{E0395473-9614-41FD-9F18-DE02E73C14AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vezeeta.Application", "src\Vezeeta.Application\Vezeeta.Application.csproj", "{F770FBEE-B943-4C34-996D-40CD9DF7CF54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vezeeta.Application", "src\Vezeeta.Application\Vezeeta.Application.csproj", "{F770FBEE-B943-4C34-996D-40CD9DF7CF54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vezeeta.Infrastructure", "src\Vezeeta.Infrastructure\Vezeeta.Infrastructure.csproj", "{AD0F72D3-B8C7-463A-9C15-FB1227EA7065}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vezeeta.Infrastructure", "src\Vezeeta.Infrastructure\Vezeeta.Infrastructure.csproj", "{AD0F72D3-B8C7-463A-9C15-FB1227EA7065}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vezeeta.Domain", "src\Vezeeta.Domain\Vezeeta.Domain.csproj", "{815F9823-3CD4-4A30-93B2-FE78D9C167EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vezeeta.Domain", "src\Vezeeta.Domain\Vezeeta.Domain.csproj", "{815F9823-3CD4-4A30-93B2-FE78D9C167EE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A9C73362-7760-47C2-A5F0-3E835D1F865C}"
 	ProjectSection(SolutionItems) = preProject
@@ -30,6 +28,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vezeeta.API", "src\Vezeeta.API\Vezeeta.API.csproj", "{A8A68DFF-02F9-4E88-B232-49BB11647673}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,10 +53,6 @@ Global
 		{5F3094E8-B59A-4822-A121-7370E750C57C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F3094E8-B59A-4822-A121-7370E750C57C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F3094E8-B59A-4822-A121-7370E750C57C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E0395473-9614-41FD-9F18-DE02E73C14AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E0395473-9614-41FD-9F18-DE02E73C14AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E0395473-9614-41FD-9F18-DE02E73C14AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E0395473-9614-41FD-9F18-DE02E73C14AE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F770FBEE-B943-4C34-996D-40CD9DF7CF54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F770FBEE-B943-4C34-996D-40CD9DF7CF54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F770FBEE-B943-4C34-996D-40CD9DF7CF54}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -69,15 +65,19 @@ Global
 		{815F9823-3CD4-4A30-93B2-FE78D9C167EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{815F9823-3CD4-4A30-93B2-FE78D9C167EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{815F9823-3CD4-4A30-93B2-FE78D9C167EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8A68DFF-02F9-4E88-B232-49BB11647673}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8A68DFF-02F9-4E88-B232-49BB11647673}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8A68DFF-02F9-4E88-B232-49BB11647673}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8A68DFF-02F9-4E88-B232-49BB11647673}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{E0395473-9614-41FD-9F18-DE02E73C14AE} = {12414B2B-23C0-4E3F-8210-3A6166BAFD95}
 		{F770FBEE-B943-4C34-996D-40CD9DF7CF54} = {12414B2B-23C0-4E3F-8210-3A6166BAFD95}
 		{AD0F72D3-B8C7-463A-9C15-FB1227EA7065} = {12414B2B-23C0-4E3F-8210-3A6166BAFD95}
 		{815F9823-3CD4-4A30-93B2-FE78D9C167EE} = {12414B2B-23C0-4E3F-8210-3A6166BAFD95}
+		{A8A68DFF-02F9-4E88-B232-49BB11647673} = {12414B2B-23C0-4E3F-8210-3A6166BAFD95}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D3A9CD4F-EE03-47BD-84DE-3815926CF68D}
