@@ -5,12 +5,13 @@ public static class DashboardEndpoints
     public static WebApplication MapAdminDashboardEndpoints(this WebApplication app)
     {
         var adminDashboardGroup = app.MapGroup("/Dashboard")
+            .WithTags("Dashboard")
             .WithOpenApi();
 
         adminDashboardGroup.MapGet("/Top10Doctors", async (HttpContext context) =>
         {
             await context.Response.WriteAsync("Test");
-            return Results.Ok();
+            //return Results.Ok();
         });
 
         adminDashboardGroup.MapGet("/Top5Specializations", async (HttpContext context) =>
