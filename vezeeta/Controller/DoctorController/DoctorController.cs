@@ -28,7 +28,6 @@ namespace vezeeta.Controller.DoctorController
         }
 
 
-
         [HttpPost("Set Price")]
 
         public async Task<IActionResult> SetPrice(int price)
