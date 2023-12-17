@@ -23,12 +23,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapAdminDashboardEndpoints();
-app.MapDiscountCodeEndpoints();
-app.MapDoctorSettingsEndpoints();
-app.MapPatientSettingsEndpoints();
-app.MapDoctorEndpoints();
-app.MapPatientEndpoints();
-app.MapAuthenticationEndpoints();
+app.MapAdminDashboardEndpoints()
+    .MapDiscountCodeEndpoints()
+    .MapDoctorSettingsEndpoints()
+    .MapPatientSettingsEndpoints()
+    .MapDoctorEndpoints()
+    .MapPatientEndpoints();
 
 app.Run();
