@@ -17,12 +17,14 @@ namespace vezeeta.Controller.PatientController
         private readonly IPatientServices _Patient;
         private readonly IRequestServices _request;
         private readonly IDoctorServices _doctor;
+        
         public PatientController(IPatientServices patient, IRequestServices request, IDoctorServices doctor = null)
         {
             _Patient = patient;
             _request = request;
             _doctor = doctor;
         }
+        
         [HttpPost("Register")]
         [Consumes("multipart/form-data")]
         [Route("Register")]
@@ -64,8 +66,6 @@ namespace vezeeta.Controller.PatientController
 
         }
 
-
-
         [HttpPatch("Cancell Booking")]
         [Authorize(Roles = "Patient")]
         public async Task<IActionResult> CancellBooking(int BookingId)
@@ -91,6 +91,7 @@ namespace vezeeta.Controller.PatientController
             }
             return _Patient.GetPatientRequests(PatientId);
         }
+
         [HttpGet("GetDoctors")]
         [Authorize(Roles = "Patient")]
         public IActionResult SearchDoctors(int PageNumber, int PageSize, string? search)
