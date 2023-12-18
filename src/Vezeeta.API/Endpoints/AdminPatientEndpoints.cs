@@ -8,13 +8,13 @@ public static class AdminPatientEndpoints
             .WithTags("PatientSettings")
             .WithOpenApi();
 
-        PatientSettingsGroup.MapGet("/GetAllPatients", async (HttpContext context) =>
+        PatientSettingsGroup.MapGet("/patients", async (HttpContext context) =>
         {
             await context.Response.WriteAsync("");
             return Results.Ok();
         });
 
-        PatientSettingsGroup.MapGet("/GetPatientById", async (HttpContext context) =>
+        PatientSettingsGroup.MapGet("/patient", async (HttpContext context) =>
         {
             await context.Response.WriteAsync("");
             return Results.Ok();

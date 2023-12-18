@@ -8,31 +8,31 @@ public static class AdminDoctorsettingsEndpoints
             .WithTags("DoctorSettings")
             .WithOpenApi();
 
-        DoctorSettingsGroup.MapPost("/CreateDoctorAccount", async (HttpContext context) =>
+        DoctorSettingsGroup.MapPost("/create-account", async (HttpContext context) =>
         {
             await context.Response.WriteAsync("Test");
             return Results.Ok();
         });
 
-        DoctorSettingsGroup.MapPut("/EditDoctorInfo", async (HttpContext context) =>
+        DoctorSettingsGroup.MapPut("/edit-info", async (HttpContext context) =>
         {
             await context.Response.WriteAsync("");
             return Results.Ok();
         });
 
-        DoctorSettingsGroup.MapDelete("/DeleteDoctor", async (HttpContext context) =>
+        DoctorSettingsGroup.MapDelete("/delete", async (HttpContext context) =>
         {
             await context.Response.WriteAsync("");
             return Results.Ok();
         });
 
-        DoctorSettingsGroup.MapGet("/GetAllDoctors", async (HttpContext context) =>
+        DoctorSettingsGroup.MapGet("/doctors-info", async (HttpContext context) =>
         {
             await context.Response.WriteAsync("");
             return Results.Ok();
         });
 
-        DoctorSettingsGroup.MapGet("/GetDoctorById", async (HttpContext context) =>
+        DoctorSettingsGroup.MapGet("/doctor-info", async (HttpContext context) =>
         {
             await context.Response.WriteAsync("");
             return Results.Ok();

@@ -8,32 +8,32 @@ public static class PatientEndpoints
             .WithTags("Patient")
             .WithOpenApi();
 
-        PatientGroup.MapPost("/Register", async (HttpContext context) => 
+        PatientGroup.MapPost("/register", async (HttpContext context) => 
         {
 
             await context.Response.WriteAsync("");
             return Results.Ok();
         });
 
-        PatientGroup.MapPost("/RequestAppointment", async (HttpContext context) =>
+        PatientGroup.MapPost("/requests/new-request", async (HttpContext context) =>
         {
 
             await context.Response.WriteAsync("");
             return Results.Ok();
         });
-        PatientGroup.MapGet("/GetAllRequests", async (HttpContext context) =>
+        PatientGroup.MapGet("/requests", async (HttpContext context) =>
         {
 
             await context.Response.WriteAsync("");
             return Results.Ok();
         });
-        PatientGroup.MapPatch("/CancelRequest", async (HttpContext context) =>
+        PatientGroup.MapPatch("/requests/cancell", async (HttpContext context) =>
         {
 
             await context.Response.WriteAsync("");
             return Results.Ok();
         });
-        PatientGroup.MapGet("/SearchDoctors", async (HttpContext context) =>
+        PatientGroup.MapGet("/doctors", async (HttpContext context) =>
         {
 
             await context.Response.WriteAsync("");
