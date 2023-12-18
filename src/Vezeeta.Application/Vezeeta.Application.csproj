@@ -18,8 +18,4 @@
     <ProjectReference Include="..\Vezeeta.Infrastructure\Vezeeta.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\DiscountCodes\NewFolder\" />
-  </ItemGroup>
-
 </Project>

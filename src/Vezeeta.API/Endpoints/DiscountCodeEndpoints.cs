@@ -1,7 +1,12 @@
-﻿using MediatR;
+﻿
+
+using MediatR;
 
 using Vezeeta.Application.Features.DiscountCodes.AddDiscountCode;
+using Vezeeta.Application.Features.DiscountCodes.ChangeDiscountCodeStatus;
+using Vezeeta.Application.Features.DiscountCodes.DeleteDiscountCode;
 using Vezeeta.Application.Features.DiscountCodes.DTOs;
+using Vezeeta.Application.Features.DiscountCodes.EditDiscountCode;
 
 namespace Vezeeta.API.Endpoints;
 
@@ -16,7 +21,7 @@ public static class DiscountCodeEndpoints
                 .WithOpenApi();
 
 
-        discountCodeGroup.MapPost("/create", async (HttpContext context,AddDiscountCodeDto Code) =>
+        discountCodeGroup.MapPost("/create", async (HttpContext context, AddDiscountCodeDto Code) =>
         {
 
             try
@@ -27,37 +32,78 @@ public static class DiscountCodeEndpoints
                 var addDiscountCodeCommand = new AddDiscountCodeCommand
                 {
                     CodeDto = Code
-                 
+
                 };
 
                 var result = await mediator.Send(addDiscountCodeCommand);
 
-                await context.Response.WriteAsync($"Discount code created: {result}");
-                return Results.Ok();
+                return result is not null ? Results.Ok(result) : Results.NotFound();
             }
             catch (Exception ex)
             {
-                // Handle exceptions and return an appropriate response
-                await context.Response.WriteAsync($"Error creating discount code: {ex.Message}");
-                return Results.StatusCode(StatusCodes.Status500InternalServerError);
+
+                return Results.BadRequest(ex.Message);
             }
         });
 
-        discountCodeGroup.MapPut("/edit", async (HttpContext context) =>
+        discountCodeGroup.MapPut("/edit", async (HttpContext context, EditDiscountCodeDto editDiscountCode) =>
         {
-            await context.Response.WriteAsync("");
-            return Results.Ok();
+            try
+            {
+                var mediator = context.RequestServices.GetRequiredService<IMediator>();
+                var discountCode = new EditDiscountCodeCommand
+                {
+                    editDto = editDiscountCode
+                };
+                var result = await mediator.Send(discountCode);
+                return result is not null ? Results.Ok(result) : Results.NotFound();
+            }
+            catch (Exception ex)
+            {
+                return Results.BadRequest(ex.Message);
+            }
+
         });
-        discountCodeGroup.MapPatch("/deactivate", async (HttpContext context) =>
+        discountCodeGroup.MapPatch("/deactivate", async (HttpContext context, int id) =>
          {
-             await context.Response.WriteAsync("");
-             return Results.Ok();
+             try
+             {
+
+                 var mediator = context.RequestServices.GetRequiredService<IMediator>();
+                 var changeStatus = new ChangeDiscountCodeStatusCommand
+                 {
+                     Id = id
+                 };
+
+                 var result = await mediator.Send(changeStatus);
+                 return result is not null ? Results.Ok(result) : Results.NotFound();
+             }
+             catch (Exception ex)
+             {
+                 return Results.BadRequest(ex.Message);
+             }
+
          });
 
-        discountCodeGroup.MapDelete("/delete", async (HttpContext context) =>
+        discountCodeGroup.MapDelete("/delete", async (HttpContext context, int id) =>
         {
-            await context.Response.WriteAsync("");
-            return Results.Ok();
+            try
+            {
+
+                var mediator = context.RequestServices.GetRequiredService<IMediator>();
+                var deleteDiscountCodeCommand = new DeleteDiscountCodeCommand
+                {
+                    Id = id
+                };
+
+                var result = await mediator.Send(deleteDiscountCodeCommand);
+                return result is not null ? Results.Ok(result) : Results.NotFound();
+            }
+            catch (Exception ex)
+            {
+                return Results.BadRequest(ex.Message);
+            }
+
         });
 
 
