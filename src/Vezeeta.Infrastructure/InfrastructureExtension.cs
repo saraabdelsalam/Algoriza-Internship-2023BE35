@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Vezeeta.Infrastructure.Data;
 
+using Vezeeta.Infrastructure.Data;
 namespace Vezeeta.Infrastructure;
 
 public static class InfrastructureExtension
@@ -14,6 +15,7 @@ public static class InfrastructureExtension
             options.UseSqlServer(config.GetConnectionString("DefaultConnection"));
         });
 
+       
         return services;
     }
 }

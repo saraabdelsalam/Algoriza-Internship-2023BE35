@@ -8,36 +8,36 @@ public static class DoctorEndpoints
             .WithTags("Doctor")
             .WithOpenApi();
 
-        DoctorGroup.MapPost("/SetPrice", async (HttpContext context) =>
+        DoctorGroup.MapPost("/price", async (HttpContext context) =>
         {
             await context.Response.WriteAsync("Test");
             return Results.Ok();
         });
 
-        DoctorGroup.MapPost("/AddPointments", async (HttpContext context) =>
+        DoctorGroup.MapPost("/appointments/add", async (HttpContext context) =>
         {
             await context.Response.WriteAsync("");
             return Results.Ok();
         });
 
-        DoctorGroup.MapPatch("/EditAppointments", async (HttpContext context) =>
+        DoctorGroup.MapPatch("/appointments/edit", async (HttpContext context) =>
         {
             await context.Response.WriteAsync("");
             return Results.Ok();
         });
 
-        DoctorGroup.MapDelete("/DeleteAppoinments", async (HttpContext context) =>
+        DoctorGroup.MapDelete("/appoinments/delete", async (HttpContext context) =>
         {
             await context.Response.WriteAsync("");
             return Results.Ok();
         });
 
-        DoctorGroup.MapPatch("/ConfirmRequest", async (HttpContext context) =>
+        DoctorGroup.MapPatch("/requests/confirm", async (HttpContext context) =>
         {
             await context.Response.WriteAsync("");
             return Results.Ok();
         });
-        DoctorGroup.MapGet("/GetDoctorRequests", async (HttpContext context) =>
+        DoctorGroup.MapGet("/requests", async (HttpContext context) =>
         {
             await context.Response.WriteAsync("");
             return Results.Ok();

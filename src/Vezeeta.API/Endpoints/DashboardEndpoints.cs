@@ -8,28 +8,28 @@ public static class DashboardEndpoints
             .WithTags("Dashboard")
             .WithOpenApi();
 
-        adminDashboardGroup.MapGet("/Top10Doctors", async (HttpContext context) =>
+        adminDashboardGroup.MapGet("/top-10-doctors", async (HttpContext context) =>
         {
-            await context.Response.WriteAsync("Test");
-            //return Results.Ok();
+            await context.Response.WriteAsync("");
+            return Results.Ok();
         });
 
-        adminDashboardGroup.MapGet("/Top5Specializations", async (HttpContext context) =>
+        adminDashboardGroup.MapGet("/top-5-specializations", async (HttpContext context) =>
         {
             await context.Response.WriteAsync("");
             return Results.Ok();
         });
-        adminDashboardGroup.MapGet("/TotalNumberOfDoctors", async (HttpContext context) =>
+        adminDashboardGroup.MapGet("/total-number-of-doctors", async (HttpContext context) =>
         {
             await context.Response.WriteAsync("");
             return Results.Ok();
         });
-        adminDashboardGroup.MapGet("/TotalNumberOfPatients", async (HttpContext context) =>
+        adminDashboardGroup.MapGet("/total-number-of-patients", async (HttpContext context) =>
         {
             await context.Response.WriteAsync("");
             return Results.Ok();
         });
-        adminDashboardGroup.MapGet("/TotalNumberOfRequests", async (HttpContext context) =>
+        adminDashboardGroup.MapGet("/total-number-of-requests", async (HttpContext context) =>
         {
             await context.Response.WriteAsync("");
             return Results.Ok();
