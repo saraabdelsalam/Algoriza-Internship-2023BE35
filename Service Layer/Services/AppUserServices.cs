@@ -3,18 +3,11 @@ using Core_Layer.DTOs;
 using Core_Layer.Enums;
 using Core_Layer.Models;
 using Core_Layer.Services;
-using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Service_Layer.Interfaces;
 using System.Drawing;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace Service_Layer.Services

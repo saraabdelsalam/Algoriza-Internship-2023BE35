@@ -1,4 +1,10 @@
-﻿namespace Vezeeta.API.Endpoints;
+﻿using MediatR;
+
+using Vezeeta.Application.Features.DiscountCodes.AddDiscountCode;
+using Vezeeta.Application.Features.Patients.DTOs;
+using Vezeeta.Application.Features.Patients.Register;
+
+namespace Vezeeta.API.Endpoints;
 
 public static class PatientEndpoints
 {
@@ -8,11 +14,27 @@ public static class PatientEndpoints
             .WithTags("Patient")
             .WithOpenApi();
 
-        PatientGroup.MapPost("/register", async (HttpContext context) => 
+        PatientGroup.MapPost("/register", async (HttpContext context, PatientRegisterDto patient) => 
         {
+            try
+            {
+                // Retrieve Mediator from the DI container
+                var mediator = context.RequestServices.GetRequiredService<IMediator>();
 
-            await context.Response.WriteAsync("");
-            return Results.Ok();
+                var RegisterCommand = new RegisterCommand
+                {
+                    _registrationDto = patient
+                };
+
+                var result = await mediator.Send(RegisterCommand);
+
+                return result is not null ? Results.Ok(result) : Results.NotFound();
+            }
+            catch (Exception ex)
+            {
+
+                return Results.BadRequest(ex.Message);
+            }
         });
 
         PatientGroup.MapPost("/requests/new-request", async (HttpContext context) =>
